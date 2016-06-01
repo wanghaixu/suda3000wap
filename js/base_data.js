@@ -123,6 +123,9 @@ define(function(require,exports,module){
 			$('.focusShade').width($(window).width()).height($(window).height());
 			$('.module-form-t1 input').focus(function(){
 				$('.focusShade').removeClass('uhide');
+				if($('.filtration-icon').hasClass("filtration-icon-active")){
+					$('.filtration-icon').removeClass('filtration-icon-active')
+				}
 			});
 			$('.module-form-t1 input').blur(function(){
 				$('.focusShade').addClass('uhide');
@@ -140,6 +143,7 @@ define(function(require,exports,module){
 			});
 			$('#shade').on('tap',function(){
 				$('.item-body,#shade').toggleClass('uhide');
+				$('.filtration-icon').toggleClass('filtration-icon-active');
 			});
 			$('.item-body').on('tap','.item-1',function(){
 				//获取文字

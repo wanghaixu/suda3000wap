@@ -960,7 +960,7 @@ Base_index.prototype = {
              * @param {[function]} 	errCallback 	[请求错误函数]
              */
             refreshPage: function (retCallback, errCallback) {
-                // this.data = $.extend({}, this.initData);
+                this.data = $.extend({}, this.initData);
                 this.nowPageNum = 1;
                 this.data.pageSize = this.pageSize;
                 this.data.start = this.start = 0;
@@ -1403,7 +1403,7 @@ Base_index.prototype = {
         $('.goodsItem').each(function (index, el) {
             if (type.indexOf('sale') > -1) {
                 var goodsData = JSON.parse($(el).attr('data-json'));
-                var goodsTaxrate = goodsData.oldTaxRate;
+                var goodsTaxrate = goodsData.saletaxrate;
                 //销售类
                 if (noteType == 1) {
                     //收据

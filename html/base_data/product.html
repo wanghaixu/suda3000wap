@@ -21,7 +21,7 @@
 	<!--头部结束-->
 	<form class="ub module-input-t1 line-b" action="#">
 		<div class="ub-f1 ub ub-ac ub-pc line-all">
-			<input type="text" class="ub ub-f1" placeholder="名称/代码">
+			<input type="search" class="ub ub-f1" placeholder="名称/代码">
 			<div class="search-icon"></div>
 			<div class="focusShade _focusShade uhide"></div>
 		</div>
@@ -178,11 +178,11 @@ seajs.use(['zepto.min','base_data','public','layer','iscroll','pullToRefresh'],f
 						name=listData[i].name?listData[i].name:'',
 						goodsid=listData[i].goodsid,
 						specs=listData[i].specs?listData[i].specs:'',
-						sprice=listData[i].sprice?listData[i].sprice:'';
+						sprice=listData[i].sprice?listData[i].sprice:'',
 						onhand=listData[i].onhand?listData[i].onhand:0,
 						moneycode=listData[i].moneycode?listData[i].moneycode:'',
-						unit=checkValue(listData[i].unit),
-					node+='<li class="h-71"><div class="ub ub-ver ub-pc ul line-b productItem" Data-href="pro_detail.html?list_id='+goodsid+'&list_code='+code+'"><div class="ub ub-ac ub-pc"><div class="tx-16 tx-bla-2 marr-10">'+code+'</div><div class="ub-f1 tx-bla ut-s">'+name+specs+'</div></div><div class="ub-f1 ub mart-7"><div class="ub-f1 tx-12 tx-bla-3 ut-s">库存：<span class="">'+onhand+'('+unit+')'+</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">进价：<span class="">'+pprice+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">售价：<span class="">'+sprice+'</span></div></div></div></li>';
+						unit=checkValue(listData[i].unit);
+					node+='<li class="h-71"><div class="ub ub-ver ub-pc ul line-b productItem" Data-href="pro_detail.html?list_id='+goodsid+'&list_code='+code+'"><div class="ub ub-ac ub-pc"><div class="tx-16 tx-bla-2 marr-10">'+code+'</div><div class="ub-f1 tx-bla ut-s">'+name+specs+'</div></div><div class="ub-f1 ub mart-7"><div class="ub-f1 tx-12 tx-bla-3 ut-s">库存：<span class="">'+onhand+'('+unit+')'+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">进价：<span class="">'+pprice+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">售价：<span class="">'+sprice+'</span></div></div></div></li>';
 				}
 				if(type=='refresh'||type=='search'||type=='all'){
 					$('#wrapper .navDataList').find('.h-71').remove();

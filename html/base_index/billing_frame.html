@@ -270,6 +270,7 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 	}
 	//下拉刷新
 	function Refresh(){
+		$('#filterInput').val('');
 		dataCommand.refreshPage(
 			function(ret){
 				if(ret.errNo==-1){
