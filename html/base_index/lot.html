@@ -1,0 +1,171 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>批号选择</title>
+    <link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body>
+    <!--头部开始-->
+    <header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+        <a class="ub ub-ac" href="javascript:history.back(-1);">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+        <div class="ub-f1 ub ub-ac ub-pc tx-18">批号选择</div>
+        <div class="ub ub-ac ub-pe title-r">
+            <div id="submitBtn" class="icon post-icon-wh marl-10"></div>
+        </div>
+    </header>
+    <!--头部结束-->
+    <!--主体 开始-->
+    <div class="mart-5 padt-44">
+        <div class="ub ub-ver line-t line-b bg-wh dataList">
+            <!-- 列表 开始 -->
+            <!--<div class="ub ub-ac line-b h-65 padlr-15  lotItem">
+                <div class="li-tips"></div>
+                <div class="ub ub-ver ub-f1 marl-10">
+                    <div class="ub ub-pj marb-10 tx-16">
+                        <div class="tx-bla ub-f1 ut-s batchcode">2014102444</div>
+                        <div class="tx-r tx-bla-2 ub-f1 ut-s quantity">300</div>
+                    </div>
+                    <div class="ub tx-12 tx-gray">
+                        <div>2014-12-05</div>
+                        <div class="top-1">&nbsp;→&nbsp;</div>
+                        <div>2014-12-10</div>
+                    </div>
+                </div>
+            </div>-->
+            <!--<div class="ub ub-ac line-b h-65 padlr-15  lotItem">
+                <div class="li-tips"></div>
+                <div class="ub ub-ver ub-f1 marl-10">
+                    <div class="ub ub-pj marb-10 tx-16">
+                        <div class="tx-bla ub-f1 ut-s batchcode">2014102444</div>
+                        <div class="tx-r tx-bla-2 ub-f1 ut-s quantity">300</div>
+                    </div>
+                    <div class="ub tx-12 tx-gray">
+                        <div>2014-12-05</div>
+                        <div class="top-1">&nbsp;→&nbsp;</div>
+                        <div>2014-12-10</div>
+                    </div>
+                </div>
+            </div>-->
+            <!-- 列表 结束 -->
+        </div>
+    </div>
+    <!--主体 结束-->
+</body>
+</html>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
+<script>
+    seajs.use([ 'public'], function (_Public) {
+        $(document).ready(function () {
+            //设置到达过lot的标记
+            sessionStorage.setItem('lot', '1');
+            var dataList = sessionStorage.getItem('lotsData');
+            data = JSON.parse(dataList);
+            //获取单据类型
+            var billType=sessionStorage.getItem('billType');
+            //清除单据类型的缓存
+            sessionStorage.removeItem('billType');
+            //生成批号列表
+            var length = data.length;
+            var list = '';
+            if (length == 0) {
+                list = $('<div class="none-icon">' +
+                        '<img src="../../images/none.png">' +
+                        '<div class="tx-gray">暂无数据</div>' +
+                    '</div>');
+                $('.dataList').append(list);
+            } else {
+                for (var i = 0; i < length; i++) {
+                    //生成批号模版
+                    list = $(render(data[i]));
+                    //往批号模版增加日期
+                    list.find('.date').append($(addDate(data[i])));
+                    list.data('json',JSON.stringify(data[i]));
+                    $('.dataList').append(list);
+                }
+            }
+
+            $('.dataList').append($(list));
+
+            $(document).on('tap', '.lotItem', function () {
+                $('.lotItem').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            //确认选择批号
+            $(document).on('tap', '#submitBtn', function () {
+                var curObj = $('.active');
+                if (curObj.length == 0) {
+                    _Public.layerMsg('请选择一个批号');
+                    return;
+                }
+                var dataJson = JSON.parse(curObj.attr('data-json'));
+                sessionStorage.setItem('temp_lotData', JSON.stringify(dataJson));
+                //获得批号
+                var batchcode =dataJson.batchcode;
+                //为货品明细的缓存设置批号
+                var goodsData = JSON.parse(sessionStorage.getItem('goodsData'));
+                goodsData.batchcode = batchcode;
+                goodsData.produceddate = dataJson.produceddate;
+                goodsData.validdate = dataJson.validdate;
+                sessionStorage.setItem('goodsData', JSON.stringify(goodsData));
+                history.back();
+
+                //如果货品的成本核算类型为2的话 则要将批号里面的batchcodeid回填到明细里面的batchrefid
+                if(goodsData.inf_costingtypeid=='2'){
+                    //如果是采购退货，现款销售、销售发货则需要回填
+                    if(billType==8||billType==3||billType==2){
+                        if(dataJson.batchcodeid!=null&&dataJson.batchcodeid!=''){
+                            goodsData.batchrefid=dataJson.batchcodeid;
+                        }
+                    }
+                }     
+            })
+        })
+        function checkNull(str) {
+            if (str == null)
+                return '';
+            else
+                return str;
+        }
+
+        function render(data) {
+            var l = '';
+            l += '<div class="ub ub-ac line-b h-65 marl-10 marr-10 lotItem">' +
+    '               <div class="li-tips"></div>' +
+    '               <div class="ub ub-ver ub-f1 marl-10 date">' +
+    '                   <div class="ub ub-pj marb-10 tx-16">' +
+    '                       <div class="tx-bla ub-f1 ut-s batchcode">' + data.batchcode + '</div>' +
+    '                       <div class="tx-r tx-bla-2 quantity">' + data.leftqty + '</div>' +
+    '                   </div>' +
+    '               </div>' +
+    '           </div>';
+            return l;
+        }
+
+        function addDate(data){
+            if(checkNull(data.produceddate)==''&&checkNull(data.validdate)=='')
+                return '';
+            else{
+                            var l='';
+              l+=  '                   <div class="ub tx-12 tx-gray">' +
+    '                       <div>' +checkNull(data.produceddate) + '</div>' +
+    '                       <div class="top-1">&nbsp;→&nbsp;</div>' +
+    '                       <div>' + checkNull(data.validdate)+ '</div>' + 
+    '                   </div>' 
+                return l;
+            }
+        }
+    });
+</script>

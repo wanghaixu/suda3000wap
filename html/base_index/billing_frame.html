@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body class="uhide forbid-scroll">
+	<header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+		<a id="backBtn" class="ub ub-ac">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+		<div id="pageTitle" class="ub-f1 ub ub-ac ub-pc bold">现款销售列表</div>
+		<a class="ub ub-ac ub-pe title-r" href="filter.html?type=cash_sale">
+			<div class="icon filt-icon-wh"></div>
+		</a>
+	</header>
+	<div class="padt-44">
+		<form class="ub ub-ac ub-pc module-input-t1 line-b">
+			<div class="ub-f1 ub ub-ac ub-pc line-all">
+				<input id="filterInput" type="search" maxlength="20" autocomplete="off" class="ub ub-f1 billInput" placeholder="">
+				<div id="searchBtn" class="search-icon"></div>
+				<div class="focusShade uhide"></div>
+			</div>
+		</form>
+		<div id="wrapper" class="ub ub-ver ub-f1 padt-5">
+			<ul id="dataList">
+				<!-- <li>
+					<a class="ub ub-ver ub-f1 padlr-15 bg-wh marb-5 line-t line-b bg-f8-active">
+						<div class="ub  ub-ac ub-pj h-44 line-b">
+							<div class="ub ub-ac">
+								<div class="marr-5 tx-16 tx-bla">CS201512022</div>  -->
+								<!-- 三种状态 -->
+								<!-- 收据 -->
+								<!-- <div class="ub ub-f1 marlr-5 tickets bg-0d80eb">
+									<span class="ub tx-12">收据</span>
+								</div> -->
+								<!-- 增值税发票 -->
+								<!-- <div class="ub ub-f1 marlr-5 tickets bg-ee6602">
+									<span class="ub tx-12">增值税发票</span>
+								</div> -->
+								<!-- 普通发票 -->
+								 <!-- <div class="ub ub-f1 marlr-5 tickets bg-01BF47">
+									<span class="ub tx-12">普通发票</span>
+								</div>
+							 </div>
+							<div class="tx-12 tx-gray">2015-12-06</div>
+						</div>
+						<div class="ub ub-ac h-65">
+							<div class="ub ub-f1 ub-ver">
+								<div class="marb-10">广州洪宇网络科技有限公司</div>
+								<div class="ub ub-f1 ub-pj">
+									<div class="ub-f1 tx-14 tx-gra">采购收货</div>
+									<div class="ub-f1 tx-r tx-14 tx-red">￥25000.00</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</li> -->
+			</ul>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script>
+seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
+    var base_index = new Base_index();
+    base_index.useMask();
+	/**
+	 * 接收传递参数
+	 */
+	var type = base_index.checkType(base_index.getPageParams('type') || '');//请求模式
+	var action = base_index.checkAction(base_index.getPageParams('action') || '');//单据类型
+	var keyword = base_index.getPageParams('keyword') || '';//搜索关键字
+
+	/**
+	 * 初始化页面组件
+	 */
+	//页面标题
+	var pageTitle = base_index.listPageTitle[type];
+	$('#pageTitle').text(pageTitle);
+	document.title = pageTitle;
+	//输入框提示
+	$('#filterInput').attr('placeholder', '单号/'+base_index.getTraderTypeTilte(type));
+	//设置弹动区域高度
+	$('#wrapper').height($(window).height()-$('header').height()-$('form').height()-5);
+	//下拉刷新上拉加载
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load
+	});
+
+	/**
+	 * 初始化请求参数 
+	 */
+	var ipUrl=_Public.Get_storage('sdIP');//接口IP
+	var loadUrl='http://'+ipUrl+base_index.listUrl[type];//请求地址
+	var dataStr = base_index.initData;//列表初始化参数
+	var dateilPageName = base_index.detailEditPageName[type];//详情页面名称
+
+	//设置参数
+	var dataCommand = base_index.DataCommand(loadUrl, 'post', dataStr);
+	//设置显示数量
+	var pageSize = 10;
+	dataCommand.setPageSize(pageSize);
+	//发送请求，返回数据
+	if(keyword!=''){
+		//搜索请求
+		$('#filterInput').val(keyword);
+		searchSaleOrderData();
+	}else if(action == 'filter' && sessionStorage.getItem('session_filterJson')){
+		// 获取参数
+		var session_filterJson = sessionStorage.getItem('session_filterJson');
+		var filterJson = JSON.parse(session_filterJson);
+		console.log(session_filterJson);
+		//发送请求
+		dataCommand.filterData(filterJson,
+			function(ret){
+				if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+	}else{
+		//普通请求
+		dataCommand.init(
+			function(ret){
+				if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+	}
+
+	/**
+	 * 初始化页面事件 
+	 */
+	//后退
+	$('#backBtn').on('tap', function(){
+		sessionStorage.removeItem('session_filterJson');//清空筛选条件缓存
+		window.location.href = base_index.detailPageName[type]+'?action=add&type='+type;
+	});
+	//搜索(键盘按钮)
+	$('form').on('submit', function(){
+		searchListData();
+		$('#filterInput').blur();
+		//阻止form提交跳转
+		return false;
+	});
+	//搜索(搜索按钮)
+	$('#searchBtn').on('tap', function(event){
+		event.preventDefault();
+		searchListData();
+	});
+
+	//搜索
+	function searchListData(){
+		//获取搜索内容
+		var filterValue = $('#filterInput').val();
+		if(filterValue!=''){
+			//初始化搜索参数
+			dataCommand.initSearchData(base_index.searchTypeItem[type](filterValue));
+			//发送请求
+			dataCommand.sendSearch(
+				function(ret){
+					if(ret.errNo==-1){
+						//提示错误信息弹窗
+						_Public.layerMsg(ret.errMsg);
+						_Public.hideProgress();
+					}else {
+						//清空页面HTML
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+					}
+				}, function(ret){
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}
+			);
+		}else{
+			dataCommand.setData();
+			dataCommand.setPageSize(pageSize);
+			dataCommand.init(
+				function(ret){
+					if(ret.errNo==-1){
+						//提示错误信息弹窗
+						_Public.layerMsg(ret.errMsg);
+						_Public.hideProgress();
+					}else {
+						//清空页面HTML
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+					}
+				}, function(ret){
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}
+			);
+		}
+	}
+
+	/**
+	 * 获取数据，生成html
+	 */
+	//初始化html模板
+	var htmlCommand = base_index.HtmlCommand(billingItemHtml);
+	//成功处理函数
+	var succFunc = function(ret){
+		if(ret){
+			//设置页码
+			dataCommand.setPageNum(base_index.countPageNum(ret.count, pageSize));
+
+			var listDataArray = ret.listData;
+			console.log(JSON.stringify(ret));
+			if(listDataArray instanceof Array && listDataArray.length>0){
+				for(var k=0; k<listDataArray.length; k++){
+					var retJson = {
+    					'itemHref': dateilPageName + (listDataArray[k].invoiceid || listDataArray[k].csaleid || listDataArray[k].returnid || listDataArray[k].recievedid || listDataArray[k].crecievedid || listDataArray[k].preturnid || ''),//单据详情链接
+						'billCode': listDataArray[k].code || '',//编号
+						'noteTypeName': listDataArray[k].billtypename || '',//发票类型
+						'noteType': listDataArray[k].billtypeid || '',//发票类型序号
+						'billDate': listDataArray[k].billdate || '',//日期
+						'billkindName': listDataArray[k].storename || '',//仓库名称
+						'traderName': listDataArray[k].clientshortname || listDataArray[k].clientname ||'',//客户名称
+						'amount': listDataArray[k].totalamt || listDataArray[k].amount || 0//价格
+	    			}
+		    		htmlCommand.set(retJson);//将数据设置到HTML模板
+				}
+		    	htmlCommand.appendIn($('#dataList'));
+	    	}else{
+	    		//暂无数据
+	    		if(dataCommand.getPageNum()==0){
+	    			htmlCommand.setNoDataImg($('#dataList'));
+	    		}
+	    	}
+		}
+	}
+	//下拉刷新
+	function Refresh(){
+		dataCommand.refreshPage(
+			function(ret){
+				if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					//清空页面HTML
+					htmlCommand.clearConFrom($('#dataList'));
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+			}
+		);
+		myScroll.refresh();
+	};
+	//上拉加载
+	function Load(){
+		dataCommand.nextPage(
+			function(ret){
+				if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+					//页码+1
+					dataCommand.addNowPageNum();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+			}
+		);
+		myScroll.refresh();
+	};
+	//HTML模板
+	function billingItemHtml(json){
+		var noteTypeClass = '';
+		switch(json.noteType){
+			case 1: 
+				noteTypeClass = 'bg-0d80eb';
+				break;
+			case 2: 
+				noteTypeClass = 'bg-01BF47';
+				break;
+			case 3: 
+				noteTypeClass = 'bg-ee6602';
+				break;
+			default: noteTypeClass='';
+		}
+		//判断价格正负数
+		var amountColor = 'tx-bla';
+		var amount = (json.amount).toString();
+		if(amount.indexOf('-')>-1){
+			amountColor = 'tx-red';
+		}
+		return '<li><a class="ub ub-ver ub-f1 padlr-15 bg-wh marb-5 line-t line-b bg-f8-active" href="'+json.itemHref+'"><div class="ub ub-ac ub-pj h-44 line-b"><div class="ub ub-ac"><div class="marr-5 tx-16 tx-bla">'+json.billCode+'</div><div class="ub ub-f1 marlr-5 tickets '+noteTypeClass+'"><span class="ub tx-12">'+json.noteTypeName+'</span></div></div><div class="tx-12 tx-gray">'+json.billDate+'</div></div><div class="ub ub-ac h-65"><div class="ub ub-f1 ub-ver"><div class="marb-10">'+json.traderName+'</div><div class="ub ub-f1 ub-pj"><div class="ub-f1 tx-14 tx-gra">'+json.billkindName+'</div><div class="ub-f1 tx-r tx-14 '+amountColor+'"><span>￥</span><span>'+json.amount+'</span></div></div></div></div></a></li>';
+	}
+});
+</script>
+</html>

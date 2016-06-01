@@ -1,0 +1,917 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <title>开单货品明细编辑</title>
+    <link rel="stylesheet" type="text/css" href="../../css/ui-base.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/layer.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/public.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/base_index.css" />
+    <style>
+        .batch .go-icon {
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body class="hide">
+    <!--头部开始-->
+    <header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+        <a class="ub ub-ac" href="javascript:history.back(-1);">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+        <div class="ub-f1 ub ub-ac ub-pc tx-18">货品明细编辑</div>
+        <div class="ub ub-ac ub-pe title-r">
+            <div id="submitBtn" class="icon post-icon-wh marl-10"></div>
+        </div>
+    </header>
+    <!--头部结束-->
+    <!--主体开始-->
+    <div class="mart-5 line-t padt-44">
+        <section class="orderListEdit ub ub-ver line-t">
+            <div class="padlr-15 " tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">货品编号</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="goodscode" class="billInput ub-f1 tx-r goodscode" type="text" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">货品名称</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="goodsname" class="billInput ub-f1 tx-r goodsname" type="text" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">规格</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="specs" class="billInput ub-f1 tx-r specs" type="text" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">条形码</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="barcode" class="billInput ub-f1 tx-r barcode" type="text" readonly/>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ub ub-ver line-t bg-wh marb-5">
+            <div class="listItem" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">单位</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray srcoll">
+                        <select name="unit" class="unit cus-select"></select>
+                    </div>
+                    <div class="rightArrow"></div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">数量</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="qty" class="billInput ub-f1 tx-r qty" type="number">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">单价</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="unitprice" class="billInput ub-f1 tx-r unitprice" type="number">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">税率(%)</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="taxrate" class="billInput ub-f1 tx-r taxrate" type="number">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">货款</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="goodsamt" class="billInput ub-f1 tx-r goodsamt" type="number">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">税额</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="taxamt" class="billInput ub-f1 tx-r taxamt" type="number">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">金额</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input name="total" class="billInput ub-f1 tx-r total" type="number">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ub ub-ver line-t bg-wh marb-5 bill_pro">
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">批号</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray batch">
+                        <input name="batchcode" class="billInput ub-f1 tx-r batchcode" replaceholder="请输入批号" type="text">
+                        <div class="rightArrow"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">生产日期</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input id="produceddate" name="produceddate" class="billInput ub-f1 tx-r produceddate" type="text" readonly="readonly">
+                    </div>
+                </div>
+            </div>
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">有效期至</div>
+                    <div class="ub ub-ac ub-f1 tx-r tx-gray">
+                        <input id="validdate" name="validdate" class="billInput ub-f1 tx-r validdate" type="text" readonly="readonly">
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="ub ub-ver line-t bg-wh marb-5 bill_pro">
+            <div class="padlr-15" tapmode="bg-f8-active">
+                <div class="ub ub-ac ub-f1 h-44 line-b">
+                    <div class="itemName tx-l tx-bla">赠品</div>
+                    <div class="ub-f1 tx-r tx-gray">
+                        <label class="switch">
+                            <input id="ispresent" name="ispresent" type="checkbox" class="switchBtn">
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="longButton danger ub-f1">删&nbsp;除</div>
+    </div>
+    <!--主体结束-->
+</body>
+</html>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script type="text/javascript" src="../../js/mobiscroll.2.13.2.min.js"></script>
+<script type="text/javascript">
+    seajs.use(['public', 'layer'], function (_Public) {
+        var base_index = new Base_index();
+        $().ready(function () {
+
+            var url_suffix = localStorage.getItem('sdIP');
+
+            //获取来自单据详情页面的缓存
+            var store_billData = JSON.parse(sessionStorage.getItem('session_goodParamJson'));
+            //获取货品数据缓存
+            var d = JSON.parse(sessionStorage.getItem('goodsData'));
+
+            //获取单据类型,用于后续判断
+            var type = base_index.getPageParams('type');
+            //获取操作类型
+            var act = base_index.getPageParams('act');
+            //是否是折扣商品
+            var isDiscPro;
+
+            //是否从lot过来的
+            var lot = sessionStorage.getItem('lot');
+            //清除掉从批号页来的标记
+            sessionStorage.removeItem('lot');
+
+            if (type.indexOf('order') != -1) {
+                $('.bill_pro').remove();
+            }
+
+            var traderID = store_billData.traderID;//客户ID
+            var noteType = store_billData.noteType;//发票类型
+            var storeID = store_billData.storeID;//仓库ID
+            var billType = base_index.getBillType[type];//获取billtype
+
+            var data = {
+                qty: '',//业务数量
+                taxprice: '',//含税单价
+                taxrate: '',//税率
+                goodsamt: '',//货款
+                taxamt: '',//税款
+                total: '',//价税合计
+                unitprice: '',//业务单价
+                price: '',//原始单价
+                disc: 100,//折扣,由于这里没有给,于是默认为100
+                baseprice: '',//基本单位单价
+                quantity: '',//基础数量
+                unitrate: '',//单位比率
+                unitid: '',//单位ID 主要用于获取价格
+                itemno: '-1'//项目编号 没有项目时 itemno=-1
+            };
+
+            //初始化数据
+            $.extend(data, d);
+
+            if (act != 'add') {
+                data.qty = data.unitqty;
+                data.taxamt = data.taxamt;
+                data.total = data.total||data.amount;
+            }
+            if (!data.goodskind) {
+                data.goodskind = data.kind;
+            }
+            IsDisc(data.goodskind);
+            //如果单据类型是
+            if (noteType == '1') {
+                data.taxrate = 0;
+                data.taxamt = 0;
+                $('.taxrate').attr('readonly', 'readonly');
+                $('.taxamt').attr('readonly', 'readonly');
+            }
+            if (noteType == '2') {
+                if (billType == 7 || billType == 26) {//采购收货，和现款采购时  没有税率，并不可编辑
+                    data.taxrate = 0;
+                    data.taxamt = 0;
+                    $('.taxrate').attr('readonly', 'readonly');
+                    $('.taxamt').attr('readonly', 'readonly');
+                }
+            }
+
+            render();
+
+            if (type.indexOf('order') == -1) {
+                //如果批号管理为'T'或者货品的成本核算类型为2时,有批号,批号可以获取或者输入,采购或者销售都是获取或者输入
+                if (data.inf_costingtypeid == '2' || data.batchctrl == 'T') {
+                    base_index.setValue($('.batchcode'), data.batchcode);
+                    //编辑单据的时候 需要判断referbillid是否为空或者0 如果不是为空或者0的话 则提示不能重新选择批号
+                    if(data.referbillid!==''&&data.referbillid!==null&&data.referbillid!==0&&data.referbillid!==undefined){
+                        $('.batchcode').attr('readonly','readonly');
+                        $('.batchcode').click(function () {
+                            _Public.layerMsg('批号不可重新选择');           
+                        })
+                    }
+                    $(document).on('tap', '.batch .rightArrow', function () {
+                        if(storeID==''){                            
+                            _Public.layerMsg('请先选择仓库!');
+                        }else{
+                            //编辑单据的时候 需要判断referbillid是否为空或者0 如果不是为空或者0的话 则提示不能重新选择批号
+                            if(data.referbillid!==''&&data.referbillid!==null&&data.referbillid!==0&&data.referbillid!==undefined)
+                                _Public.layerMsg('批号不可重新选择');                                
+                            else
+                                getBatchcode();
+                        }
+                    })
+
+                    if (billType == '8' || billType == '2' || billType == '3') {//采购退货  销售发货  现款销售 只能选择批号
+                        $('.batchcode').attr('readonly', 'readonly');
+                    }
+
+                    data.produceddate = data.produceddate || '';
+                    data.validdate = data.validdate || '';
+
+                    //为日期添加选择日期事件
+                    _Public.selectDates($('.validdate'), data.validdate);
+                    _Public.selectDates($('.produceddate'), data.produceddate);
+                } else {
+                    $('.batch .rightArrow').hide();
+                    $('.batchcode').hide();
+                    $('.produceddate').attr('readonly', 'readonly');
+                    $('.validdate').attr('readonly', 'readonly');
+                }
+            }
+
+            //获取单位
+            getUnit();
+
+            if (act == 'add') {
+                if (!lot) {
+                    //计算税率
+                    countTaxRate();
+                    //获取价格
+                    getPrice();
+                }
+                $('.longButton').hide();
+            }
+            //如果操作类型为审核的话,则只能查看且禁用掉所有input和select 并且不绑定任何事件
+            if (act == 'check') {
+                $('#submitBtn').hide();
+                $('.longButton').hide();
+                $('input').attr('readonly', 'readonly');
+                $('select').attr('disabled', 'disabled');
+            }
+            $('body').removeClass('hide');
+            _Public.hideProgress();
+
+            //如果操作类型为审核的话,则只能查看且禁用掉所有input和select 并且不绑定任何事件
+            if (act == 'check')
+                return false;
+
+            //提交商品明细事件
+            $(document).on('tap', '#submitBtn', function () {
+                //收到保存的事件后,让input失去响应 触发change事件
+                $('input').blur();
+                //获取页面参数,并形成缓存
+                //判断是否有空值 合法性检验
+                if (!checkValid('.qty', '.unitprice', '.taxrate', '.goodsamt', '.taxamt', '.total'))
+                    return;
+
+                if (type.indexOf('order') == -1) {
+                    if ($('.produceddate').val() != '' && $('.validdate').val() != '')
+                        if (!_Public.compareDate($('.produceddate').val(), $('.validdate').val())) {
+                            _Public.layerMsg('生产日期不能大于有效期!')
+                            return;
+                        }
+                }
+
+                //判断货品数量是否大于0
+                if (parseFloat(data.qty) <= 0) {
+                    _Public.layerMsg('货品数量要大于0');
+                    return;
+                }
+
+                if (type.indexOf('order') == -1 && data.batchctrl == 'T') {
+                    //非订单的单据中,有批号管理属性的货品 批号不能为空
+                    if (!checkValid('.batchcode')) {
+                        _Public.layerMsg('批号不能为空');
+                        return;
+                    }
+
+                    //采购退货  销售发货  现款销售 只能选择批号 并且判断数量是否大于库存
+                    if (billType == '8' || billType == '2' || billType == '3') {
+                        var leftqty = JSON.parse(sessionStorage.getItem('temp_lotData')).leftqty;
+
+                        if ($('.qty').val() > leftqty) {
+                            _Public.layerMsg('数量不能大于所选批号的库存!')
+                            return;
+                        }
+                    }
+                }
+
+                $('input').each(function () {
+                    var t = $(this);
+                    if (t.attr('type') == 'text' || t.attr('type') == 'number') {
+                        data[t.attr('name')] = t.val();
+                    }
+                    if (t.attr('type') == 'checkbox') {
+                        data[t.attr('name')] = t.is(':checked') == true ? 'T' : 'F';
+                    }
+                })
+
+                //折扣核算货品单价不能大于0
+                if (isDiscPro == true) {
+                    if (parseFloat(data.unitprice) > 0) {
+                        _Public.layerMsg('折扣核算货品单价不能大于0!');
+                        return;
+                    }
+                }
+
+                data.amount = data.total;
+                data.unitqty = data.qty;
+                data.oldTaxRate=data.taxrate;//将货品税率缓存起来
+
+                if (data.inf_costingtypeid == null)
+                    data.inf_costingtypeid = ''
+
+                //对缓存进行操作 并跳转回原来的页面
+                if (act == 'add') {
+                    base_index.addGoods(data);
+                    history.go(-2);
+                }
+                if (act == 'edit') {
+                    var _id = data.log_id;
+                    base_index.editGoods(_id, data);
+                    history.go(-1);
+                }
+            })
+
+            //发出删除货品事件
+            $(document).on('tap', '.longButton', function () {
+                var _id = data.log_id;
+                base_index.deleteGoods(_id);
+                //由于是编辑进来的 所以history后退一步
+                history.go(-1);
+            })
+
+            //数量变化
+            $('.qty').change(function () {
+                var qty = $(this).val() || 0;
+                changeQty(qty);
+            })
+
+            //业务单价改变
+            $('.unitprice').change(function () {
+                var unitprice = $(this).val() || 0;
+                changeUnitprice(unitprice);
+            })
+
+            //税率改变
+            $('.taxrate').change(function () {
+                var taxrate = $(this).val() || 0;
+                changeTaxrate(taxrate);
+            })
+
+            // 货款改变
+            $('.goodsamt').change(function () {
+                var goodsamt = $(this).val() || 0;
+                changeGoodsamt(goodsamt);
+            })
+
+            //税款改变
+            $('.taxamt').change(function () {
+                var taxamt = $(this).val() || 0;
+                changeTaxAmt(taxamt);
+            })
+
+            //价税合计改变
+            $('.total').change(function () {
+                var total = $(this).val() || 0;
+                changeTotal(total);
+            })
+
+            //单位改变联动事件
+            $('.unit').change(function () {
+                var unitSelect = $('.unit')[0];                
+                var unitData = unitSelect[unitSelect.selectedIndex].getAttribute('data-json');
+                var data1 = JSON.parse(unitData);
+
+                data.unit = data1.unitname;
+                data.unitrate = data1.rate;
+                data.unitid = data1.unitid;
+
+                //如果是赠品的话 就不改变价格了
+                if(data.ispresent=='T')
+                    return ;
+
+                changeQty(data.qty);
+                getPrice();
+                
+            })
+
+            //赠品改变
+            if (type.indexOf('order') == -1) {
+                $('#ispresent').change(function () {
+                    var t = $(this);
+                    if (t.is(':checked')) {
+                        $('input').attr('readonly','readonly');
+                        $('.qty').removeAttr('readonly');
+                        $('.batchcode').removeAttr('readonly');
+                        data.ispresent='T';
+                        //设置缓存
+                        sessionStorage.setItem('tempProData', JSON.stringify(data));
+                        var unitprice = 0;
+                        changeUnitprice(unitprice);
+                    } else {
+                        $('input').removeAttr('readonly');
+                        data.ispresent='F';
+                        //复原到改变前的数据
+                        if(sessionStorage.getItem('tempProData')){
+                            data = JSON.parse(sessionStorage.getItem('tempProData'));
+                            refreshData();
+                            sessionStorage.removeItem('tempProData');
+                        }else{
+                            getPrice();
+                        }
+                    }
+                })
+            }
+
+            //刷新一次页面显示的数据
+            function refreshData() {
+                base_index.setValue($('.taxrate'), parseFloat(data.taxrate || 0).toFixed(2));
+                base_index.setValue($('.goodsamt'), parseFloat(data.goodsamt || 0).toFixed(2));
+                base_index.setValue($('.taxamt'), parseFloat(data.taxamt || 0).toFixed(2));
+                base_index.setValue($('.total'), parseFloat(data.total || 0).toFixed(2));
+                var qty = parseFloat(data.qty);
+                var unitprice = parseFloat(data.unitprice);
+
+                if (base_index.countDotLength(qty) > 6)
+                    qty = qty.toFixed(6);
+
+                if (base_index.countDotLength(unitprice) > 6)
+                    unitprice = unitprice.toFixed(6);
+
+                base_index.setValue($('.qty'), qty);
+                base_index.setValue($('.unitprice'), unitprice);
+                data.qty = qty;
+                data.unitprice = unitprice;
+            }
+
+            //数量改变联动
+            function changeQty(qty) {
+                data.qty = qty;
+
+                var _unitprice = data.unitprice;
+                var _taxprice = data.taxprice;
+                var _unitrate = data.unitrate;
+
+                //基本数量=业务数量*单位比率
+                var quantity = qty * _unitrate;
+                //货款=业务单价*业务数量
+                var goodsamt = _unitprice * qty;
+                //总额=含税单价*业务数量
+                var total = _taxprice * qty;
+                //税额=价税总额-货款
+                var taxamt = total - goodsamt;
+                //基本单位单价=业务单价/单位比率
+                var baseprice = (_unitprice / _unitrate).toFixed(2);
+
+                data.quantity = quantity;
+                data.goodsamt = goodsamt;
+                data.total = total;
+                data.taxamt = taxamt;
+                data.baseprice = baseprice;
+
+                refreshData();//刷新数据;
+            }
+
+            //业务单价改变联动
+            function changeUnitprice(unitprice) {
+                data.unitprice = unitprice;
+
+                var taxrate = data.taxrate;//税率
+                var disc = data.disc;//折扣率
+                var qty = data.qty;//数量
+                var unitrate = data.unitrate;//单位比率
+
+                var price;
+                //含税价=业务单价*(1+税率)
+                var taxprice = unitprice * (1 + taxrate / 100);
+
+                if (noteType != 1) {
+                    //原始单价=含税价/折扣率
+                    price = taxprice / (disc / 100);
+                } else {
+                    //原始单价=业务单价/折扣率
+                    price = unitprice / (disc / 100);
+                }
+                //货款=业务数量*业务单价
+                var goodsamt = unitprice * qty;
+                //价税合计=含税单价*业务数量
+                var total = taxprice * qty;
+                // 税金 =货款 * 税率
+                var taxamt = goodsamt * taxrate / 100;
+                //基本单位单价=业务单价/单位比率
+                var baseprice = unitprice / unitrate;
+
+                data.taxprice = taxprice;
+                data.price = price;
+                data.goodsamt = goodsamt;
+                data.total = total;
+                data.taxamt = taxamt;
+                data.baseprice = baseprice;
+
+                refreshData();//刷新数据;
+            }
+
+            //税率改变联动
+            function changeTaxrate(taxrate) {
+                data.taxrate = taxrate;
+
+                var taxprice = data.taxprice;//含税价
+                var taxrate = data.taxrate;//税率
+                var qty = data.qty;//业务数量
+                var unitrate = data.unitrate;//单位比率
+
+                if (taxrate != 0) {
+                    //业务单价=含税价/(1+税率)
+                    var unitprice = taxprice / (1 + taxrate / 100);
+                    //货款=业务数量*业务单价
+                    var goodsamt = unitprice * qty;
+                    //价税合计=含税单价*业务数量
+                    var total = taxprice * qty;
+                    //税金=价税合计-货款
+                    var taxamt = total - goodsamt;
+                    //基本单位单价=业务单价/单位比率
+                    var baseprice = unitprice / unitrate;
+
+                    data.unitprice = unitprice;
+                    data.goodsamt = goodsamt;
+                    data.total = total;
+                    data.taxamt = taxamt;
+                    data.baseprice = baseprice;
+
+                    refreshData();//刷新数据;
+                }
+            }
+
+            //税款改变联动
+            function changeTaxAmt(taxamt) {
+                data.taxamt = taxamt;
+
+                var qty = data.qty || 0;//业务数量
+                var taxrate = data.taxrate || 0;//税率
+                var disc = data.disc;//折扣率
+                var unitrate = data.unitrate;//单位比率
+
+                if (qty != 0 && taxrate != 0) {
+                    //业务单价=税款/(业务数量*税率)
+                    var unitprice = taxamt / (qty * taxrate / 100);
+                    //含税价=业务单价*(1+税率)
+                    var taxprice = unitprice * (1 + taxrate / 100);
+                    //原始单价=含税价/折扣率
+                    var price = taxprice / (disc / 100);
+                    //价税合计=含税单价*业务数量
+                    var total = taxprice * qty;
+                    //货款=价税合计-税金
+                    var goodsamt = total - taxamt;
+                    //基本单位单价=业务单价/单位比率
+                    var baseprice = unitprice / unitrate;
+
+                    data.unitprice = unitprice;
+                    data.taxprice = taxprice;
+                    data.price = price;
+                    data.total = total;
+                    data.goodsamt = goodsamt;
+                    data.baseprice = baseprice;
+
+                    refreshData();//刷新数据;
+                }
+            }
+
+            //货款改变联动
+            function changeGoodsamt(goodsamt) {
+                data.goodsamt = goodsamt;
+
+                var qty = data.qty;
+                var taxrate = data.taxrate;
+                var disc = data.disc;
+                var unitrate = data.unitrate;
+
+                //含税单价=货款/业务数量
+                var unitprice = goodsamt / qty;
+                //含税价=业务单价(1+税率)
+                var taxprice = unitprice * (1 + taxrate / 100);
+                //原始单价=含税价/折扣率
+                var price = taxprice / (disc / 100);
+                //价税合计=含税单价*业务数量
+                var total = taxprice * qty;
+                //税金=价税合计-货款
+                var taxamt = total - goodsamt;
+                //基本单位单价=业务单价/单位比率
+                var baseprice = unitprice / unitrate;
+
+                data.unitprice = unitprice;
+                data.taxprice = taxprice;
+                data.price = price;
+                data.total = total;
+                data.taxamt = taxamt;
+                data.baseprice = baseprice;
+
+                refreshData();//刷新数据;
+            }
+
+            //价税合计改变联动
+            function changeTotal(total) {
+                data.total = total;
+
+                var qty = data.qty || 0;
+                var taxrate = data.taxrate;
+                var disc = data.disc;
+                var unitrate = data.unitrate;
+
+                if (qty != 0) {
+                    //含税单价=价税合计/业务数量
+                    var taxprice = total / qty;
+                    //业务单价=含税价/(1+税率)
+                    var unitprice = taxprice / (1 + taxrate / 100);
+                    //原始单价=含税价/折扣率
+                    var price = taxprice / (disc / 100);
+                    // 货款 =业务数量 * 业务单价
+                    var goodsamt = unitprice * qty;
+                    //税金=价税合计-货款
+                    var taxamt = total - goodsamt;
+                    // 基本单位单价 =业务单价 /单位比率
+                    var baseprice = unitprice / unitrate;
+
+                    data.taxprice = taxprice;
+                    data.unitprice = unitprice;
+                    data.price = price;
+                    data.goodsamt = goodsamt;
+                    data.taxamt = taxamt;
+                    data.baseprice = baseprice;
+
+                    refreshData();//刷新数据;
+                }
+            }
+
+            //获取单位
+            function getUnit() {
+                var Ajax_data = {};
+                Ajax_data.url = countUrl('/lookupdm/lookupdata.action');
+                Ajax_data.method = 'post';
+                Ajax_data.datatype = 'json';
+                Ajax_data.data = {
+                    viewname: 'goodsunit',
+                    filter: 'goodsid=' + data.goodsid,
+                    likeValue: '',
+                    pageSize: 999,
+                    start: 0
+                }
+                _Public.Get_ajax(Ajax_data, function (data1) {
+                    if (data1.errNo) {
+                        _Public.closeToLogin(data1.errMsg);
+                        return;
+                    }
+                    var datalist = data1.listData;
+                    var unitList = '';
+                    //新增的话 没有单位默认值,直接添加
+
+                    for (var i = 0; i < datalist.length; i++) {
+                        unitList = $('<option data-json=' + JSON.stringify(datalist[i]) + ' >' + datalist[i].unitname + '</option>');
+                        if (datalist[i].unitid == data.unitid)
+                            unitList.attr('selected', 'selected');
+                        $('.unit').append(unitList);
+                    }
+                    setSelect($('.unit'));
+                }, function (xhr, err) {
+                    _Public.layerMsg(xhr.statusText);
+                })
+            }
+
+            //获取单价
+            function getPrice() {
+                var Ajax_data = {}
+                Ajax_data.url = countUrl(base_index.priceUrl[type]);
+                Ajax_data.method = 'post';
+                Ajax_data.datatype = 'json';
+                Ajax_data.data = {
+                    batchRefId: '',//默认为空
+                    goodsId: data.goodsid,//商品ID
+                    traderId: traderID,//客户ID
+                    storeId: storeID,//仓库ID
+                    unitId: data.unitid//单位ID
+                }
+                _Public.Get_ajax(Ajax_data, function (data1) {
+                    if (data1.errNo) {
+                        _Public.closeToLogin(data1.errMsg);//错误编码如果不是0 则返回首页,并提示错误信息
+                        return;
+                    }
+                    data.pricetype = data1.priceMap.pricetype;
+                    var defaultPrice = data1.priceMap.defaultprice;//数据中的价格
+                    changeUnitprice(defaultPrice);//重算一遍价格并且自动刷新
+                }, function (err) {
+                    _Public.layerMsg(JSON.stringify(err));
+                })
+            }
+
+            //获取批号
+            function getBatchcode() {
+                var Ajax_data = {};
+                Ajax_data.url = countUrl('/selectbatch.action');
+                Ajax_data.method = 'post';
+                Ajax_data.datatype = 'json';
+                Ajax_data.data = {
+                    clientid: traderID,
+                    goodsId: data.goodsid,
+                    modId: base_index.modID[type],
+                    storeId: storeID,
+                    typeId: data.inf_costingtypeid,
+                    unitrate: data.unitrate
+                }
+                _Public.Get_ajax(Ajax_data, function (data1) {
+                    if (data1.errNo) {
+                        _Public.closeToLogin(data1.errMsg);
+                        return;
+                    }
+                    var realqty = data.onhand;//库存量
+                    var datalist = data1.listData;
+                    //先把本页面缓存下来
+                    sessionStorage.setItem('billType',billType);
+                    sessionStorage.setItem('goodsData', JSON.stringify(data));
+                    sessionStorage.setItem('lotsData', JSON.stringify(datalist));
+                    window.location = 'lot.html';
+                }, function (xhr) {
+                    _Public.layerMsg(xhr.statusText);
+                })
+            }
+
+            //判断是否是折扣核算的商品 如果是的话单价必须小于0
+            function IsDisc(kind) {
+                var Ajax_data = {};
+                Ajax_data.url = 'http://' + url_suffix + '/lookupdm/lookupdata.action?viewname=gcm_DS&filter= 1=1 and kind=' + kind + '&likeValue=&pageSize=15&start=0';
+                Ajax_data.method = 'post';
+                Ajax_data.datatype = 'json';
+                Ajax_data.data = {};
+                _Public.Get_ajax(Ajax_data, function (data1) {
+                    var result = data1.listData[0];
+                    if (result.name == '折扣核算') {
+                        isDiscPro = true;
+                    } else {
+                        isDiscPro = false;
+                    }
+                }, function (err) {
+                    _Public.layerMsg(err.msg);
+                })
+            }
+
+            //计算税率
+            function countTaxRate() {
+                var purTaxrate = localStorage.getItem('purTaxrate');//进项税率
+                var saleTaxrate = localStorage.getItem('saleTaxrate');//销项税率
+                if (billType == 1 || billType == 6) {//订单的情况
+                    if (billType == 6) {//采购订单 使用进项税率
+                        data.taxrate = purTaxrate;
+                    } else {//销售订单 使用货品带入的货品税率 当货品带入税率为空时,使用帐套带路的销项税率
+                        if (data.saletaxrate != '' && data.saletaxrate != null && data.saletaxrate != undefined)
+                            data.taxrate = data.saletaxrate;
+                        else
+                            data.taxrate = saleTaxrate;
+                    }
+                } else {
+                    if (noteType == 1)//收据时 没有税率,并且不可编辑
+                        data.taxrate = 0;
+                    else if (noteType == 2) {//普通发票
+                        if (billType == 8) {//采购退货时 使用进项税率
+                            data.taxrate = purTaxrate;
+                        } else if (billType == 7 || billType == 26) {
+                            data.taxrate = 0;
+                        } else {//销售单据时,使用货品带入的货品税率, 当货品带入税率为空时 使用销项税率
+                            if (data.saletaxrate != '' && data.saletaxrate != null && data.saletaxrate != undefined)
+                                data.taxrate = data.saletaxrate;
+                            else
+                                data.taxrate = saleTaxrate;
+                        }
+                    } else {//增值税发票
+                        if (billType == 7 || billType == 8 || billType == 26) {//采购单据时 使用进项税率
+                            data.taxrate = purTaxrate;
+                        } else if (billType == 2 || billType == 3 || billType == 4) {//销售单据时 使用商品税率 如果商品税率为空 则使用销项税率
+                            if (data.saletaxrate != '' && data.saletaxrate != null && data.saletaxrate != undefined)
+                                data.taxrate = data.saletaxrate;
+                            else
+                                data.taxrate = saleTaxrate;
+                        }
+                    }
+                }
+            }
+
+            //渲染页面
+            function render() {
+                if (act == 'add'&&!lot) {
+                    if (!data.qty) {
+                        changeQty(1);
+                    }
+                }
+                base_index.setValue($('.goodsname'), data.goodsname);
+                base_index.setValue($('.goodscode'), data.goodscode);
+                base_index.setValue($('.specs'), data.specs);
+                base_index.setValue($('.barcode'), data.barcode || '');
+
+                base_index.setValue($('.taxrate'), parseFloat(data.taxrate || 0).toFixed(2));
+                base_index.setValue($('.unitprice'), parseFloat(data.unitprice || 0));
+                base_index.setValue($('.qty'), parseFloat(data.qty || 1));
+                base_index.setValue($('.goodsamt'), parseFloat(data.goodsamt || 0).toFixed(2));
+                base_index.setValue($('.taxamt'), parseFloat(data.taxamt || 0).toFixed(2));
+                base_index.setValue($('.total'), parseFloat(data.total || 0).toFixed(2));
+
+                if (type.indexOf('order') == -1) {
+                    if (data.ispresent == 'T') {
+                        $('#ispresent').attr('checked', true);
+                        $('input').attr('readonly','readonly');
+                        $('.qty').removeAttr('readonly');
+                        $('.batchcode').removeAttr('readonly');
+                    }
+                }
+            }
+
+            //拼装URL
+            function countUrl(url) {
+                return 'http://' + url_suffix + url;
+            }
+
+            //检查值是否为空,是空则返回false,并且返回该节点的name
+            function checkValid() {
+                var length = arguments.length;
+                for (var i = 0; i < length; i++) {
+                    if ($(arguments[i]).val() == '') {
+                        _Public.layerMsg($(arguments[i]).parent().prev().text() + '不能为空');
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function setSelect(obj) {
+                obj.mobiscroll().select({
+                    theme: 'mobiscroll',
+                    lang: 'zh',
+                    display: 'bottom',
+                    mode: 'selectBasic'
+                });
+            }
+        })
+
+    })
+</script>

@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>速达ERP</title>
+    <link rel="stylesheet" href="../../css/ui-base.css">
+    <link rel="stylesheet" href="../../css/layer.css">
+    <link rel="stylesheet" href="../../css/public.css">
+    <link rel="stylesheet" href="../../css/mobiscroll.2.13.2.min.css" />
+    <link rel="stylesheet" href="../../css/login.css">
+    <style>
+        html, body {
+            background-color: #CDCDCF;
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="ub ub-ac index-header">
+        <div class="sd-logo"></div>
+    </header>
+    <div class="base_banner"></div>
+    <div class="i-list ub ub-ac ub-ver mart-40">
+        <div class="i-listItem ub-f1 ub ub-ac ">
+            <div class="lis-icon ub-img icon-head"></div>
+            <div class="ub ub-ac ub-f1">
+                <input class="billInput ub ub-f1 ut-s" type="text" name="username" placeholder="请输入全局应用账号" required="required">
+            </div>
+        </div>
+        <div class="i-listItem ub-f1 ub ub-ac mart-30">
+            <div class="lis-icon ub-img icon-lock"></div>
+            <div class="ub ub-ac ub-f1">
+                <input class="billInput ub ub-f1 ut-s" type="password" name="password" placeholder="请输入密码" required="required">
+            </div>
+            <label class="switch">
+                <input name="" type="checkbox" class="switchBtn">
+            </label>
+        </div>
+    </div>
+    <div class="ub ub-pc mart-20">
+        <div class="i-listItem ub ub-ac pw-remember">
+            <div class="lis-icon ub-img icon-remember icon-checked"></div>
+            <div class="ub ub-ac ub-f1 tx-l tx-bla tx-14">
+                记住登录密码
+            </div>
+        </div>
+    </div>
+    <div class="mart-20 shortButton login-btn marb-50">
+        登&nbsp&nbsp&nbsp&nbsp录
+    </div>
+    <footer class="l-footer ub ub-ac ub-pc mart-40">
+        <div class="footer-logo"></div>
+    </footer>
+    <div class="mask">
+        <div class="container ub ub-pc">
+            <div class="dialog">
+                <div class="ub ub-pc">
+                    <div class="title">速达软件</div>
+                </div>
+                <div class="content">
+                    <div class="ub ub-ver">
+                        <div class="item">
+                            全局帐号:
+                            <span class="account"></span>
+                        </div>
+                        <div class="item">
+                            有效期至:
+                            <span class="expdate"></span>
+                        </div>
+                        <div class="item">
+                            有效天数:
+                            <span class="exptime"></span>
+                        </div>
+                    </div>
+                    <div class="ub ub-ver sm tx-gray">
+                        <div class="item">
+                            续费咨询:
+                            <span class="agentName"></span>
+                        </div>
+                        <div class="item">
+                            联系电话: <span class="agentTel"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-group ub ub-ac">
+                    <div class="btn ub-f1 tx-gray btn-close">取消</div>
+                    <div class="btn ub-f1 tx-green btn-confirm">确认</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
+<script>
+    //处理全局登录信息
+    //url用于获取step1返回的url
+    var url, IP;
+    function jsonpcallback(data) {
+        //判断是否登录成功
+        if (data.errNo == 1) {
+            //登录失败
+            layer.open({
+                content: '用户名或密码错误,请重新输入',
+                className: 'layerMobile',
+                time: 2
+            })
+        }
+        else {
+            //登录成功,生成登录信息
+            var mask = $('.mask');
+            mask.show();
+            mask.find('.account').text(data.EMail);
+            mask.find('.expdate').text(data.strValidDate);
+            mask.find('.exptime').text(data.strValidDays);
+            mask.find('.agentName').text(data.AgentName);
+            mask.find('.agentTel').text(data.AgentTel);
+            localStorage.setItem('EMail',data.EMail);
+            localStorage.setItem('ValidDate',data.strValidDate);
+            localStorage.setItem('ValidDays',data.strValidDays);
+            localStorage.setItem('AgentName',data.AgentName);
+            localStorage.setItem('AgentTel',data.AgentTel); 
+            //由于测试需要使用全局变量
+            url = data.url;
+            //测试需要 使用本地IP和端口
+            url = url.replace(/113.108.131.85/, '192.168.0.111');
+            url = url.replace(/web/, 'mobile');
+            // var end=url.indexOf('/',8);
+            // var IP=url.slice(7,end);
+            //测试 判断是否为5k或者3k
+            if (url.indexOf('8085') == -1) {
+                IP = "192.168.0.111:8083";
+            }
+            else {
+                IP = "192.168.0.111:8085";
+            }
+            localStorage.setItem('sdIP', IP);
+            //关闭登录信息
+            $(document).on('tap', '.btn-close', function () {
+                mask.hide();
+            });
+        }
+    }
+    seajs.use(['zepto.min', 'public'], function (zepto, _Public) {
+        $().ready(function () {
+            //需要判断是否记住密码 如果记住了就自动填充--!
+            if (_Public.Get_storage('globalPwRem') == 'true') {
+                $('input[name="password"]').val(_Public.Get_storage('globalPw'));
+            }
+            if (localStorage.getItem('globalAccount')) {
+                $('input[name="username"]').val(localStorage.getItem('globalAccount'));
+            }
+
+            //是否记住密码
+            $(document).on('tap', '.pw-remember', function (e) {
+                if ($('.icon-remember').hasClass('icon-checked')) {
+                    $('.icon-remember').removeClass('icon-checked');
+                }
+                else {
+                    $('.icon-remember').addClass('icon-checked');
+                }
+            })
+
+            //登录
+            $(document).on('tap', '.login-btn', function (e) {
+                // 判断账号和密码的合法性
+                var account = $('input[name="username"]').val();
+                var pw = $('input[name="password"]').val();
+                if (account.trim() == '' || pw.trim() == '') {
+                    layer.open({
+                        content: '账号和密码不能为空！',
+                        className: 'layerMobile',
+                        time: 2
+                    })
+                    return false;
+                };
+                var mail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;//邮箱
+                if (account.match(mail) == null) {
+                    layer.open({
+                        content: '请输入正确的邮箱账号！',
+                        className: 'layerMobile',
+                        time: 2
+                    })
+                    return false;
+                };
+
+                // step1--全局登录
+                var loginData = { 'email': account, 'password': pw, 'logo': 'SDWAP', 'isH5': true };
+
+                localStorage.setItem('globalAccount', account);
+                localStorage.setItem('globalPw', pw);
+                if ($('.icon-remember').hasClass('icon-checked')) {
+                    localStorage.setItem('globalPwRem', 'true');
+                }
+                else {
+                    localStorage.removeItem('globalPwRem');
+                }
+                $.ajax({
+                    type: 'get',
+                    url: 'http://login.superdata.com.cn/login_post.jsp',
+                    dataType: 'jsonp',
+                    data: loginData,
+                    error: function (xhr, type) {
+                        layer.open({
+                            content: type,
+                            className: '.layerMobile',
+                            time: 2
+                        })
+                    }
+                });
+            })
+            //改变密码栏的可见状态
+            $(document).on('change', '.switchBtn', function (e) {
+                if ($(this).attr('checked') == true)
+                    $('input[name="password"]').attr('type', 'text');
+                else
+                    $('input[name="password"]').attr('type', 'password')
+            })
+
+            //step2--使用step1得到的url进行登录
+            $(document).on('tap', '.btn-confirm', function () {
+                var data = {
+                    type: 'post',
+                    url: url,
+                    data: {
+                        'isH5': true
+                    },
+                }
+                _Public.Get_ajax(data, function (data1) {
+                    if (data1.errNo == -1) {
+                        _Public.layerMsg(data1.errMsg);
+                    }
+                    else {
+                        if (data1.isTY) {
+                            window.location = 'login2.html?type=ty';
+                        } else {
+                            window.location = 'login2.html?type=sd';
+                        }
+
+                    }
+                }, function (xhr, type) {
+                    _Public.layerMsg(xhr.statusText);
+                });
+            });
+
+            //解决底部被input推上去的问题
+            $(window).resize(function () {
+                if ($(window).height() < 300)
+                    $('.l-footer').addClass('pos-rel');
+                else
+                    $('.l-footer').removeClass('pos-rel');
+            })
+        })
+    })
+</script>
+</html>

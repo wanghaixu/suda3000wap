@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页-资料</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_data.css">
+</head>
+<body class="uhide">
+	<header class="ub ub-pc ub-ac" id="header"></header>
+	<form class="ub module-form-t1" action="#" style="margin-top: 50px">
+		<div class="ub ub-ac ub-pc filtration">
+			<div id="filtrateType">货品</div>
+			<div class="filtration-icon"></div>
+		</div>
+		<div class="ub-f1 ub ub-ac ub-pc line-all">
+			<input type="search" class="ub ub-f1" placeholder="名称/代码">
+			<div class="search-icon"></div>
+			<div class="focusShade uhide"></div>
+		</div>
+		<div class="ub ub-ver item-body uhide">
+			<div class="sharp-icon">
+				<div class="first"></div>
+				<div class="last"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 item-1-active line-b">
+				<div class="item-left ub-f1 ut-s tx-14">货品</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b">
+				<div class="item-left ub-f1 ut-s tx-14">客户</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b">
+				<div class="item-left ub-f1 ut-s tx-14">供应商</div>
+				<div class="item-r-icon"></div>
+			</div>
+		</div>
+		<div id="shade" class="uhide"></div>
+	</form>
+	<div class="ub ub-ver navList line-t line-b">
+		<div class="ub ub-ac ub-pc ul hrefBtn line-b" Data-href="product.html">
+			<div class="ub-f1 ub-fv ub ub-ac ub-pc">
+				<div class="goods-icon"></div>
+				<div class="tx-bla-2 tx-16">货品</div>
+			</div>
+			<div class="go-icon"></div>
+		</div>
+		<div class="ub ub-ac ub-pc ul hrefBtn line-b" Data-href="client.html">
+			<div class="ub-f1 ub-fv ub ub-ac ub-pc">
+				<div class="clientele-icon"></div>
+				<div class="tx-bla-2 tx-16">客户</div>
+			</div>
+			<div class="go-icon"></div>
+		</div>
+		<div class="ub ub-ac ub-pc ul hrefBtn" Data-href="provider.html">
+			<div class="ub-f1 ub-fv ub ub-ac ub-pc">
+				<div class="supplier-icon"></div>
+				<div class="tx-bla-2 tx-16">供应商</div>
+			</div>
+			<div class="go-icon"></div>
+		</div>
+	</div>
+	<footer class="module-footer-t5">
+		<div class="ub ub-fv">
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_index/index.html">
+				<div class="nav1"></div>
+				<div>首页</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv footerNavActive" href="javascript:void(0);">
+				<div class="nav2  nav2-active"></div>
+				<div>资料</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../report/index.html">
+				<div class="nav4"></div>
+				<div>报表</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../set/index.html">
+				<div class="nav5"></div>
+				<div>设置</div>
+			</a>
+		</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+seajs.use(['zepto.min','base_data'],function(zepto,Base_data){
+	//组件module-form-t1脚本
+	Base_data.moduleFormT1();
+	//点击货品、客户、供应商，跳转到新页面
+	Base_data.skipToHref('.hrefBtn');
+	//表单提交
+	function onsubmit(){
+		$('input').attr('disabled',true);
+		$('input').blur();
+		setTimeout(function(){
+			$('input').removeAttr('disabled');
+		},50);
+		var data={
+			value:$('input').val()
+		};
+		var filtrateType=$('#filtrateType').text();
+		switch(filtrateType){
+			case '货品':
+				location.href='product.html?searchValue='+data.value;
+				break;
+			case '客户':
+				location.href='client.html?searchValue='+data.value;
+				break;
+			case '供应商':
+				location.href='provider.html?searchValue='+data.value;
+				break;
+			default:
+				alert('页面出错！');
+				break;
+		}
+	}
+	$('input').on('input',function(){
+		if($(this).val()==""){
+			$('.focusShade').addClass('uhide')
+		}else{
+			$('.focusShade').removeClass('uhide');
+		}
+	})
+	//点击虚拟键盘提交
+	$('form').submit(function(){
+		onsubmit();
+		return false;
+	});
+	//点击搜索图标提交
+	$('.search-icon').on('tap',function(){
+		onsubmit();
+	})
+});
+</script>
+</html>

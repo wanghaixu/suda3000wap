@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>过滤</title>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body class="uhide">
+	<header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+		<a class="ub ub-ac" href="javascript:history.back(-1)">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+		<div class="ub-f1 ub ub-ac ub-pc bold">过滤</div>
+	    <div id="finishBtn" class="ub ub-ac ub-pe title-r" tapmode>
+	        <div class="icon post-icon-wh"></div>
+	    </div>
+	</header>
+	<div class="mart-5 padt-44">
+		<div class="ub ub-ver line-t line-b bg-wh">
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac h-44 line-b">
+					<div class="itemName tx-l tx-bla">开始日期</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="beginDate" class="billInput ub-f1 tx-r" type="text" readonly>
+					</div>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac h-44 line-b">
+					<div class="itemName tx-l tx-bla">终止日期</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="endDate" class="billInput ub-f1 tx-r" type="text" readonly>
+					</div>
+				</div>
+			</div>
+			<div id="chooseTraderBtn" class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac h-44 line-b">
+					<div id="traderType" class="itemName tx-l tx-bla" data-id="477">供应商</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="traderName" class="billInput ub-f1 tx-r" type="text" data-id="" data-code="" value="全部" readonly>
+						<div class="rightArrow"></div>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="chooseGoodBtn" class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac h-44 line-b">
+					<div class="itemName tx-l tx-bla">货品</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="goods" class="billInput ub-f1 tx-r" type="text" data-id="-1" data-code="-1" value="全部" readonly>
+						<div class="rightArrow"></div>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+	<!--主体结束-->
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script type="text/javascript" src="../../js/mobiscroll.2.13.2.min.js"></script>
+<script>
+seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
+    var base_index = new Base_index();
+	/**
+ 	 * 接收传递参数
+	 */
+	var type = base_index.checkType(base_index.getPageParams('type')) || '';//单据类型
+	/**
+	 * 初始化页面组件
+	 */
+	//日期选择
+    $('body').removeClass('uhide');
+	_Public.selectDates($('#beginDate'), _Public.getDates().eDate);
+	_Public.selectDates($('#endDate'), _Public.getDates().sDate);
+	//表单标题
+	$('#traderType').text(base_index.getTraderTypeTilte(type));
+	//条件筛选（供应商/客户）fieldid
+	$('#traderName').parent().prev().data('id', base_index.traderNameFieldid[type]);
+
+	//获取缓存参数
+	if(sessionStorage.getItem('session_filterJson')){
+		var session_filterJson = sessionStorage.getItem('session_filterJson') || '';
+		if(session_filterJson !=''){
+			session_filterJson = JSON.parse(session_filterJson);
+			$('#beginDate').val(session_filterJson.beginDate);
+			$('#endDate').val(session_filterJson.endDate); 
+			$('#traderName').val(session_filterJson.traderName);
+			$('#traderName').data('id', session_filterJson.traderId);
+			$('#traderName').parent().prev().data('id', session_filterJson.traderNameFieldid);
+			$('#traderName').parent().prev().text(session_filterJson.traderNameFieldlabel);
+			// $('#goods').data('code', session_filterJson.goodsCode);
+			// $('#goods').val(session_filterJson.goodsName);
+		}
+	}
+
+	/**
+	 * 初始化页面事件
+	 */
+	$('select').on('change', function(){
+        base_index.change_select($(this));
+	});
+	//选择供应商/客户
+	$('#chooseTraderBtn').on('tap', function(event) {
+		event.preventDefault();
+		base_index.setSessionStorage('session_filterJson', filterJsonMode());//获取JSON数据并设置到缓存
+		window.location.href = './trader_choose.html?action=filter&type='+type;
+	});
+	//选择货品
+	// $('#chooseGoodBtn').on('tap', function(event) {
+	// 	event.preventDefault();
+	// 	base_index.setSessionStorage('session_filterJson', filterJsonMode());//获取JSON数据并设置到缓存
+	// 	window.location.href = './pro_choose.html?act=goods&type='+type;
+	// });
+	//确定按钮
+	$('#finishBtn').on('tap', function(){
+		var beginDate = $('#beginDate').val();
+		var endDate = $('#endDate').val();
+		if(_Public.compareDate(beginDate, endDate)){
+			// console.log($('#moneyName').prev('input').val());
+			// console.log($('#moneyName').data('id'));
+			base_index.setSessionStorage('session_filterJson', filterJsonMode());//获取JSON数据并设置到缓存
+			console.log(sessionStorage.getItem('session_filterJson'));
+			window.location.href = base_index.listPageName[type]+'?action=filter&type='+type;
+		}else{
+			_Public.layerMsg('开始日期必须小于终止日期');
+		}
+	});
+	//获取JSON数据模板
+	function filterJsonMode(){
+		return {
+			'beginDate': $('#beginDate').val(),//开始时间
+			'endDate': $('#endDate').val(),//结束时间
+			'traderId': $('#traderName').data('id') || '',//供应商id/客户id
+			'traderName': $('#traderName').val() || '',//供应商名称/客户名称
+			'traderNameFieldid': $('#traderName').parent().prev().data('id'),
+			'traderNameFieldlabel': $('#traderName').parent().prev().text(),//条件筛选（供应商/客户）fieldlabel
+			// 'goodsCode': $('#goods').data('code') || '',//货品id
+			// 'goodsName': $('#goods').val() || ''//货品名称
+		}
+	}
+});
+</script>
+</html>

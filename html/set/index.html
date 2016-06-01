@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/set.css">
+	<style type="text/css">
+	</style>
+</head>
+<body class="uhide tx-Arial">
+	<!--头部开始-->
+	<header class="ub ub-ac ub-pc module-header-t1 header-green ">
+		<div class="logo-5000"></div>
+	</header>
+	<!--头部结束-->
+
+	<section class="list ub ub-ver" id="body">
+			<a class="itemAnchor ub-f1 ub" href="edit_password1.html">
+				<div class="listItem ub ub-ac line-b">
+					<div class="itemName tx-l tx-bla">修改密码</div>
+					<div class="ub ub-pe ub-f1 itemContent">
+						<span class="rightArrow"></span>
+					</div>
+				</div>
+			</a>
+			<a class="itemAnchor ub-f1 ub" href="help.html">
+				<div class="listItem ub ub-ac border-fixed">
+					<div class="itemName tx-l tx-bla">使用帮助</div>
+					<div class="ub ub-pe ub-f1 itemContent">
+						<span class="rightArrow"></span>
+					</div>
+				</div>
+			</a>
+	</section>
+
+	<div class="longButton danger mart-30" id="exit">退出登录</div>
+
+	<footer class="module-footer-t5">
+		<div class="ub ub-fv">
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_index/index.html">
+				<div class="nav1"></div>
+				<div>首页</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_data/index.html">
+				<div class="nav2"></div>
+				<div>资料</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../report/index.html">
+				<div class="nav3"></div>
+				<div>报表</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv footerNavActive" href="javascript:void(0)">
+				<div class="nav5 nav5-active"></div>
+				<div>设置</div>
+			</a>
+		</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+seajs.use(['zepto.min', 'public', 'layer'],function(zepto, _Public){
+	//获取操作员账号 并显示
+	var globalAccount=window.localStorage.getItem('globalAccount');
+	$('#account').text(globalAccount);
+	//页面渲染完才显示
+	$('body').removeClass('uhide');
+	var url_suffix=localStorage.getItem('sdIP');
+	//监听 退出登录 按钮点击事件 点击后ajax传值注销当前帐号
+	$('#exit').on('tap',function(){
+	//	alert('即将注销账号');
+		$.ajax({
+			url:'http://'+url_suffix+'/login/logout!mobilelogout.action',
+			type:'post',
+			dataType:'json',
+			data:{},
+			success:function(data){
+				if(data.errNo==0){
+					_Public.layerMsg('已退出当前操作员帐号');
+					setTimeout(function(){
+						location.href='../login/login2.html';
+					},1000);
+				}else{
+					_Public.closeToLogin(data.errMsg);
+				}
+				
+			},
+			error:function(xhr,type){
+				_Public.layerMsg('退出登录失败');
+			}
+		});
+	});
+})
+</script>
+</html>

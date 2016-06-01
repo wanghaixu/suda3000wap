@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>使用帮助</title>
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/set.css">
+    <style type="text/css">
+    .listItem{
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .itemContent{
+        text-indent: 10px;
+    }
+    </style>
+</head>
+<body>
+    <div class="wrapper tx-Arial" id="wrapper">
+        <header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 border-add">
+            <a class="goback ub ub-ac ub-pc" href="javascript:history.back(-1)">返回</a>
+            <div class="ub-f1 ub ub-ac ub-pc">客服中心</div>
+            <div class="holder ub ub-ac ub-pc"></div>
+        </header>
+        <!--头部结束-->
+
+        <!--主体开始-->
+        <section class="list ub ub-ver mart-49">
+            <a class="itemAnchor tx-14" href="javascript:void(0);" >
+                <div class="listItem ub-f1 ub">
+                    <div class="tx-l">全局账号:</div>
+                    <div id='EMail' class="itemContent tx-bla"></div>
+                </div>
+            </a>
+            <a class="itemAnchor tx-14" href="javascript:void(0);" >
+                <div class="listItem ub-f1 ub">
+                    <div class="tx-l">有效天数:</div>
+                    <div id='ValidDays' class="itemContent tx-bla"></div>
+                </div>
+            </a>
+            <a class="itemAnchor tx-14" href="javascript:void(0);" >
+                <div class="listItem ub-f1 ub">
+                    <div class="tx-l">有效期至:</div>
+                    <div id='ValidDate' class="itemContent tx-bla"></div>
+                </div>
+            </a>
+            <a class="itemAnchor tx-14" href="javascript:void(0);" >
+                <div class="listItem ub-f1 ub">
+                    <div class="tx-l">服务商名称:</div>
+                    <div id='AgentName' class="itemContent tx-bla"></div>
+                </div>
+            </a>
+            <a class="itemAnchor tx-14" href="javascript:void(0);" >
+                <div class="listItem ub-f1 ub">
+                    <div class="tx-l">联系电话:</div>
+                    <div id='AgentTel' class="itemContent tx-bla"></div>
+                </div>
+            </a>
+            
+        </section>
+        <!--主体结束-->
+
+    </div>
+
+</body>
+<script src="../../js/zepto.min.js"></script>
+<script src="../../js/sea.js"></script>
+<script src="../../js/public.js"></script>
+<script>
+    $(document).ready(function(){
+        //客服
+        $('#EMail').text(localStorage.getItem('EMail'));
+        $('#ValidDate').text(localStorage.getItem('ValidDate'));
+        $('#ValidDays').text(localStorage.getItem('ValidDays'));
+        $('#AgentName').text(localStorage.getItem('AgentName'));
+        $('#AgentTel').text(localStorage.getItem('AgentTel')); 
+    });
+</script>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>货品</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_data.css">
+</head>
+<body class="uhide" scroll="no">
+	<!--头部开始-->
+	<header class="ub ub-pc ub-ac module-header-t1 line-b bg-fixed2">
+		<a class="goback ub ub-ac ub-pc" href="index.html">返回</a>
+		<div class="ub-f1 ub ub-ac ub-pc">货品</div>
+		<div class="holder"></div>
+	</header>
+	<!--头部结束-->
+	<form class="ub module-input-t1 line-b" action="#">
+		<div class="ub-f1 ub ub-ac ub-pc line-all">
+			<input type="text" class="ub ub-f1" placeholder="名称/代码">
+			<div class="search-icon"></div>
+			<div class="focusShade _focusShade uhide"></div>
+		</div>
+	</form>
+	<div id="wrapper">
+		<ul class="ub ub-ver navDataList mart-5"></ul>
+	</div>
+	<div class="none-icon uhide">
+		<img src="../../images/none.png">
+		<div class="tx-gray">暂无数据</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+//数据列表
+function dataListArray(){
+	//存储获取的数据
+	this.array=[];
+	//发送的数据
+	this.postData={};
+	//请求方法
+	this.requireData=function(){};
+};
+seajs.use(['zepto.min','base_data','public','layer','iscroll','pullToRefresh'],function(zepto,Base_data,_Public,layer){
+	$('#wrapper').height($(window).height()-$('header').height()-$('form').height()-$('footer').height());
+	//加载层
+	var onload=layer.open({type: 2});
+	//首次加载的数量
+	var viewH=$(window).height()-$('header').height()-$('form').height()-$('footer').height();
+	var nodeNumber=parseInt(viewH/63)+1;
+	//$('#wrapper ul').css('min-height',$(window).height()-$('header').height()-$('form').height()-$('footer').height());
+	/*计算数据条的宽度，动态插入数据后-此段可以删去，已在enhance_data.js中写好-开始*/
+    //$('.messageContent').width($(window).width()+120);
+    //$('.messageContent').find(".um").width($(window).width()-30);
+	/*计算数据条的宽度，动态插入数据后-此段可以删去，已在enhance_data.js中写好-结束*/
+	//拨打电话,发短信,点击查看客户详情
+	Base_data.skipToHref('.contact,.productItem');
+	/*输入框获得焦点时，背景虚化-开始*/
+	$('.focusShade').width($(window).width()).height($(window).height());
+	$('input').focus(function(){
+		$('.focusShade').removeClass('uhide');
+	});
+	$('input').blur(function(){
+		$('.focusShade').addClass('uhide');
+	});
+	//表单提交
+	function onsubmit(){
+		$('input').attr('disabled',true);
+		$('input').blur();
+		setTimeout(function(){
+			$('input').removeAttr('disabled');
+		},50);
+		var data={
+			value:$('input').val()
+		};
+		dataListArray.postData.value=$('input').val()?$('input').val():"";
+		dataListArray.requireData(dataListArray.postData,'search');
+	}
+	$('input').on('input',function(){
+		if($(this).val()==""){
+			dataListArray.postData.value="";
+			dataListArray.requireData(dataListArray.postData,'all');
+			$('.focusShade').addClass('uhide')
+		}else{
+			$('.focusShade').removeClass('uhide');
+		}
+	})
+	//点击虚拟键盘提交
+	$('form').submit(function(){
+		onsubmit();
+		return false;
+	});
+	//点击搜索图标提交
+	$('.search-icon').on('tap',function(){
+		onsubmit();
+	})
+	/*输入框获得焦点时，背景虚化-结束*/
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load
+	});
+	function Refresh(){
+		dataListArray.postData.data.start=0;
+		dataListArray.postData.data.pageSize=dataListArray.array.length;
+		dataListArray.requireData(dataListArray.postData,'refresh');
+		myScroll.refresh();
+	};
+	//检查输入的东西是否为空 ,是空则返回空字符串 非空则返回值
+	function checkValue(val){
+		if(val==undefined||val==null)
+			return '';
+		else
+			return val;
+	}
+	dataListArray.close=false;
+	function Load(){
+		dataListArray.postData.data.start=dataListArray.array.length;
+		dataListArray.postData.data.pageSize=10;
+		dataListArray.requireData(dataListArray.postData,'add');
+		myScroll.refresh();
+	};
+	/*数据交互-开始*/
+	dataListArray.postData={
+		url:"http://"+Base_data.sdip+"/common/goods/goodsList!doGetListData.action",
+		type:'post',
+		data:{
+			condition_txf:'',
+			filterItemRelation:'全部或者',
+			pageSize:'20',
+			start:'0',
+		},
+		value:''
+	};
+	var fieldtype=['ft_Str','ft_ListStr','ft_Str','ft_Str','ft_Level','ft_ListNum'];
+	var fieldid=['13010','13020','13030','13040','13050','13060'];
+	var itemno=['0','1','2','3','4','5'];
+	var fieldlabel=['货品编码','货品名称','货品规格','货品简称','货品类型','货品属性'];
+	var operate=['包含','包含','包含','包含','等于(包含子级)','包含'];
+	$('#pullUp,.pullUpLabel,.loader').css('display','none!important');
+	dataListArray.requireData=function(postData,type){
+		if(type=='search'){
+			for(var i=0;i<6;i++){
+				var num=String(i);
+				postData.data["filterItems["+num+"].displayvalue"]=postData.value;
+				postData.data["filterItems["+num+"].fieldid"]=fieldid[i];
+				postData.data["filterItems["+num+"].fieldlabel"]=fieldlabel[i];
+				postData.data["filterItems["+num+"].fieldtype"]=fieldtype[i];
+				postData.data["filterItems["+num+"].itemno"]=itemno[i];
+				postData.data["filterItems["+num+"].operate"]=operate[i];
+				postData.data["filterItems["+num+"].realvalue"]=postData.value;
+			}
+		}else if(type=='all'){
+			postData.data={
+				condition_txf:'',
+				filterItemRelation:'全部或者',
+				pageSize:'20',
+				start:'0',
+			};
+		}
+		_Public.Get_ajax(postData,function(ret){
+			_Public.showLoading();
+			if(ret.errNo){
+				//提示错误信息弹窗
+				_Public.hideProgress();
+                _Public.closeToLogin(ret.errMsg);
+			}else {
+				var listData=ret.listData;
+				$('.none-icon').addClass('uhide');
+				var node="";
+				for(var i=0;i<listData.length;i++){
+					var pprice=listData[i].pprice?listData[i].pprice:'',
+						code=listData[i].code?listData[i].code:'',
+						name=listData[i].name?listData[i].name:'',
+						goodsid=listData[i].goodsid,
+						specs=listData[i].specs?listData[i].specs:'',
+						sprice=listData[i].sprice?listData[i].sprice:'';
+						onhand=listData[i].onhand?listData[i].onhand:0,
+						moneycode=listData[i].moneycode?listData[i].moneycode:'',
+						unit=checkValue(listData[i].unit),
+					node+='<li class="h-71"><div class="ub ub-ver ub-pc ul line-b productItem" Data-href="pro_detail.html?list_id='+goodsid+'&list_code='+code+'"><div class="ub ub-ac ub-pc"><div class="tx-16 tx-bla-2 marr-10">'+code+'</div><div class="ub-f1 tx-bla ut-s">'+name+specs+'</div></div><div class="ub-f1 ub mart-7"><div class="ub-f1 tx-12 tx-bla-3 ut-s">库存：<span class="">'+onhand+'('+unit+')'+</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">进价：<span class="">'+pprice+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">售价：<span class="">'+sprice+'</span></div></div></div></li>';
+				}
+				if(type=='refresh'||type=='search'||type=='all'){
+					$('#wrapper .navDataList').find('.h-71').remove();
+					dataListArray.array=listData;
+				}else if(type=='add'){
+					dataListArray.array=dataListArray.array.concat(listData);
+				}else{
+					if(listData.length<nodeNumber){
+						dataListArray.close=true;
+					}
+					dataListArray.array=listData;
+				}
+				if(listData.length==0&&type!='add'){
+					$('.none-icon').removeClass('uhide');
+				}else{
+					$('.none-icon').addClass('uhide');
+				}
+				$('#wrapper .navDataList').append(node);
+				$('body').removeClass('uhide');
+				_Public.hideProgress();
+			}	
+		},function(xhr,type){
+			if(xhr){
+				_Public.hideProgress();
+				_Public.layerMsg(xhr.statusText);
+			}
+		});
+	}
+	if(Base_data.getPageParams('searchValue')){
+		$('input').val(Base_data.getPageParams('searchValue'));
+		dataListArray.postData.value=Base_data.getPageParams('searchValue');
+		dataListArray.requireData(dataListArray.postData,'search');
+	}else{
+		dataListArray.requireData(dataListArray.postData,'all');
+	}
+	/*数据交互-结束*/
+})
+</script>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>选择供应商</title>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body>
+	<header class="module-header-t1">
+		<div class="ub ub-pc ub-ac bg-fixed2 line-b">
+			<a class="ub ub-ac" href="javascript:history.back()">
+	            <div class="icon back-icon-wh"></div>
+	            <div class="tx-16 tx-wh">返回</div>
+	        </a>
+			<div id="pageTilte" class="ub-f1 ub ub-ac ub-pc bold">选择供应商</div>
+		    <div id="affirmBtn" class="ub ub-ac ub-pe title-r">
+		        <div class="icon post-icon-wh"></div>
+		   	</div>
+	    </div>
+		<form class="ub ub-ac ub-pc module-input-t1 line-b">
+			<div class="ub-f1 ub ub-ac ub-pc line-all">
+				<input id="filterInput" type="search" maxlength="20" autocomplete="off" class="ub ub-f1 billInput" placeholder="名称/代码">
+				<div id="searchBtn" class="search-icon"></div>
+			</div>
+		</form>
+	</header>
+	<div id="wrapper" class="mart-114 mart-5 marb-5 ub ub-ver line-b line-t">
+			<ul id="dataList" class="bg-wh">
+				<!-- <div class="listItem ub ub-ac h-65 marl-10 marr-10 line-b">
+					<div class="li-tips"></div>
+					<div class="ub ub-ac ub-f1 marl-10">
+						<div class="tx-gra marr-10">1001</div>
+						<div class="ub-f1 tx-bla">DVD风采</div>
+					</div>
+				</div>
+				<div class="listItem ub ub-ac h-65 marl-10 marr-10 line-b">
+					<div class="li-tips"></div>
+					<div class="ub ub-ac ub-f1 marl-10">
+						<div class="tx-gra marr-10">1001</div>
+						<div class="ub-f1 tx-bla">DVD风采</div>
+					</div>
+				</div>
+				<div class="listItem ub ub-ac h-65 marl-10 marr-10 line-b">
+					<div class="li-tips"></div>
+					<div class="ub ub-ac ub-f1 marl-10">
+						<div class="tx-gra marr-10">1001</div>
+						<div class="ub-f1 tx-bla">DVD风采</div>
+					</div>
+				</div> -->
+			</ul>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script>
+seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
+    var base_index = new Base_index();
+	/**
+ 	 * 接收传递参数
+	 */
+	var type = base_index.getPageParams('type') || '';//单据类型
+	var action = base_index.getPageParams('action') || '';//数据类型
+
+	/**
+	 * 初始化页面组件
+	 */
+	$('#wrapper').height($(window).height()-$('header').height()-$('form').height()-$('footer').height()-5);
+	//下拉刷新上拉加载
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load
+	});
+	//页面标题
+	var pageTilte = base_index.getTraderTypeTilte(type) || '';
+	document.title = '选择' + pageTilte;
+	$('#pageTilte').text('选择' + pageTilte);
+
+	/**
+	 * 请求数据
+	 */
+	var ipUrl = 'http://' + _Public.Get_storage('sdIP');
+	var loadUrl= ipUrl + '/lookupdm/lookupdata.action';//请求地址
+
+	var dataStr = base_index.baseData[base_index.getTraderNameKey[type]]() || '';//列表初始化参数
+	if(action == 'filter'){
+		//筛选时
+		dataStr.filter = '1=1';
+	}
+	var dataCommand = base_index.DataCommand(loadUrl, 'post', dataStr);//设置参数
+	//设置显示数量
+	var pageSize = 15;
+	dataCommand.setPageSize(pageSize);
+	//发送请求
+	dataCommand.init(
+		function(ret){
+			if(ret.errNo){
+				//提示错误信息弹窗
+                _Public.closeToLogin(ret.errMsg);
+			}else {
+				succFunc(ret);
+				//设置下一页参数
+				dataCommand.setNextData();
+			}
+		}, function(ret){
+			layer.close();
+			_Public.hideProgress();
+			_Public.layerMsg(ret.msg);
+		}
+	);
+
+	/**
+	 * 获取数据，生成html
+	 */
+	//初始化html模板
+	var htmlCommand = base_index.HtmlCommand(traderItemHtml);
+	//成功处理函数
+	var succFunc = function(ret){
+		if(ret.errNo){
+			//提示错误信息弹窗
+            _Public.closeToLogin(ret.errMsg);
+		}else{
+			//设置页码
+			dataCommand.setPageNum(base_index.countPageNum(ret.count, pageSize));
+			//设置数据
+			var listDataArray = ret.listData;
+			if(listDataArray instanceof Array && listDataArray.length>0){
+				for(var k in listDataArray){
+					var retJson = {
+						'traderId': listDataArray[k].traderid || listDataArray[k].clientid,
+						'code': listDataArray[k].code || '',//编码
+						'name': listDataArray[k].shortname || '',//名称
+						'clientaddress': listDataArray[k].address || '',//地址
+						'clienttaxid': listDataArray[k].taxid || '',
+						'clientbankid': listDataArray[k].bankid || '',
+						'clientphone': listDataArray[k].phone || '',
+						'clientbank': listDataArray[k].bank || '',
+					}
+    				htmlCommand.set(retJson);//将数据设置到HTML模板
+				}
+			    htmlCommand.appendIn($('#dataList'));
+			}else{
+    			//暂无数据
+	    		if(dataCommand.getPageNum()==0){
+	    			htmlCommand.setNoDataImg($('#dataList'));
+	    		}
+	    	}
+		}
+	}
+
+
+	/**
+	 * 初始化页面事件
+	 */
+	//搜索(键盘按钮)
+	$('form').on('submit', function(){
+		searchTraderData();
+		$('#filterInput').blur();
+		//阻止form提交跳转
+		return false;
+	});
+	//搜索(搜索按钮)
+	$('#searchBtn').on('tap', function(event){
+		event.preventDefault();
+		searchTraderData();
+	});
+	//确定
+	$('#affirmBtn').on('tap', function(){
+		if(action == 'filter'){
+			//过滤请求
+			var chooseItem = $('.active');
+			var traderJson = {}
+			if(chooseItem.length==0){
+				traderJson = {
+					'traderId': '',//供应商id/客户id
+					'traderName': '全部',//供应商/客户
+				}
+			}else{
+				traderJson = {
+					'traderId': chooseItem.data('traderid'),//供应商id/客户id
+					'traderName': chooseItem.data('name'),//供应商/客户
+				}
+			}
+			if(sessionStorage.getItem('session_filterJson')){
+				var session_filterJson = JSON.parse(sessionStorage.getItem('session_filterJson'));
+				traderJson = $.extend(session_filterJson, traderJson);
+			}
+			sessionStorage.setItem('session_filterJson', JSON.stringify(traderJson));
+			window.location.href = './filter.html?type='+type;
+		}else{
+			//供应商/客户
+			var chooseItem = $('.active');
+			var prevBillId = sessionStorage.getItem('session_billId') || '';
+			if(chooseItem.length==0){
+				if(prevBillId!='' && action==''){
+					//供应商/客户
+					window.location.href = base_index.detailPageName[type] + '?action='+sessionStorage.getItem('session_billAction')+'&type='+type+'&billId='+sessionStorage.getItem('session_billId');
+				}else{
+					sessionStorage.setItem('session_billAction', 'add');
+					window.location.href = base_index.detailPageName[type] + '?action='+sessionStorage.getItem('session_billAction')+'&type='+type;
+				}
+			}else{
+				var traderId = chooseItem.data('traderid');//供应商id/客户id
+				var traderName = chooseItem.data('name');//供应商/客户
+				var traderCode = chooseItem.data('code');//供应商code/客户code
+				var clientaddress = chooseItem.data('clientaddress');
+				var clienttaxid = chooseItem.data('clienttaxid');
+				var clientbankid = chooseItem.data('clientbankid');
+				var clientphone = chooseItem.data('clientphone');
+				var clientbank = chooseItem.data('clientbank');
+
+				loadUrl= ipUrl + '/gettraderinfo.action';//请求地址
+				dataStr = {
+					'traderId': traderId
+				}
+				dataCommand = base_index.DataCommand(loadUrl, 'post', dataStr);//设置参数
+				//发送请求
+				dataCommand.init(
+					function(ret){
+						if(ret.errNo){
+							//提示错误信息弹窗
+							_Public.closeToLogin(ret.errMsg);
+						}else {
+							var traderJson = {
+								'clientid': traderId,//供应商id/客户id结算id
+								'clientshortname': traderName,//供应商/客户/结算单位
+								'tradercode': traderCode,//供应商code/客户code/结算单位code
+								'phone': ret.data.phone || '',//电话
+								'fax': ret.data.fax || '',//传真
+								'linkmanid': ret.data.linkmanid || '',//联系人id
+								'linkmanname': ret.data.linkmanname || '',//联系人
+								// 'exemanid': ret.data.employid || '',//业务员id
+								// 'exemanname': ret.data.employname || '',//业务员
+								// 'departmentid': ret.data.departmentid || '',//部门id
+								// 'deptname': ret.data.departmentname || '',//部门
+								'billto': ret.data.shipto || '',//送货地址/交货地址
+								'balance': ret.data.balance || '',//应付余额
+								'vipid': ret.data.vipid || '',//会员id
+								'shortname': ret.data.shortname || '',//简称
+								'clientaddress': clientaddress,
+								'clienttaxid': clienttaxid,
+								'clientbankid': clientbankid,
+								'clientphone': clientphone,
+								'clientbank': clientbank,
+							}
+		                    // 部门
+		                    var departmentid = ret.data.departmentid;
+		                    if(departmentid!='' && departmentid!=null){
+		                        traderJson.departmentid = departmentid;//部门id
+		                        traderJson.deptname = ret.data.departmentname;//部门
+		                    }
+		                    //业务员
+		                    var employid = ret.data.employid;//业务员id
+		                    if(employid!='' && employid!=null){
+		                        traderJson.exemanid = employid;//业务员id
+		                        traderJson.exemanname = ret.data.employname;//业务员
+		                    }
+							sessionStorage.setItem('session_traderJson', JSON.stringify(traderJson));
+		                    if (sessionStorage.getItem('session_temp_billDataJson')) {
+		                        var session_temp_billDataJson = JSON.parse(sessionStorage.getItem('session_temp_billDataJson'));
+		                        $.extend(session_temp_billDataJson.master, traderJson);
+		                        sessionStorage.setItem('session_temp_billDataJson', JSON.stringify(session_temp_billDataJson));
+		                    }
+							if(prevBillId!='' && action==''){
+								//供应商/客户
+								window.location.href = base_index.detailPageName[type] + '?action='+sessionStorage.getItem('session_billAction')+'&type='+type+'&billId='+sessionStorage.getItem('session_billId');
+							}else{
+								sessionStorage.setItem('session_billAction', 'add');
+								window.location.href = base_index.detailPageName[type] + '?action='+sessionStorage.getItem('session_billAction')+'&type='+type;
+							}
+						}
+					}, function(ret){
+						layer.close();
+						_Public.hideProgress();
+						_Public.layerMsg(ret.msg);
+					}
+				);
+			}
+		}
+	});
+	//元素选择事件
+	$(document).on('tap','.listItem',function(){
+		if($(this).hasClass('active')){
+			$(this).removeClass('active');
+		}else{
+			$('.listItem').removeClass('active');
+			$(this).addClass('active');
+		}
+	});
+
+
+	//下拉刷新
+	function Refresh(){
+		dataCommand.refreshPage(
+			function(ret){
+				if(ret.errNo){
+					//提示错误信息弹窗
+					_Public.hideProgress();
+                	_Public.closeToLogin(ret.errMsg);
+				}else {
+					htmlCommand.clearConFrom($('#dataList'));
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+					_Public.hideProgress();
+				}
+			}, function(ret){
+				layer.close();
+				_Public.hideProgress();
+				_Public.layerMsg(ret.msg);
+			}
+		);
+		myScroll.refresh();
+	};
+	//上拉加载
+	function Load(){
+		dataCommand.nextPage(
+			function(ret){
+				if(ret.errNo){
+					//提示错误信息弹窗
+					_Public.hideProgress();
+                	_Public.closeToLogin(ret.errMsg);
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+					//页码+1
+					dataCommand.addNowPageNum();
+					_Public.hideProgress();
+				}
+			}, function(ret){
+				layer.close();
+				_Public.hideProgress();
+				_Public.layerMsg(ret.msg);
+		});
+		myScroll.refresh();
+	};
+	//搜索
+	function searchTraderData(){
+		//获取搜索内容
+		var filterValue = $('#filterInput').val();
+		if(filterValue!=''){
+			var dataStr = base_index.baseData[base_index.getTraderNameKey[type]](filterValue) || '';
+			//发送请求
+			dataCommand.sendSearchBaseData(dataStr,
+				function(ret){
+					if(ret.errNo){
+						//提示错误信息弹窗
+					_Public.hideProgress();
+                	_Public.closeToLogin(ret.errMsg);
+					}else {
+						//清空页面HTML
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+						_Public.hideProgress();
+					}
+				}, function(ret){
+					layer.close();
+					_Public.hideProgress();
+					_Public.layerMsg(ret.msg);
+				}
+			);
+		}else{
+			dataCommand.setData();
+			dataCommand.setPageSize(pageSize);
+			dataCommand.init(
+				function(ret){
+					if(ret.errNo){
+						//提示错误信息弹窗
+						_Public.hideProgress();
+	                	_Public.closeToLogin(ret.errMsg);
+					}else {
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+						_Public.hideProgress();
+					}
+				}, function(ret){
+					layer.close();
+					_Public.hideProgress();
+					_Public.layerMsg(ret.msg);
+				}
+			);
+		}
+	}
+	//HTML模板
+	function traderItemHtml(json){
+		if(base_index.isEmptyJson(json.departmentid)){
+			json.departmentid = '';
+		}
+		if(base_index.isEmptyJson(json.taxrate)){
+			json.taxrate = '';
+		}
+		if(base_index.isEmptyJson(json.empid)){
+			json.empid = '';
+		}
+		if(base_index.isEmptyJson(json.shiptype)){
+			json.shiptype = '';
+		}
+		if(base_index.isEmptyJson(json.paymethodid)){
+			json.paymethodid = '';
+		}
+		if(base_index.isEmptyJson(json.notetype)){
+			json.notetype = '';
+		}
+		return '<li><div class="listItem ub ub-ac h-65 line-b" data-traderid="'+json.traderId+'" data-code="'+json.code+'" data-name="'+json.name+'" data-contactor="'+json.contactor+'" data-moneyid="'+json.moneyid+'" data-moneyname="'+json.moneyname+'" data-tel1="'+json.tel1+'" data-fax="'+json.fax+'" data-departmentid="'+json.departmentid+'" data-departmentname="'+json.departmentname+'" data-empid="'+json.empid+'" data-empname="'+json.empname+'" data-taxrate="'+json.taxrate+'" data-iscashtrader="'+json.iscashtrader+'" data-paymethodid="'+json.paymethodid+'" data-paymethodname="'+json.paymethodname+'" data-shipto="'+json.shipto+'" data-shiptype="'+json.shiptype+'" data-shiptypename="'+json.shiptypename+'" data-scamt="'+json.scamt+'" data-creditday="'+json.creditday+'" data-notetype="'+json.notetype+'" data-notetypename="'+json.notetypename+'" data-distributorid="'+json.distributorid+'" tapmode="active-f8"><div class="li-tips"></div><div class="ub ub-ac ub-f1 marl-10"><div class="tx-gra marr-10">'+json.code+'</div><div class="ub-f1 tx-bla">'+json.name+'</div></div></div></li>';
+	}
+});
+</script>
+</html>

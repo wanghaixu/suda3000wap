@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>供应商详情</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_data.css">
+</head>
+<body class="uhide" scroll="no">
+<div class="wrapper" id="wrapper">
+	<!--头部开始-->
+	<header class="ub ub-pc ub-ac module-header-t1 line-b bg-fixed2">
+		<a class="goback ub ub-ac ub-pc" onclick="history.back(-1)">返回</a>
+		<div class="ub-f1 ub ub-ac ub-pc">供应商详情</div>
+		<div class="holder"></div>
+	</header>
+	<!--头部结束-->
+	<!--主体开始-->
+	<section class="list ub ub-ver mart-5 line-t">
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">编号</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="code"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">名称</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="fullname"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">地区</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="areaname"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">往来单位类型</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="iscashtrader"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">核算客户</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="acctrader"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">供应商等级</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="levname"></div>
+		</div>
+		<div class="listItem ub-f1 ub ub-ac ub-pc phone line-b">
+			<div class="itemName tx-l tx-bla">联系手机</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="phone"></div>
+			<div class="go"></div>
+		</div>
+		<div class="listItem ub-f1 ub ub-ac ub-pc phone line-b">
+			<div class="itemName tx-l tx-bla">常用电话</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="tel1"></div>
+			<div class="go"></div>
+		</div>
+		<!-- <div class="listItem ub-f1 ub ub-ac ub-pc phone line-b">
+			<div class="itemName tx-l tx-bla">备用电话</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="tel2"></div>
+			<div class="go"></div>
+		</div> -->
+	</section>
+</div>
+<div class="shade uhide"></div>
+<div class="popupWin ub ub-ver ub-pe uhide">
+	<a class="ub-f1 ub ub-ac ub-pc line-b phoneNumber" href="">打电话</a>
+	<a class="ub-f1 ub ub-ac ub-pc messageNumber" href="">发短信</a>
+	<a class="ub-f1 ub ub-ac ub-pc cancel">取消</a>
+</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+seajs.use(['zepto.min','base_data','public','iscroll','pullToRefresh','layer'],function(zepto,Base_data,_Public){
+	//如果没有登陆，则跳回登陆页
+	if(_Public.Get_storage('sdIP')){
+		Base_data.sdip=_Public.Get_storage('sdIP');
+	}else{
+		location.href=Base_data.loginPage;
+		return;
+	}
+	/*拨打电话，发短信-开始*/
+	$('.phone').on('tap',function(){
+		var phoneNumber=$.trim($(this).find('.ub-f1').text());
+		if(phoneNumber!=""){
+			$('.popupWin .phoneNumber').attr('href',"tel:"+phoneNumber);
+			$('.popupWin .messageNumber').attr('href',"sms:"+phoneNumber);
+			setTimeout(function(){
+				$('.popupWin,.shade').toggleClass('uhide');
+			},301);
+		}
+	});
+	$('.shade,.cancel').on('tap',function(){
+		$('.popupWin,.shade').toggleClass('uhide');
+	})
+	/*拨打电话，发短信-结束*/
+	//数据id
+	var id=Base_data.getPageParams('list_id');
+	if(id){
+		/*有数据列表点击跳转到此页面，数据交互-开始*/
+		var postData={
+			url:"http://"+Base_data.sdip+"/common/vendor/vendorEdit!doGetEditData.action",
+			method:'post',
+			data:{id:id}
+		};
+		_Public.Get_ajax(postData,function(ret){
+			//如果有错误，则跳回登陆页
+			if(ret.errNo){
+				//提示错误信息弹窗
+				_Public.hideProgress();
+                _Public.closeToLogin(ret.errMsg);
+			}else{
+				if(ret.master.isdouble=="F"){
+					ret.master.isdouble="否"
+				}else if(ret.master.isdouble=="T"){
+					ret.master.isdouble="是"
+				}
+				$('#code').text(ret.master.code);
+				$('#fullname').text(ret.master.shortname);
+				$('#areaname').text(ret.master.areaname);
+				$('#iscashtrader').text(ret.master.tradetypename);
+				$('#acctrader').text(ret.master.isdouble);
+				$('#levname').text(ret.master.lev?ret.master.lev:'暂无分级');
+				$('#phone').text(ret.master.mobilephone);
+				$('#tel1').text(ret.master.phone);
+				// $('#tel2').text(ret.master.tel2);
+				$('body').removeClass('uhide');
+				_Public.hideProgress();
+			}
+			
+		},function(xhr,type){
+			if(xhr){
+				_Public.hideProgress();
+				_Public.layerMsg(xhr.statusText);
+			}
+		});
+		/*有数据列表点击跳转到此页面，数据交互-结束*/
+	}
+})
+</script>
+</html>

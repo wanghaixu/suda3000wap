@@ -1,0 +1,485 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title>销售发货</title>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body class="uhide">
+	<header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+		<a id="backBtn" class="ub ub-ac">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+		<div class="ub-f1 ub ub-ac ub-pc tx-18">销售发货</div>
+		 <div class="ub ub-ac ub-pe title-r">
+			<a id="listBtn" class="icon list-icon-wh"></a>
+			<div id="submitBtn" class="icon post-icon-wh marl-10"></div>
+		</div>
+	</header>
+	<div class="mart-5 padt-44">
+		<section class="ub ub-ver marb-5 bg-wh line-t line-b">
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">日期</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="billDate" data-kname="billdate" class="billInput ub-f1 tx-r ut-s" type="text" readonly>
+					</div>
+				</div>
+			</div>
+			<div class="padlr-15">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla ">单号</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="billCode" data-kname="code" class="billInput ub-f1 tx-r ut-s" type="text">
+					</div>
+				</div>
+			</div>
+			<div id="chooseTraderBtn" class="padlr-15 bg-f8-active" data-on="1">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div id="traderTitle" class="item-tilte itemName tx-l tx-bla">客户</div>
+					<div class="ub ub-ac ub-f1 tx-r tx-gray">
+						<input id="traderName" data-kid="clientid" data-kame="clientshortname" class="billInput ub-f1 tx-r" type="text" readonly>
+						<div class="rightArrow"></div>
+					</div>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">仓库</div>
+					<label for="storeName" class="ub ub-ac ub-f1 tx-r tx-gray sel-label">
+						<div class="ub-f1"></div>
+						<select id="storeName" data-kid="storeid" data-kname="storename" class="hide sel-opt"></select>
+						<div class="rightArrow"></div>
+					</label>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">发票类型</div>
+					<label for="notetypeName" class="ub ub-ac ub-f1 tx-r tx-gray sel-label">
+						<div class="ub-f1"></div>
+						<select id="notetypeName" data-kid="billtypeid" data-kname="billtypename" class="hide sel-opt"></select>
+						<div class="rightArrow"></div>
+					</label>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">项目</div>
+					<label for="projectName" data-kid="projectid" data-kname="projectname" class="ub ub-ac ub-f1 tx-r tx-gray sel-label">
+						<div class="ub-f1"></div>
+						<select id="projectName" class="hide sel-opt"></select>
+						<div class="rightArrow"></div>
+					</label>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">部门</div>
+					<label for="depName" class="ub ub-ac ub-f1 tx-r tx-gray sel-label">
+						<div class="ub-f1"></div>
+						<select id="depName" data-kid="departmentid" data-kname="deptname" class="hide sel-opt"></select>
+						<div class="rightArrow"></div>
+					</label>
+				</div>
+			</div>
+			<div class="padlr-15 bg-f8-active">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">业务员</div>
+					<label for="empName" class="ub ub-ac ub-f1 tx-r tx-gray sel-label">
+						<div class="ub-f1"></div>
+						<select id="empName" data-kid="exemanid" data-kname="exemanname" class="hide sel-opt"></select>
+						<div class="rightArrow"></div>
+					</label>
+				</div>
+			</div>
+		</section>
+		<section class="ub ub-ver marb-5 bg-wh line-t">
+			<div id="chooseGoodsBtn" class="padlr-15 bg-f8-active" data-on="1">
+				<div class="ub ub-ac ub-f1 h-44 line-b">
+					<div class="item-tilte itemName tx-l tx-bla">选择货品</div>
+					<div class="ub ub-ac ub-pe ub-f1 tx-r tx-gray">
+						<div class="rightArrow"></div>
+					</div>
+				</div>
+			</div>
+			<div id="listDetail"></div>
+			<div class="listItem ub-f1 ub">
+				<div class="itemName tx-l tx-bla">合计</div>
+				<div class="ub-f1 tx-r tx-bla bold">
+					<span id="moneyCode">￥</span><span id="amount">0</span>
+				</div>
+			</div>
+		</section>
+		<div id="delBtn" class="longButton danger ub-f1 hide">删&nbsp;除</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script>
+var type = 'sale_del';//Url地址键名
+seajs.use(['zepto.min', 'public', 'base_index', 'layer', 'mobiscroll.2.13.2.min'],function(zepto, _Public, base_index){
+	/**
+	 * 接收传递参数
+	 */
+	var action = base_index.getPageParams('action') || '';//操作模式
+	var billId = base_index.getPageParams('billId') || '';//单据id
+
+	//修改地址
+	var prevDetailPageName = sessionStorage.getItem('session_prevDetailPageName') || '';
+	if(prevDetailPageName != base_index.detailPageName[type]){
+		console.log('detailPageName：'+base_index.detailPageName[type]);
+		sessionStorage.removeItem('session_billDataJson');
+		sessionStorage.removeItem('session_temp_billDataJson');//临时编辑数据缓存
+		sessionStorage.removeItem('session_traderJson');//（联动数据）供应商/客户/结算单位
+		sessionStorage.setItem('session_prevDetailPageName', base_index.detailPageName[type]);
+	}
+	//修改参数
+	var prevBillAction = sessionStorage.getItem('session_prevBillAction') || '';
+	if(prevBillAction != action){
+		console.log('action：'+action);
+		sessionStorage.removeItem('session_billDataJson');
+		sessionStorage.removeItem('session_temp_billDataJson');//临时编辑数据缓存
+		sessionStorage.removeItem('session_traderJson');//（联动数据）供应商/客户/结算单位
+		sessionStorage.setItem('session_prevBillAction', action);
+	}
+	//修改单据id
+	if(action=='edit' && billId!='' && billId!=sessionStorage.getItem('session_billId')){
+		console.log('修改单据id');
+		sessionStorage.removeItem('session_temp_billDataJson');//临时编辑数据缓存
+		sessionStorage.removeItem('session_traderJson');//（联动数据）供应商/客户/结算单位
+	}
+
+	/**
+	 * 请求参数
+	 */
+	var ipUrl='http://'+_Public.Get_storage('sdIP');//接口IP
+	var editUrl = ipUrl + base_index.billEditUrl[type];//编辑接口地址
+	var addUrl = ipUrl + base_index.billAddUrl[type];//添加接口地址
+	var delUrl = ipUrl + base_index.billDelUrl[type];//删除接口地址
+	var saveUrl= ipUrl + base_index.billSaveUrl[type];//保存接口地址
+
+	/**
+	 * 初始化下拉选择
+	 */
+	base_index.getBaseData($('#storeName'), 'store', 'store');//仓库
+	base_index.getBaseData($('#notetypeName'), 'noteType', 'noteType');//发票类型
+	base_index.getBaseData($('#projectName'), 'project', 'project');//项目
+	base_index.getBaseData($('#depName'), 'department', 'base');//部门
+	base_index.getBaseData($('#empName'), 'employ', 'employ');//业务员
+
+	/**
+     * 数据处理
+     */
+	if(action=='edit'){
+		/*
+		* 编辑模式
+		*/
+		if(billId!='' && billId!=sessionStorage.getItem('session_billId') || !sessionStorage.getItem('session_temp_billDataJson') && billId!=''){
+			sessionStorage.setItem('session_billId', billId);
+			console.log('edit-new');
+			//输入参数
+			var dataStr = {
+				'billId': billId
+			}
+			//设置参数
+			var dataCommand = base_index.DataCommand(editUrl, 'get', dataStr);
+			//发送请求，返回数据
+			dataCommand.init(
+				function(ret){
+					if(ret.errNo){
+						//提示错误信息弹窗
+						console.log(ret.errMsg);
+                        _Public.closeToLogin(ret.errMsg);
+					}else {
+						sessionStorage.removeItem('session_billDataJson');
+						sessionStorage.removeItem('session_wasChange');
+						/**
+						 * 货品需要参数
+						 */
+						var rdetail1 = ret.detail1;
+						for(var k = 0; k< rdetail1.length; k++){
+							ret.detail1[k].log_oldGoods = 'true';
+							ret.detail1[k].log_attr = 'old';
+							ret.detail1[k].log_id = k;
+						}
+						sessionStorage.setItem('session_billDataJson', JSON.stringify(ret));
+						succFuncEdit(ret);
+					}
+				}, function(ret){
+					console.log(ret.errMsg);
+					_Public.hideProgress();
+					_Public.layerMsg(ret.msg);
+				}
+			);
+		}else if(sessionStorage.getItem('session_temp_billDataJson')){
+			console.log('edit-old');
+			var rets = sessionStorage.getItem('session_temp_billDataJson') || '';
+			console.log(rets);
+			rets = JSON.parse(rets);
+			succFuncEdit(rets);
+		}else if(sessionStorage.getItem('session_billDataJson') && billId==''){
+			console.log(0);
+		}else{
+			console.log(1);
+		}
+	}else if(action=='add'){
+		/*
+		 * 新增模式
+		 */
+		if(sessionStorage.getItem('session_temp_billDataJson') && sessionStorage.getItem('session_wasChange')){
+			console.log('add-old');
+			var rets = sessionStorage.getItem('session_temp_billDataJson') || '';
+			console.log(rets);
+			rets = JSON.parse(rets);
+			succFuncEdit(rets);
+		}else{
+			console.log('add-new');
+			//设置参数
+			var dataCommand = base_index.DataCommand(addUrl, 'get');
+			//发送请求，返回数据
+			dataCommand.init(
+				function(ret){
+					if(ret.errNo){
+						//提示错误信息弹窗
+                        _Public.closeToLogin(ret.errMsg);
+					}else{
+						sessionStorage.removeItem('session_billDataJson');
+						sessionStorage.removeItem('session_wasChange');
+						sessionStorage.setItem('session_billDataJson', JSON.stringify(ret));
+						/**
+						 * 货品需要参数
+						 */
+						vipID = ret.master.vipid;//主表中会员的值
+						succFuncAdd(ret);
+					}
+				}, function(ret){
+					_Public.hideProgress();
+					_Public.layerMsg(ret.msg);
+				}
+			);
+		}
+		$('#delBtn').addClass('hide');//隐藏按钮
+	}
+	
+	/**
+	 * 初始化页面事件
+	 */
+	//后退
+	$('#backBtn').on('tap', function(){
+		if(action=='edit'){
+			console.log(action);
+			window.location.href = base_index.listPageName[type];
+		}else if(action=='add'){
+			console.log(action);
+			window.location.href = './index.html';
+		}else{
+			history.back();
+		}
+	});
+	//进入列表按钮
+	$('#listBtn').on('tap', function(){
+		var billAction = action;
+		if(action == 'check'){
+			billAction = 'edit';
+		}
+		sessionStorage.setItem('session_billAction', 'add');
+		window.location.href = base_index.listPageName[type]+'?action='+action;
+	});
+	//点击进入选择商品页面
+	$('#chooseGoodsBtn').on('tap', function(event){
+		event.preventDefault();
+		/**
+		 * 货品选择需要参数
+		 */
+		if($(this).data('on')=='1'){
+			var goodParamJson = {
+			 	'traderID': $('#traderName').data('id') || 0,//客户或/供应商id
+			 	'noteType': base_index.getSelectedAttr($('#notetypeName'), 'data-id') || $('#notetypeName').data('id') || 1,//发票类型
+				'storeID': base_index.getSelectedAttr($('#storeName'), 'data-id') || $('#storeName').data('id')//仓库id
+			 }
+			base_index.tempSessionStorage();//临时缓存
+			sessionStorage.setItem('session_goodParamJson', JSON.stringify(goodParamJson));
+			window.location.href = './pro_choose.html?type='+type;
+		}
+	});
+	//点击进入商品详情页面
+	$(document).on('tap', '.goodsItem', function(event){
+		event.preventDefault();
+		/**
+		 * 货品选择需要参数
+		 */
+        var goodParamJson = {
+		 	'traderID': $('#traderName').data('id') || 0,//客户或/供应商id
+		 	'noteType': base_index.getSelectedAttr($('#notetypeName'), 'data-id') || $('#notetypeName').data('id') || 1,
+			'storeID': base_index.getSelectedAttr($('#storeName'), 'data-id') || $('#storeName').data('id')//仓库id
+		}
+		base_index.tempSessionStorage();//临时缓存
+		sessionStorage.setItem('session_goodParamJson', JSON.stringify(goodParamJson));
+        var goodsDataJson = $(this).attr('data-json');
+		sessionStorage.setItem('goodsData', goodsDataJson);
+		window.location.href = './pro_edit.html?type='+type+'&act=edit';
+	});
+	//选择供应商/客户
+	$('#chooseTraderBtn').on('tap', function(event) {
+		event.preventDefault();
+		//如果不是审核状态可选
+		sessionStorage.setItem('session_billAction', action);
+		base_index.tempSessionStorage();//临时缓存
+		window.location.href = './trader_choose.html?type='+type;
+	});
+
+	/**
+	 * 联动事件
+	 */
+	//供应商/客户
+	var traderJson = JSON.parse(sessionStorage.getItem('session_traderJson')) || '';
+	console.log(sessionStorage.getItem('session_traderJson'));
+	if(traderJson!=''){
+		//设置供应商/客户联动数据
+		base_index.change_trader(traderJson);
+		//删除所有的商品HTML
+		$('#listDetail').empty();
+		//总价归零
+		$('#amount').text(0);
+		//获取并设置会员信息（卡号、积分）
+		if(type=='cash_sale'){
+			var vipid = $('#traderName').data('vipid');
+			base_index.getMemberData(vipid);
+		}
+	}
+	//发票类型
+	$('#notetypeName').on('change', function(){
+		base_index.change_notetype(type);
+	});
+
+	$('#storeName').change(function () {
+	    base_index.clearBatchCode();
+	})
+
+	//成功处理函数
+	function succFuncAdd(ret){
+		//初始化html模板
+		console.log(JSON.stringify(ret));
+		if(ret.master && ret.detail1){
+			/**
+			 * 设置页面参数
+			 */
+			_Public.selectDates($('#billDate'), ret.master.billdate);
+			base_index.setValue($('#billCode'), ret.master.code);//单号
+            _Public.hideProgress();
+		}
+	}
+	function succFuncEdit(ret){
+		//初始化html模板
+		var htmlCommand = base_index.HtmlCommand(goodsListHtml);
+		/*主单据*/
+		var rmaster = ret.master || '';
+		var rdetail1 = ret.detail1 || '';
+		if(rmaster!=''){
+			//判断订单状态
+			if(rmaster.billstate == 1){
+				/**
+				 * 审核状态
+				 */
+				action = 'check';//货品状态
+				base_index.readPattern();//阅读模式
+				base_index.offDatePicker($('#billDate'));//日期选择器不可用
+				base_index.offSelectPageBtn($('#chooseSettleUnitBtn'));//结算单位不可用
+				base_index.offSelectPageBtn($('#chooseGoodsBtn'));//选择货品不可选
+			}else{
+				/**
+				 * 未审核状态
+				 */
+				
+				//显示删除按钮
+				$('#delBtn').removeClass('hide');
+				$('#delBtn').on('tap', function(event){
+					event.preventDefault();
+					_Public.confirmLayer('确定删除该单据', function(){
+						layer.close();
+						_Public.showLoading();
+						var delDataStr = {
+							'billId': billId,
+							'checkStep': 0,
+							'id': billId
+						}
+						var delDataCommand = base_index.DataCommand(delUrl, 'get', dataStr);
+						//发送请求，返回数据
+						delDataCommand.init(
+							function(ret){
+								if(ret.errNo){
+									//提示错误信息弹窗
+	                       			_Public.closeToLogin(ret.errMsg);
+								}else {
+									_Public.hideProgress();
+									_Public.layerMsg('删除成功!');
+								}
+							}, function(ret){
+								_Public.hideProgress();
+								_Public.layerMsg(ret.msg);
+							}
+						);
+					}, function(){
+						layer.close();
+						_Public.hideProgress();
+					});
+				});
+			}
+			/**
+			 * 设置页面参数
+			 */
+			_Public.selectDates($('#billDate'), ret.master.billdate);//日期
+			base_index.setValue($('#billCode'), rmaster.code || '');//单号
+			base_index.setValue($('#traderName'), rmaster.clientshortname);//供应商/客户
+			$('#traderName').attr('data-id', rmaster.clientid || '');//供应商id/客户id
+			base_index.setMobiscrollValue($('#storeName'), rmaster.storename);//仓库
+			$('#storeName').attr('data-id', rmaster.storeid || '');//仓库id
+			base_index.setMobiscrollValue($('#notetypeName'), rmaster.billtypename);//发票类型
+			$('#notetypeName').attr('data-id', rmaster.billtypeid || '');//发票类型id
+			base_index.setMobiscrollValue($('#projectName'), rmaster.projectname);//项目
+			$('#projectName').attr('data-id', rmaster.projectid || '');//项目id
+			base_index.setMobiscrollValue($('#depName'), rmaster.deptname);//部门
+			$('#depName').attr('data-id', rmaster.departmentid || '');//部门id
+			base_index.setMobiscrollValue($('#empName'), rmaster.exemanname);//业务员/员工
+			$('#empName').attr('data-id', rmaster.exemanid || '');//业务员id/员工id
+
+			//判断价格正负数
+			var amount = (rmaster.amount || '').toString();
+			if(amount.indexOf('-')>-1){
+				$('#amount').parent().addClass('tx-red');
+				$('#amount').parent().removeClass('tx-bla');
+			}
+			base_index.setText($('#amount'), rmaster.totalamt);//合计(价格)
+
+			/**
+			 * 单据明细
+			 */
+			var rdetail1 = ret.detail1;
+			for(var k = 0; k< rdetail1.length; k++){
+				rdetail1[k].moneycode = rmaster.moneycode;
+	    		htmlCommand.set(rdetail1[k]);//将数据填充到HTML模板
+			}
+			htmlCommand.appendIn($('#listDetail'));
+		}
+	}
+
+	// HTML模板
+	function goodsListHtml(json){
+        var thisItem = $('<div></div>');
+        var jsonStr = JSON.stringify(json);
+        if(json.log_attr!='del'){
+        thisItem.append($('<div class="goodsItem ub ub-ac line-b bg-f8-active oldGoods" data-attr="'+json.log_attr+'" data-id="'+json.log_id+'" data-oldGoods="'+json.log_oldGoods+'"><div class="itemName tx-bla ub ub-f1 ub-ver "><div class="marb-5 ub ub-f1 ub-pc"><div class="ub-f1">'+json.goodsname+'</div><div class="ub-f1 tx-gra tx-r"><span class="ub-f1 tx-gra tx-r">'+json.unitqty+''+json.unit+'</span></div></div><div class="tx-gray tx-12 ub ub-f1"><div class="ub-f1"><span>单价：￥</span><span class="goodsPrice">'+json.unitprice+'</span></div><div class="ub-f1 tx-c"><span>税率：</span><span class="goodsTaxrate">'+json.taxrate+'</span><span>%</span></div><div class="ub-f1 tx-r"><span>金额：</span><span class="goodsTaxprece">'+json.amount+'</span></div></div></div></div>').attr('data-json', jsonStr));
+    	}
+        return thisItem.html();
+	}
+});
+</script>
+</html>

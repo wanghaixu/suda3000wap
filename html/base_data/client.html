@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>客户</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no" />
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_data.css">
+</head>
+<body class="uhide">
+	<!--头部开始-->
+	<header class="ub ub-pc ub-ac module-header-t1 line-b" style="background-color: #004527">
+		<a class="goback ub ub-ac ub-pc" href="index.html">返回</a>
+		<div class="ub-f1 ub ub-ac ub-pc">客户</div>
+		<div class="holder"></div>
+	</header>
+	<!--头部结束-->
+	<form class="ub module-input-t1 line-b" action="#" onsubmit="return false">
+		<div class="ub-f1 ub ub-ac ub-pc line-all">
+			<input type="text" maxlength="20" autocomplete="off" name="keyword" class="ub ub-f1" placeholder="名称/代码">
+			<div class="search-icon"></div>
+			<div class="focusShade _focusShade uhide"></div>
+		</div>
+	</form>
+	<div id="wrapper">
+		<ul class="list ub ub-ver bg-wh line-b line-t">
+			<!-- 数据项-开始
+			<li>
+				<div class="listBody">
+				    <ul class="messageContent um">
+				        <li class="um">
+				        	<div class="ub ub-ver line-b h-63" Data-href="client_detail.html?list_ID=1">
+				        		<div class="ub ub-pj mart-10">
+				        			<div class="ub-f1 ut-s tx-14 tx-bla marr-30"><span class="marr-10 tx-bla-2">K001</span><span class="tx-bla">北京天龙集团</span></div>
+				        		</div>
+				        		<div class="ub ub-ac  mart-10">
+				        			<div class="mw-80 tx-12 tx-bla-3 marr-15 ut-s">一级客户</div>
+									<div class="mw-100 tx-12 tx-bla-3 marr-15 ut-s">13800138000</div>
+									<div class="ub-f1 tx-12 tx-bla-3 marr-15 ut-s">¥15000.00</div>
+				        		</div>
+				        	</div>
+				        	<div class="btn-more"></div>
+				        </li>
+					    	        <li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="tel:''">
+					            		<div class="phone-icon"></div>
+					            		<div class="tx-14 tx-wh">电话</div>
+					    	        </li>
+					    	        <li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="sms:110">
+					            		<div class="message-icon"></div>
+					            		<div class="tx-wh tx-14">短信</div>
+					    	        </li>
+				    </ul>
+				</div>
+			</li>
+			数据项-结束
+			数据项-开始
+			<li>
+				<div class="listBody">
+				    <ul class="messageContent um">
+				        <li class="um">
+				        	<div class="ub ub-ver line-b h-63" Data-href="client_detail.html?list_ID=1">
+				        		<div class="ub ub-pj mart-10">
+				        			<div class="ub-f1 ut-s tx-14 tx-bla marr-30"><span class="marr-10 tx-bla-2">K001</span><span class="tx-bla">北京天龙集团</span></div>
+				        		</div>
+				        		<div class="ub ub-ac  mart-10">
+				        			<div class="mw-80 tx-12 tx-bla-3 marr-15 ut-s">一级客户</div>
+									<div class="mw-100 tx-12 tx-bla-3 marr-15 ut-s">13800138000</div>
+									<div class="ub-f1 tx-12 tx-bla-3 marr-15 ut-s">¥15000.00</div>
+				        		</div>
+				        	</div>
+				        	<div class="btn-more"></div>
+				        </li>
+					    	        <li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="tel:10010">
+					            		<div class="phone-icon"></div>
+					            		<div class="tx-14 tx-wh">电话</div>
+					    	        </li>
+					    	        <li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="sms:110">
+					            		<div class="message-icon"></div>
+					            		<div class="tx-wh tx-14">短信</div>
+					    	        </li>
+				    </ul>
+				</div>
+			</li>
+			数据项-结束 -->
+		</ul>
+	</div>
+	<div class="none-icon uhide">
+		<img src="../../images/none.png">
+		<div class="tx-gray">暂无数据</div>
+	</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+//记录已打开的按钮对象
+var former;
+//数据列表
+function dataListArray(){
+	//存储获取的数据
+	this.array=[];
+	//发送的数据
+	this.postData={};
+	//请求方法
+	this.requireData=function(){};
+};
+seajs.use(['zepto.min','public','base_data','layer','iscroll','pullToRefresh'],function(zepto,_Public,Base_data,layer){
+	$('#wrapper').height($(window).height()-$('header').height()-$('form').height()-$('footer').height());
+	//加载层
+	var onload=layer.open({type: 2});
+	//首次加载的数量
+	var viewH=$(window).height()-$('header').height()-$('form').height()-$('footer').height();
+	var nodeNumber=parseInt(viewH/63)+1;
+	/*计算数据条的宽度，动态插入数据后-此段可以删去，已在enhance_data.js中写好-开始*/
+    //$('.messageContent').width($(window).width()+120);
+    //$('.messageContent').find(".um").width($(window).width()-30);
+	/*计算数据条的宽度，动态插入数据后-此段可以删去，已在enhance_data.js中写好-结束*/
+	//点击弹出more按钮
+	Base_data.moreBtn();
+	//拨打电话,发短信,点击查看客户详情
+	Base_data.skipToHref('.contact,.h-63');
+	/*输入框获得焦点时，背景虚化-开始*/
+	$('.focusShade').width($(window).width()).height($(window).height());
+	$('input').focus(function(){
+		$('.focusShade').removeClass('uhide');
+	});
+	$('input').blur(function(){
+		$('.focusShade').addClass('uhide');
+	});
+	//表单提交
+	function onsubmit(){
+		$('input').attr('disabled',true);
+		$('input').blur();
+		setTimeout(function(){
+			$('input').removeAttr('disabled');
+		},50);
+		var data={
+			value:$('input').val()
+		};
+		dataListArray.postData.value=$('input').val()?$('input').val():"";
+		dataListArray.requireData(dataListArray.postData,'search');
+	}
+	$('input').on('input',function(){
+		if($(this).val()==""){
+			dataListArray.postData.value="";
+			dataListArray.requireData(dataListArray.postData,'all');
+			$('.focusShade').addClass('uhide')
+		}else{
+			$('.focusShade').removeClass('uhide');
+		}
+	})
+	//点击虚拟键盘提交
+	$('form').submit(function(){
+		onsubmit();
+		return false;
+	});
+	//点击搜索图标提交
+	$('.search-icon').on('tap',function(){
+		onsubmit();
+	})
+	/*输入框获得焦点时，背景虚化-结束*/
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load
+	});
+	//刷新
+	function Refresh(){
+		dataListArray.postData.data.start=0;
+		dataListArray.postData.data.pageSize=dataListArray.array.length;
+		dataListArray.requireData(dataListArray.postData,'refresh');
+		myScroll.refresh();
+	};
+	dataListArray.close=false;
+	//上拉加载
+	function Load(){
+		dataListArray.postData.data.start=dataListArray.array.length;
+		dataListArray.postData.data.pageSize=20;
+		dataListArray.requireData(dataListArray.postData,'add');
+		myScroll.refresh();
+	};
+	/*数据交互-开始*/
+	dataListArray.postData={
+		url:"http://"+Base_data.sdip+"/common/client/clientList!doGetListData.action",
+		method:'post',
+		type:'post',
+		data:{
+			condition_txf:'',
+			filterItemRelation:'全部或者',
+			pageSize:'20',
+			start:'0',
+		},
+		value:""
+	};
+	var fieldType=['ft_Str','ft_ListStr','ft_Level','ft_ListNum','ft_Level','ft_ListStr','ft_ListStr','ft_ListStr'];
+	var fieldid=['2000','2010','2020','2040','2050','2100','1822090','2170'];
+	var itemno=['0','1','2','3','4','5','6','7'];
+	var fieldlabel=['客户编码','客户名称','地区','客户等级','往来类型','业务员','分支机构','联系人'];
+	var operate=['包含','包含','等于(包含子级)','包含','包含','包含','包含','包含'];
+	$('#pullUp,.pullUpLabel,.loader').css('display','none!important');
+	dataListArray.requireData=function(postData,type){
+		if(type=='search'){
+			for(var i=0;i<8;i++){
+				var num=String(i);
+				dataListArray.postData.data["filterItems["+num+"].displayvalue"]=postData.value;
+				dataListArray.postData.data["filterItems["+num+"].fieldid"]=fieldid[i];
+				dataListArray.postData.data["filterItems["+num+"].fieldlabel"]=fieldlabel[i];
+				dataListArray.postData.data["filterItems["+num+"].fieldtype"]=fieldType[i];
+				dataListArray.postData.data["filterItems["+num+"].itemno"]=itemno[i];
+				dataListArray.postData.data["filterItems["+num+"].operate"]=operate[i];
+				dataListArray.postData.data["filterItems["+num+"].realvalue"]=postData.value;
+			}
+		}else if(type=='all'){
+			postData.data={
+				condition_txf:'',
+				filterItemRelation:'全部或者',
+				pageSize:'20',
+				start:'0',
+			}
+		}
+		
+		_Public.Get_ajax(postData,function(ret,xhr){
+			_Public.showLoading();
+			if(ret.errNo){
+				//提示错误信息弹窗
+				_Public.hideProgress();
+                _Public.closeToLogin(ret.errMsg);
+			}else{
+				var listData=ret.clientclassList?ret.clientclassList:[];
+				var node="";
+				for(var i=0;i<listData.length;i++){
+					var phone=listData[i].mobilephone?listData[i].mobilephone:'',
+						// moneycode=listData[i].moneycode?listData[i].moneycode:"",
+						code=listData[i].code?listData[i].code:'',
+						//areaname=listData[i].areaname?listData[i].areaname:'',
+						name=listData[i].shortname?listData[i].shortname:"",
+						clientid=listData[i].clientid?listData[i].clientid:'',
+						levname,
+						scamt=listData[i].scamt?listData[i].scamt:'';
+						shouldrecieve=listData[i].shouldrecieve?listData[i].shouldrecieve:'';
+						if(listData[i].lev){
+							levname=String(listData[i].lev)+"级客户";
+						}else{
+							levname="暂无分级";
+						}
+					node+='<li><div class="listBody"><ul class="messageContent um"><li class="um"><div class="ub ub-ver line-b h-63" Data-href="client_detail.html?list_id='+clientid+'&list_code='+code+'"><div class="ub ub-pj mart-10"><div class="ub-f1 ut-s tx-14 tx-bla marr-30"><span class="marr-10 tx-bla-2">'+code+'</span><span class="tx-bla">'+name+'</span></div></div><div class="ub ub-ac  mart-10"><div class="w-80 tx-12 tx-bla-3 marr-15 ut-s">'+levname+'</div><div class="mw-100 tx-12 tx-bla-3 marr-15 ut-s">'+phone+'</div><div class="ub-f1 tx-12 tx-bla-3 marr-15 ut-s tx-r padr-40">'+shouldrecieve+'</div></div></div><div class="btn-more"></div></li><li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="tel:'+phone+'"><div class="phone-icon"></div><div class="tx-14 tx-wh">电话</div></li><li class="line-b ub ub-ver ub-ac ub-pc contact" data-href="sms:'+phone+'"><div class="message-icon"></div><div class="tx-wh tx-14">短信</div></li></ul></div></li>';
+				}
+				if(type=='refresh'||type=='search'||type=='all'){
+					$('#wrapper .list').find('.listBody').remove();
+					dataListArray.array=listData;
+					
+				}else if(type=='add'){
+					dataListArray.array=dataListArray.array.concat(listData);
+				}else{
+					if(listData.length<nodeNumber){
+						dataListArray.close=true;
+					}
+					dataListArray.array=listData;
+				}
+				$('#wrapper .list').append(node);
+				if(listData.length==0&&type!='add'){
+					$('.none-icon').removeClass('uhide');
+				}else{
+					$('.none-icon').addClass('uhide');
+				}
+				_Public.hideProgress();
+				$('body').removeClass('uhide');
+			}	
+		},function(xhr,type){
+			if(xhr){
+				_Public.hideProgress();
+				_Public.layerMsg(xhr.statusText);
+			}
+		});
+	}
+	if(Base_data.getPageParams('searchValue')){
+		$('input').val(Base_data.getPageParams('searchValue'));
+		dataListArray.postData.value=Base_data.getPageParams('searchValue');
+		dataListArray.requireData(dataListArray.postData,'search');
+	}else{
+		dataListArray.requireData(dataListArray.postData,'all');
+	}
+	/*数据交互-结束*/
+})
+</script>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>过滤</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css">
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/report.css">
+</head>
+<body>
+	<div class="wrapper tx-Arial" id="wrapper">
+		<!--头部开始-->
+		<header class="ub ub-pc ub-ac module-header-t1 bg-fixed">
+			<a class="goback ub ub-ac ub-pc" href="javascript:history.back(-1)">返回</a>
+			<div class="ub-f1 ub ub-ac ub-pc">过滤</div>
+			<div class="holder ub ub-ac ub-pe">
+				<a class="sureBtn" id="sureBtn"></a>
+			</div>
+		</header>
+		<!--头部结束-->
+		<!--头部结束-->
+
+		<!--主体开始-->
+		<section class="list ub ub-ver">
+			<div class="listItem ub-f1 ub">
+				<div class="itemName tx-bla">开始日期</div>
+				<div class="ub ub-ac ub-f1 tx-r tx-gray">
+					<input class="ub-f1 tx-r" type="text" value="" readonly="readonly" id="startDate" placeholder="选择开始日期">
+				</div>
+			</div>
+			<div class="listItem ub-f1 ub">
+				<div class="itemName tx-bla">终止日期</div>
+				<div class="ub ub-ac ub-f1 tx-r tx-gray">
+					<input class="ub-f1 tx-r" type="text" value="" readonly="readonly" id="endDate" placeholder="选择结束日期">
+				</div>
+			</div>
+			<div class="listItem ub-f1 ub" id="cli-div">
+				<div class="itemName tx-bla">客户</div>
+				<div class="ub ub-ac ub-pe ub-f1 tx-r tx-gray">
+					<select class="cus-select" id="client" data-id="154030" data-label="客户名称" data-operate="等于">
+						<option value="null">全部</option>
+					</select>
+				</div>
+			</div>
+			<div class="listItem ub-f1 ub" id="sup-div">
+				<div class="itemName tx-bla">供应商</div>
+				<div class="ub ub-ac ub-pe ub-f1 tx-r tx-gray">
+					<select class="cus-select" id="supplier" data-id="157030" data-label="供应商名称" data-operate="等于">
+						<option value="null">全部</option>
+					</select>
+				</div>
+			</div>
+			<div class="listItem ub-f1 ub">
+				<div class="itemName tx-bla">往来类型</div>
+				<div class="ub ub-ac ub-pe ub-f1 tx-r tx-gray">
+					<select class="cus-select" id="contact" data-id="154015" data-label="往来类型" data-operate="等于(包含子级)">
+						<option value="null">全部</option>
+					</select>
+				</div>
+			</div>
+		</section>
+		<!--主体结束-->
+
+	</div>
+
+</body>
+<script src="../../js/sea.js"></script>
+<script src="../../js/jquery-1.9.0.min.js"></script>
+<script src="../../js/mobiscroll.2.13.2.min.js"></script>
+<script>
+seajs.use(['public','layer','report'],function(_Public,layer,_report){
+	$(document).ready(function(){
+		layer.open({
+			type: 2,
+			shadeClose: false
+		});
+		//设置默认时间
+		_report.setTimes($('#startDate'),$('#endDate'));
+		var type = localStorage.getItem('type');
+		if (type == ('post_credit')){
+			$('#cli-div').addClass('uhide');
+			$('#sup-div').removeClass('uhide');
+			_report.selectData($('#supplier'), 'vendor_ds', 2, 'credit');
+		} else {
+			$('#cli-div').removeClass('uhide');
+			$('#sup-div').addClass('uhide');
+			_report.selectData($('#client'), 'client_ds', 2, 'credit');
+		}
+		//获取往来类型数据
+		_report.selectContact($('#contact'),'157015','credit');
+		//点击完成按钮
+		$('#sureBtn').on('click',function(){
+			var startTime = $('#startDate').val();
+			var endTime = $('#endDate').val();
+			var dataArg = _Public.getDates();
+			var sureTime = _Public.compareDate(startTime,endTime);
+			if (sureTime == false) {
+				_Public.layerMsg('开始时间不能大于结束时间');
+				return;
+			}
+			var select = _report.values(['supplier','client','contact']);
+			if(window.localStorage){
+				var filter = {
+					sDate: startTime,
+					eDate: endTime,
+					select: select
+				};
+				localStorage['filter']=JSON.stringify(filter);
+			}
+			window.location.href = localStorage.getItem('href');
+		});
+	});
+});
+</script>
+</html>

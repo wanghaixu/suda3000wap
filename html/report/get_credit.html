@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>应收帐款汇总</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/report.css">
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<div class="wrapper tx-Arial" id="wrapper">
+		<!--头部开始-->
+		<header class="ub ub-pc ub-ac module-header-t1 bg-fixed">
+			<a class="goback ub ub-ac ub-pc" href="index.html">返回</a>
+			<div class="ub-f1 ub ub-ac ub-pc">应收帐款汇总</div>
+			<div class="holder">
+				<a class="filterBtn"></a>
+			</div>
+		</header>
+		<!--头部结束-->
+		<!--主体开始-->
+		<!--filterArea 为旋转搜索条件的区域 filtCondition 为筛选条件因素-->
+		<section class="list ub ub-ver">
+			<div class="filterArea tx-c tx-14">
+			</div>
+			<div class="reportData" id="listBox">
+			</div>
+		</section>
+		<!--主体结束-->
+
+		<!--底部合计 开始-->
+		<footer class="reportSummary">
+			<div class="ub ub-ver tx-14 tx-bla marr-15 marl-15 padt-10 padb-10">
+				<div class="ub">
+					<div class="ub-f1 ut-s">
+						<span>合计</span>
+					</div>
+				</div>
+				<div class="ub ub-50">
+					<div class="ub-f1">
+						期初：<span id="startCount"></span>
+					</div>
+					<div class="ub-f1 tx-r">
+						期末:<span id="endCount"></span>
+					</div>
+				</div>
+				<div class="ub ub-50">
+					<div class="ub-f1">
+						增加：<span id="addCount"></span>
+					</div>
+					<div class="ub-f1 tx-r">
+						承收:<span id="postCount"></span>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!--底部合计 结束-->
+	</div>
+
+</body>
+<script src="../../js/sea.js"></script>
+<script src="../../js/zepto.min.js"></script>
+<script>
+seajs.use(['report','layer'],function(_report,layer){
+	$(document).ready(function(){
+		layer.open({
+			type: 2,
+			shadeClose: false
+		});
+		var url = '/report/sum_receaccountrpt!doGetReportData.action';
+		var html = function(arg) {
+			if (arg.data.errNo != 0) {
+				if (arg.data.errMsg != null){
+					layer.closeAll();
+					_Public.closeToLogin(arg.data.errMsg);
+				}
+			} else {
+				$('.reportItem').remove();
+				var ret = arg.data.resultData.ReportData;
+				var str = '';
+				if ((typeof(ret) == 'undefined') || (ret.length == 1)) {
+					str = '<div class="none-icon reportItem">'+
+							'<img src="../../images/none.png">'+
+							'<div class="tx-gray">'+arg.tip+'</div>'+
+						'</div>';
+					$('#startCount').text('');
+					$('#endCount').text('');
+					$('#addCount').text('');
+					$('#postCount').text('');
+					setTimeout(function(){layer.closeAll();}, 1000);
+				} else {
+					//拼接数据
+					var len = ret.length - 1;
+					for (var i = 0; i < len; i++) {
+						str += '<div class="reportItem">'+
+					     	'<div class="ub ub-ver tx-14 marr-15 marl-15 padt-10 padb-10 borb-gray">'+
+								'<div class="ub marb-5">'+
+									'<div class="ub-f1 ut-s">'+
+										'<span class="marr-5">'+ret[i].code+'</span>'+
+										'<span>'+ret[i].name+'</span>'+
+									'</div>'+
+								'</div>'+
+								'<div class="ub tx-gray marb-5 ub-50">'+
+									'<div class="ub-f1">期初：<span>'+ret[i].startamt+'</span>'+
+									'</div>'+
+									'<div class="ub-f1 tx-r">期末:<span>'+ret[i].endamt+'</span>'+
+									'</div>'+
+								'</div>'+
+								'<div class="ub tx-gray ub-50">'+
+									'<div class="ub-f1">增加：<span>'+ret[i].inamt+'</span>'+
+									'</div>'+
+									'<div class="ub-f1 tx-r">承收:<span>'+ret[i].outamt+'</span>'+
+									'</div>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+					};
+					$('#startCount').text(ret[len].startamt);
+					$('#endCount').text(ret[len].endamt);
+					$('#addCount').text(ret[len].inamt);
+					$('#postCount').text(ret[len].outamt);
+					setTimeout(function(){layer.closeAll();}, 1000);
+				}
+				$('#listBox').append(str);
+			}
+		}
+		//加载数据
+		_report.addData(154,html,'collect', url);
+		//获取已筛选条件
+		_report.setfilterName();
+		//点击筛选按钮
+		$('.filterBtn').on('click', function(){
+			localStorage['type'] = 'get_credit';
+			localStorage['href'] = 'get_credit.html';
+			window.location.href = 'credit_filter.html';
+		});
+	});
+});
+</script>
+</html>

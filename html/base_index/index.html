@@ -1,0 +1,276 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+	<style>
+	html,body{
+		background-color:#9A9A9A;
+		overflow-x:hidden;
+	}
+	</style>
+</head>
+<body>
+	<header class="module-header-t1">
+		<div class="ub ub-ae header-green tx-r">
+			<div class=" logo-left"></div>
+			<div class="ub ub-f1 ub-pe">
+				<div class="ub header-right ">
+				进销存管理
+					<div class="ub version">（APP.02）</div>
+				</div>
+			</div>
+		</div>
+		<form class="ub uf-f1 classic-module-form-t1 line-b" action="#" onsubmit="return false">
+			<div id="filtBtn" class="ub ub-ac ub-pc filtration" tapmode>
+				<div id="filtrateType" class="classic-filtrate-type" data-winName="pur_order">采购订单</div>
+				<div class="bg-e7 bor1-b2 filtration-icon"></div>
+			</div>
+			<div class="ub-f1 ub ub-ac ub-pc marr-15">
+				<input id="filterInput" type="search" name="keyword" class="ub ub-f1 ub-ac classic-billInput tx-16" placeholder="名称/单号">
+				<div id="searchBtn" class="search-icon"></div>
+			</div>
+		</form>
+		<div class="ub ub-ver select-body bg-wh uhide">
+			<div class="ub ub-ac ub-pc item-1 item-1-active line-b" data-type="purchase_order">
+				<div class="item-left ub-f1 ut-s">采购订单</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="purchase_gain">
+				<div class="item-left ub-f1 ut-s">采购收货</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="cash_purchase">
+				<div class="item-left ub-f1 ut-s">现款采购</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="purchase_return">
+				<div class="item-left ub-f1 ut-s">采购退货</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="sale_order">
+				<div class="item-left ub-f1 ut-s">销售订单</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="sale_deliver">
+				<div class="item-left ub-f1 ut-s">销售发货</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="cash_sale">
+				<div class="item-left ub-f1 ut-s">现款销售</div>
+				<div class="item-r-icon"></div>
+			</div>
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="sale_return">
+				<div class="item-left ub-f1 ut-s">销售退货</div>
+				<div class="item-r-icon"></div>
+			</div>
+		</div>
+		<div id="shade" class="uhide"></div>
+	</header>
+	<div class="mask uhide"></div>
+	<div class="mart-100 marb-55">
+		<div class="focusShade uhide"></div>
+		<div class="ub ub-ver item-body item-body-erp">
+			<div class="ub ub-ac ub-pc item-1">
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="order_edit_frame.html?action=add&type=pur_order">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b21"></div>
+						<div class="description">					
+							<div class="item-text">采购订单</div>
+							<div class="item-text-e">Purchase Order</div>
+						</div>
+					</div>
+				</a>
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="pur_sale_edit_frame.html?action=add&type=pur_gain">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b22"></div>
+						<div class="description">
+							<div class="item-text">采购收货</div>
+							<div class="item-text-e">Purchase Gain</div>
+						</div>
+						
+					</div>
+				</a>
+			</div>
+			<div class="ub ub-ac ub-pc item-1">
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="cash_edit_frame.html?action=add&type=cash_pur">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b23"></div>	
+						<div class="description">
+							<div class="item-text">现款采购</div>
+							<div class="item-text-e">Cash Purchase</div>	
+						</div>						
+					</div>
+				</a>
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="return_edit_frame.html?action=add&type=pur_return">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b24"></div>
+						<div class="description">					
+							<div class="item-text">采购退货</div>
+							<div class="item-text-e">Pruchase Return</div>
+						</div>	
+					</div>
+				</a>
+			</div>
+			<div class="ub ub-ac ub-pc item-1">
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="order_edit_frame.html?action=add&type=sale_order">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b25"></div>
+						<div class="description">
+							<div class="item-text">销售订单</div>
+							<div class="item-text-e">Sale Order</div>
+						</div>
+					</div>
+				</a>
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="pur_sale_edit_frame.html?action=add&type=sale_del">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b26"></div>
+						<div class="description ub-ver" >
+							<div class="item-text">销售发货</div>
+							<div class="item-text-e">Sale Deliver</div>
+						</div>						
+					</div>
+				</a>
+			</div>
+			<div class="ub ub-ac ub-pc item-1">
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="cash_edit_frame.html?action=add&type=cash_sale">
+					<div class="ub ub-ac ub-pc ">
+						<div class="icon-big icon-b27"></div>
+						<div class="description">
+							<div class="item-text">现款销售</div>
+							<div class="item-text-e">Cash Sale</div>
+						</div>							
+					</div>
+				</a>
+				<a class="ub-f1 ub ub-pc ub-ac item-con" href="return_edit_frame.html?action=add&type=sale_return">
+					<div class="ub ub-ac ub-pc">
+						<div class="icon-big icon-b28"></div>
+						<div class="description">					
+							<div class="item-text">销售退货</div>
+							<div class="item-text-e">Sale Return</div>
+						</div>	
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="item-body padlr-5 service">
+			<div class="h ub ub-ac">
+				<div class="tx-md">服务与应用</div>
+				<div class="tx-sm">Service and Application</div>
+			</div>
+			<div class="banner-list">
+				<a class="cus ban cus  ub ub-ac" href='./kefu.html'>
+					<div class="dc"></div>
+					<div class="cus-1">客服中心</div>
+					<div class="desc">产品升级 应用资讯 全局应用 移动应用</div>
+				</a>
+				<a class="ban pla mart-5 ub ub-ac" href='./share.html'>
+					<div class="dingdang"></div>
+					<div>
+						<div class="desc">销售工作、财务工作、仓库工作、采购工作</div>
+						<div class="desc">生产工作、市场工作、行政工作、研发工作</div>
+					</div>
+					
+				</a>
+			</div>
+		</div>
+	</div>
+	<footer class="module-footer-t5">
+		<div class="ub ub-fv">
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv footer-nav-active" href="javascript:void(0)">
+				<div class="nav1 nav1-active"></div>
+				<div>首页</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_data/index.html">
+				<div class="nav2"></div>
+				<div>资料</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../report/index.html">
+				<div class="nav4"></div>
+				<div>报表</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../set/index.html">
+				<div class="nav5"></div>
+				<div>设置</div>
+			</a>
+		</div>
+	</footer>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+	//页面渲染完才显示
+seajs.use(['zepto.min'], function(zepto){
+	sessionStorage.removeItem('session_traderJson');
+	sessionStorage.removeItem('session_billDataJson');
+	sessionStorage.removeItem('session_temp_billDataJson');
+	sessionStorage.removeItem('session_wasChange');
+	sessionStorage.removeItem('session_billAction');
+	sessionStorage.removeItem('session_prevDetailPageName');
+	sessionStorage.removeItem('session_prevBillAction');
+	sessionStorage.removeItem('session_goodParamJson');
+	sessionStorage.removeItem('session_billId');
+	sessionStorage.removeItem('session_filterJson');
+	sessionStorage.removeItem('goodsData');
+	sessionStorage.removeItem('session_prevTraderId');
+	$(document).on('tap','.filtration',function(){
+		toggle();
+	});
+
+	$('.select-body .item-1').on('touchend', function(e){
+		e.preventDefault();
+		var e=$(e.currentTarget);
+		//改变active选项
+		$('.select-body').find('.item-1').removeClass('item-1-active');
+		e.addClass('item-1-active');
+		//改变筛选栏内容
+		$('#filtrateType').text(e.find('.item-left').text());
+		toggle();
+	});
+
+	//搜索(键盘按钮)
+	$('form').on('submit', function(){
+		event.preventDefault();
+		searchBillData();
+	});
+	//搜索(搜索按钮)
+	$('#searchBtn').on('tap', function(event){
+		event.preventDefault();
+		searchBillData();
+	});
+
+	//输入框事件
+	$('#filterInput').focus(function(){
+		$('.focusShade').removeClass('uhide');//输入框焦点蒙版
+		$('.mask').addClass('uhide');//下拉选择列表背景蒙版
+		$('.select-body').addClass('uhide');//下拉选择列表
+		$('.filtration-icon').removeClass('filtration-icon-active');//筛选图标
+		$('body').addClass('forbid-scroll');
+	}).blur(function(){
+		$('.focusShade').addClass('uhide');
+		$('.mask').addClass('uhide');
+		$('.select-body').addClass('uhide');
+		$('.filtration-icon').removeClass('filtration-icon-active');
+		$('body').removeClass('forbid-scroll');
+	});
+
+	function searchBillData(){
+		var type = $('.item-1-active').data('type');
+		var filterValue = $.trim($('#filterInput').val());
+		window.location.href = type+'.html?keyword='+filterValue;
+	}
+
+	//隐藏显示东西
+	function toggle(){
+		$('.filtration-icon').toggleClass('filtration-icon-active');
+		$('.select-body').toggleClass('uhide');
+		$('.mask').toggleClass('uhide');
+		$('body').toggleClass('forbid-scroll');
+	}
+})
+</script>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body class="uhide forbid-scroll">
+	<header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+		<a id="backBtn" class="ub ub-ac">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+		<div id="pageTitle" class="ub-f1 ub ub-ac ub-pc bold">销售订单列表</div>
+		<a class="ub ub-ac ub-pe title-r" href="filter.html?type=sale_order">
+			<div class="icon filt-icon-wh"></div>
+		</a>
+	</header>
+	<div class="padt-44">
+		<form class="ub ub-ac ub-pc module-input-t1 line-b">
+			<div class="ub-f1 ub ub-ac ub-pc line-all">
+				<input id="filterInput" type="search" maxlength="20" autocomplete="off" name="keyword" class="ub ub-f1 billInput" placeholder="">
+				<div id="searchBtn" class="search-icon"></div>
+				<div class="focusShade uhide"></div>
+			</div>
+		</form>
+		<div id="wrapper" class="ub ub-ver ub-f1 padt-5">
+			<ul id="dataList">
+				<!-- <li>
+					<a class="ub ub-ver ub-f1 padlr-15 bg-wh marb-5 line-t line-b bg-f8-active">
+						<div class="ub  ub-ac ub-pj h-44 line-b">
+							<div class="tx-16 tx-bla">CS201512022</div>
+							<div class="tx-14 tx-gra">中止</div>
+						</div>
+						<div class="ub ub-ver h-65">
+							<div class="ub ub-ac h-40">广州洪宇网络科技有限公司</div>
+							<div class="ub ub-pj">
+								<div class="tx-12 tx-gray">2015-12-06</div>
+								<div class="tx-14 tx-red">
+									<span>￥</span>
+									<span>25000.00</span>
+								</div>
+							</div>
+						</div>
+					</a>
+				</li> -->
+			</ul>
+		</div>
+	</div>
+</body>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script>
+seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
+    var base_index = new Base_index();
+    base_index.useMask();
+	/**
+	 * 接收传递参数
+	 */
+	var type = base_index.checkType(base_index.getPageParams('type') || '');//请求模式
+	var action = base_index.checkAction(base_index.getPageParams('action') || '');//单据类型
+	var keyword = base_index.getPageParams('keyword') || '';//搜索关键字
+
+	/**
+	 * 初始化页面组件
+	 */
+	//页面标题
+	var pageTitle = base_index.listPageTitle[type];
+	$('#pageTitle').text(pageTitle);
+	document.title = pageTitle;
+	//输入框提示
+	$('#filterInput').attr('placeholder', '单号/'+base_index.getTraderTypeTilte(type));
+	//设置弹动区域高度
+	$('#wrapper').height($(window).height()-$('header').height()-$('form').height()-5);
+	//下拉刷新上拉加载
+	refresher.init({
+		id:"wrapper",
+		pullDownAction:Refresh,
+		pullUpAction:Load
+	});
+
+	/**
+	 * 初始化请求参数 
+	 */
+	var ipUrl=_Public.Get_storage('sdIP');//接口IP
+	var loadUrl='http://'+ipUrl+base_index.listUrl[type];//请求地址
+	var dataStr = base_index.initData;//列表初始化参数
+	var dateilPageName = base_index.detailEditPageName[type];//详情页面名称
+
+	//设置参数
+	var dataCommand = base_index.DataCommand(loadUrl, 'post', dataStr);
+	//设置显示数量
+	var pageSize = 10;
+	dataCommand.setPageSize(pageSize);
+
+	//发送请求，返回数据
+	if(keyword!=''){
+		//搜索请求
+		$('#filterInput').val(keyword);
+		searchSaleOrderData();
+	}else if(action == 'filter' && sessionStorage.getItem('session_filterJson')){
+		// 获取参数
+		var session_filterJson = sessionStorage.getItem('session_filterJson');
+		var filterJson = JSON.parse(session_filterJson);
+		console.log(session_filterJson);
+		//发送请求
+		dataCommand.filterData(filterJson,
+			function(ret){
+				if(ret.errNo){
+					_Public.hideProgress();
+                    _Public.closeToLogin(ret.errMsg);
+				}else if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+	}else{
+		//普通请求
+		dataCommand.init(
+			function(ret){
+				console.log(JSON.stringify(ret));
+				if(ret.errNo){
+					_Public.hideProgress();
+                    _Public.closeToLogin(ret.errMsg);
+				}else if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+	}
+
+	/**
+	 * 获取数据，生成html
+	 */
+	//初始化html模板
+	var htmlCommand = base_index.HtmlCommand(orderItemHtml);
+	//成功处理函数
+	var succFunc = function(ret){
+		if(ret){
+			//设置页码
+			dataCommand.setPageNum(base_index.countPageNum(ret.count, pageSize));
+
+			var listDataArray = ret.listData;
+			if(listDataArray instanceof Array && listDataArray.length>0){
+				for(var k=0; k<listDataArray.length; k++){
+					/*状态*/
+					var closed = listDataArray[k].closed;
+					var finished = listDataArray[k].finished;
+					var orderState = '';
+					if(closed=='T'){
+						orderState = '中止';
+					}
+					if(finished=='T'){
+						orderState = '完成';
+					}
+    				var retJson = {
+    					'itemHref': dateilPageName + (listDataArray[k].orderid || listDataArray[k].sorderid || ''),//单据详情链接
+						'billCode': listDataArray[k].code || '',//编号
+						'orderState': orderState || '',//状态
+						'traderName': listDataArray[k].clientshortname || '',//供应商名称,
+						'billDate': listDataArray[k].billdate || '',//日期
+						'amount': listDataArray[k].amount || 0//价格
+	    			}
+    				htmlCommand.set(retJson);//将数据设置到HTML模板
+				}
+		    	htmlCommand.appendIn($('#dataList'));
+	    	}else{
+    			//暂无数据
+	    		if(dataCommand.getPageNum()==0){
+	    			htmlCommand.setNoDataImg($('#dataList'));
+	    		}
+	    	}
+		}
+	}
+
+
+	/**
+	 * 初始化页面事件 
+	 */
+	//后退
+	$('#backBtn').on('tap', function(){
+		var billAction = sessionStorage.getItem('session_billAction');
+		window.location.href = base_index.detailPageName[type]+'?action=add&type='+type;
+	});
+	//搜索(键盘按钮)
+	$('form').on('submit', function(){
+		searchSaleOrderData();
+		$('#filterInput').blur();
+		//阻止form提交跳转
+		return false;
+	});
+	//搜索(搜索按钮)
+	$('#searchBtn').on('tap', function(event){
+		event.preventDefault();
+		searchSaleOrderData();
+	});
+
+	//搜索
+	function searchSaleOrderData(){
+		//获取搜索内容
+		var filterValue = $('#filterInput').val();
+		if(filterValue!=''){
+			//初始化搜索参数
+			dataCommand.initSearchData(base_index.searchTypeItem[type](filterValue));
+			//发送请求
+			dataCommand.sendSearch(
+				function(ret){
+					if(ret.errNo){
+						_Public.hideProgress();
+                    	_Public.closeToLogin(ret.errMsg);
+					}else if(ret.errNo==-1){
+						//提示错误信息弹窗
+						_Public.layerMsg(ret.errMsg);
+						_Public.hideProgress();
+					}else {
+						//清空页面HTML
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+					}
+				}, function(ret){
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}
+			);
+		}else{
+			dataCommand.setData();
+			dataCommand.setPageSize(pageSize);
+			dataCommand.init(
+				function(ret){
+					if(ret.errNo){
+						_Public.hideProgress();
+                    	_Public.closeToLogin(ret.errMsg);
+					}else if(ret.errNo==-1){
+						//提示错误信息弹窗
+						_Public.layerMsg(ret.errMsg);
+						_Public.hideProgress();
+					}else {
+						htmlCommand.clearConFrom($('#dataList'));
+						succFunc(ret);
+						//设置下一页参数
+						dataCommand.setNextData();
+					}
+				}, function(ret){
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}
+			);
+		}
+	}
+	//下拉刷新
+	function Refresh(){
+		dataCommand.refreshPage(
+			function(ret){
+				if(ret.errNo){
+					_Public.hideProgress();
+                	_Public.closeToLogin(ret.errMsg);
+				}else if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					//清空页面HTML
+					htmlCommand.clearConFrom($('#dataList'));
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+		myScroll.refresh();
+	};
+	//上拉加载
+	function Load(){
+		dataCommand.nextPage(
+			function(ret){
+				if(ret.errNo){
+					_Public.hideProgress();
+                	_Public.closeToLogin(ret.errMsg);
+				}else if(ret.errNo==-1){
+					//提示错误信息弹窗
+					_Public.layerMsg(ret.errMsg);
+					_Public.hideProgress();
+				}else {
+					succFunc(ret);
+					//设置下一页参数
+					dataCommand.setNextData();
+					//页码+1
+					dataCommand.addNowPageNum();
+				}
+			}, function(ret){
+				_Public.layerMsg(ret.errMsg);
+				_Public.hideProgress();
+			}
+		);
+		myScroll.refresh();
+	};
+	//HTML模板
+	function orderItemHtml(json){
+		//判断价格正负数
+		var amountColor = 'tx-bla';
+		var amount = (json.amount).toString();
+		if(amount.indexOf('-')>-1){
+			amountColor = 'tx-red';
+		}
+		return '<li><a class="ub ub-ver ub-f1 padlr-15 bg-wh marb-5 line-t line-b bg-f8-active" href="'+json.itemHref+'"><div class="ub  ub-ac ub-pj h-44 line-b"><div class="tx-16 tx-bla">'+json.billCode+'</div><div class="tx-14 tx-gra">'+json.orderState+'</div></div><div class="ub ub-ver h-65"><div class="ub ub-ac h-40">'+json.traderName+'</div><div class="ub ub-pj"><div class="tx-12 tx-gray">'+json.billDate+'</div><div class="tx-14 '+amountColor+'"><span>￥</span><span>'+json.amount+'</span></div></div></div></a></li>';
+	}
+});
+</script>
+</html>

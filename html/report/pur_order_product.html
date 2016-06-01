@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>采购订单汇总</title>
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<meta name="format-detection" content="telephone=no"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" href="../../css/layer.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/report.css">
+</head>
+<body>
+<div class="wrapper tx-Arial" id="wrapper">
+	<!--头部开始-->
+	<header class="ub ub-pc ub-ac module-header-t1 bg-fixed">
+		<a class="goback ub ub-ac ub-pc" href="index.html">返回</a>
+		<div class="ub-f1 ub ub-ac ub-pc">采购订单汇总</div>
+		<div class="holder">
+			<a class="filterBtn"></a>
+		</div>
+	</header>
+	<!--头部结束-->
+	<!--主体开始-->
+		<!--filterArea 为旋转搜索条件的区域 filtCondition 为筛选条件因素-->
+		<section class="list listGroup ub ub-ver">
+			<div class="filterArea">
+			</div>
+			<div class="filterTab ub">
+				<div class="ub-f1">
+					<a class="itemAnchor tabTxt filtActive" data-nav="1" href="javascript:void(0)">按货品</a>
+				</div>
+				<div class="ub-f1">
+					<a class="itemAnchor tabTxt" data-nav="2" href="javascript:void(0)">按供应商</a>
+				</div>
+				<div class="filt-active"></div>
+			</div>
+			<div class="reportData ub ub-ver">
+				<!--数据表头部 start-->
+				<div class="reportDataTit ub-f1 ub ub-ac tx-c">
+					<div id="sort-one" class="reportDataTd ub-f1">货品</div>
+					<div id="sort-two" class="reportDataTd ub-f1">订货数量 </div>
+					<div id="sort-three" class="reportDataTd ub-f1">订货金额</div>
+				</div>
+				<!--数据表头部 end-->
+				<!--数据列表 按货品 start-->
+				<div id="goods" class="ub-f1 ub ub-ver">
+					<div class="none-icon reportItem">
+						<img src="../../images/none.png">
+						<div class="tx-gray">暂无数据</div>
+					</div>
+				</div>
+				<div id="client" class="ub-f1 ub ub-ver cus-select">
+					<div class="none-icon reportItem1">
+						<img src="../../images/none.png">
+						<div class="tx-gray">暂无数据</div>
+					</div>
+				</div>
+				<!--数据列表 end-->
+			</div>
+		</section>
+		<!--主体结束-->
+		<!--底部合计 开始-->
+		<footer class="reportSummary">
+			<div class="reportDataList ub ub-ac" id="goods-foot">
+				<div class="reportDataTd ub-f1 tx-l">合计</div>
+				<div class="reportDataTd ub-f1 total-1"></div>
+				<div class="reportDataTd ub-f1 total-2"></div>
+			</div>
+			<div class="reportDataList ub ub-ac cus-select" id="client-foot">
+				<div class="reportDataTd ub-f1 tx-l">合计</div>
+				<div class="reportDataTd ub-f1 total-1"></div>
+				<div class="reportDataTd ub-f1 total-2"></div>
+			</div>
+		</footer>
+		<!--底部合计 结束-->
+</div>
+<script src="../../js/sea.js"></script>
+<script>
+seajs.use(['zepto.min','layer','public','report'],function(zepto,layer,_Public,_report){
+	$(document).ready(function(){
+		layer.open({
+			type: 2,
+			shadeClose: false
+		});
+		var good_url = '/report/mporderbygoodsrpt!doGetReportData.action';
+		var client_url = '/report/porderdetailrptbytrader!doGetReportData.action';
+		var goodData = function(arg) {
+			if (arg.data.errNo != 0) {
+				//清除缓存
+			} else {
+				$('.reportItem').remove();
+				var ret = arg.data.resultData.ReportData;
+				var str = '';
+				if ((typeof(ret) == 'undefined') || (ret.length == 1)) {
+					str = '<div class="none-icon reportItem">'+
+							'<img src="../../images/none.png">'+
+							'<div class="tx-gray">'+arg.tip+'</div>'+
+						'</div>';
+					$('.total-1').text('');
+					$('.total-2').text('');
+				} else {
+					//拼接数据
+					var len = ret.length - 1;
+					for (var i = 0; i < len; i++) {
+						str += '<div class="ub-f1 ub ub-ac tx-c marr-15 marl-15 padt-10 padb-10 reportItem borb-gray">' +
+							'<div class="reportDataTd ub-f1">'+ret[i].name+'</div>' +
+							'<div class="reportDataTd ub-f1">'+ret[i].ordqty+ret[i].unit+'</div>' +
+							'<div class="reportDataTd ub-f1">'+arg.moneyC+ret[i].ordamt+'</div>' +
+						'</div>';
+					};
+					$('#goods-foot').find('.total-1').text(ret[len].ordqty);
+					$('#goods-foot').find('.total-2').text(arg.moneyC+ret[len].ordamt);
+				}
+				$('#goods').append(str);
+			}
+		}
+		var clientData = function(arg) {
+			if (arg.data.errNo != 0) {
+				if (arg.data.errMsg != null){
+					layer.closeAll();
+					_Public.closeToLogin(arg.data.errMsg);
+				}
+			} else {
+				$('.reportItem1').remove();
+				var ret = arg.data.resultData.ReportData;
+				var str = '';
+				if ((typeof(ret) == 'undefined') || (ret.length == 1)) {
+					str = '<div class="none-icon reportItem1">'+
+							'<img src="../../images/none.png">'+
+							'<div class="tx-gray">'+arg.tip+'</div>'+
+						'</div>';
+					$('.total-1').text('');
+					$('.total-2').text('');
+					setTimeout(function(){layer.closeAll();}, 1000);
+				} else {
+					//拼接数据
+					var len = ret.length - 1;
+					for (var i = 0; i < len; i++) {
+						str += '<div class="ub ub-ac tx-c marr-15 marl-15 padt-10 padb-10 rb-b reportItem1 borb-gray">'+
+								'<div class="reportDataTd ub-f1">'+ret[i].name+'</div>'+
+								'<div class="reportDataTd ub-f1">'+arg.moneyC+ret[i].ordamt+'</div>'+
+								'<div class="reportDataTd ub-f1">'+arg.moneyC+ret[i].unamt+'</div>'+
+							'</div>';
+					};
+					$('#client-foot').find('.total-1').text(arg.moneyC+ret[len].ordamt)
+					$('#client-foot').find('.total-2').text(arg.moneyC+ret[len].unamt);
+					setTimeout(function(){layer.closeAll();}, 1000);
+				}
+				$('#client').append(str);
+			}
+		}
+		//加载数据
+		_report.addData(134,goodData,'bill', good_url);
+		_report.addData(131,clientData,'bill', client_url);
+		//获取已筛选条件
+		_report.setfilterName();
+		//选项卡点击切换选中样式
+		$('.tabTxt').on('tap',function(){
+			if ($(this).hasClass('filtActive')){
+				return;
+			} else {
+				var data = $(this).attr('data-nav');
+				$('.tabTxt').removeClass('filtActive');
+				$(this).addClass('filtActive');
+				if(data == 1) {
+					$('.filt-active').animate({left: '25%'}, 300);
+					$('#sort-one').text('货品');
+					$('#sort-two').text('订货数量');
+					$('#sort-three').text('订货金额');
+					$('#goods').show();
+					$('#client').hide();
+					$('#client-foot').addClass('cus-select');
+					$('#goods-foot').removeClass('cus-select');
+				} else if(data == 2){
+					$('.filt-active').animate({left: '75%'}, 300);
+					$('#sort-one').text('供应商');
+					$('#sort-two').text('订货金额');
+					$('#sort-three').text('未收货金额');
+					$('#client').show();
+					$('#goods').hide();
+					$('#goods-foot').addClass('cus-select');
+					$('#client-foot').removeClass('cus-select');
+				}
+			}
+		});
+		$('.filterBtn').on('click', function(){
+			localStorage['type'] = 'pur_order';
+			localStorage['href'] = 'pur_order_product.html';
+			window.location.href = 'billing_filter.html';
+		});
+	});
+})
+</script>
+</body>
+</html>

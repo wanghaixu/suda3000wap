@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>首页-报表</title>
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/report.css">
+	<style type="text/css">
+	</style>
+</head>
+<body class="report uhide tx-Arial">
+	<header class="ub ub-ac ub-pc module-header-t1 header-green ">
+		<div class="logo-5000"></div>
+	</header>
+	<!--主体 start-->
+	<section class="list ub ub-ver mart-49">
+		<!--一条列表 start-->
+		<a class="itemAnchor" data-href="pur_order_product.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r1"></div>
+					<div class="reportTxt">采购订单汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+		<!--一条列表 start-->
+		<a class="itemAnchor" data-href="pur_bill_product.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r2"></div>
+					<div class="reportTxt">采购开单汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+		<!--一条列表 start-->
+		<a class="itemAnchor" data-href="sale_order_product.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r3"></div>
+					<div class="reportTxt">销售订单汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+		<!--一条列表 start-->
+		<a class="itemAnchor" data-href="sale_bill_product.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r4"></div>
+					<div class="reportTxt">销售开单汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+				<!--一条列表 start-->
+		<a class="itemAnchor" data-href="get_credit.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r5"></div>
+					<div class="reportTxt">应收账款汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+				<!--一条列表 start-->
+		<a class="itemAnchor" data-href="post_credit.html">
+			<div class="reportCard ub ub-ac line-b">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r6"></div>
+					<div class="reportTxt">应付账款汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+				<!--一条列表 start-->
+		<a class="itemAnchor" data-href="product_store.html">
+			<div class="reportCard ub ub-ac">
+				<div class="ub-f1 ub ub-ac ub-pc">
+					<div class="reportIcon r7"></div>
+					<div class="reportTxt">货品库存汇总</div>
+				</div>
+				<div class="rightArrow"></div>
+			</div>
+		</a>
+		<!--一条列表 end-->
+	</section>
+	<!--主体 end-->
+
+	<!--底部导航区 start-->
+	<footer class="module-footer-t5">
+		<div class="ub ub-fv">
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_index/index.html">
+				<div class="nav1"></div>
+				<div>首页</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../base_data/index.html">
+				<div class="nav2"></div>
+				<div>资料</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv footerNavActive" href="javascript:void(0)">
+				<div class="nav4 nav4-active"></div>
+				<div>报表</div>
+			</a>
+			<a class="ub-f1 ub ub-ver ub-ac ub-pc ub-fv" href="../set/index.html">
+				<div class="nav5"></div>
+				<div>设置</div>
+			</a>
+		</div>
+	</footer>
+	<!--底部导航区 end-->
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script language="javascript">
+	//页面渲染完才显示
+	$('body').removeClass('uhide');
+	$('.itemAnchor').on('click', function(){
+		var href = $(this).attr('data-href');
+		clearStorage(href);
+	});
+	function clearStorage(href) {
+		localStorage.removeItem("href");
+		localStorage.removeItem("filter");
+		if (localStorage.getItem('filter') == null){
+			window.location.href = href;
+		} else {
+			clearStorage(href);
+		}
+	}
+</script>
+</html>

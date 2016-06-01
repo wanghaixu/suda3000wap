@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>货品详情</title>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+	<link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+	<link rel="stylesheet" type="text/css" href="../../css/public.css">
+	<link rel="stylesheet" type="text/css" href="../../css/base_data.css">
+</head>
+<body class="uhide" scroll="no">
+<div class="wrapper" id="wrapper">
+	<!--头部开始-->
+	<header class="ub ub-pc ub-ac module-header-t1 line-b bg-fixed2">
+		<a class="goback ub ub-ac ub-pc" onclick="history.back(-1)">返回</a>
+		<div class="ub-f1 ub ub-ac ub-pc">货品详情</div>
+		<div class="holder"></div>
+	</header>
+	<!--头部结束-->
+	<!--主体开始-->
+	<section class="list ub ub-ver mart-5 line-t line-b">
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">编号</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="code"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">名称</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="name"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">规格</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="specs"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">存货类型</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="gcmname"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">成本核算</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="costtypename"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">批号管理</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="isbatch"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">基本单位</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="unitname"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">条形码</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="barcode"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">参考进价</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="pprice"></div>
+		</div>
+		<div class="listItem ub-f1 ub line-b">
+			<div class="itemName tx-l tx-bla">参考售价</div>
+			<div class="ub-f1 tx-r tx-gray ut-s" id="sprice"></div>
+		</div>
+	</section>
+</div>
+</body>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script language="javascript">
+seajs.use(['zepto.min','base_data','public','iscroll','pullToRefresh','layer'],function(zepto,Base_data,_Public){
+	//如果没有登陆，则跳回登陆页
+	if(_Public.Get_storage('sdIP')){
+		Base_data.sdip=_Public.Get_storage('sdIP');
+	}else{
+		location.href=Base_data.loginPage;
+		return;
+	}
+	//数据id
+	var id=Base_data.getPageParams('list_id');
+	if(id){
+		/*有数据列表点击跳转到此页面，数据交互-开始*/
+		var postData={
+			url:"http://"+Base_data.sdip+"/common/goods/goodsEdit!doGetEditData.action",
+			method:'post',
+			data:{id:id}
+		};
+		_Public.Get_ajax(postData,function(ret){
+			if(ret.errNo){
+				//提示错误信息弹窗
+				_Public.hideProgress();
+                _Public.closeToLogin(ret.errMsg);
+			}else{
+				if(ret.master.batchctrl=="F"){
+					ret.master.batchctrl="否"
+				}else if(ret.master.batchctrl=="T"){
+					ret.master.batchctrl="是"
+				}
+				$('#code').text(ret.master.code);
+				$('#name').text(ret.master.name);
+				$('#specs').text(ret.master.specs);
+				$('#gcmname').text(ret.master.gcmname);
+				$('#costtypename').text(ret.master.costingtypename);
+				//$('#areaname').text(ret.master.areaname);
+				$('#isbatch').text(ret.master.batchctrl);
+				$('#unitname').text(ret.master.unit);
+				$('#barcode').text(ret.detail1[0].barcode);
+				$('#pprice').text(ret.detail1[0].pprice);
+				$('#sprice').text(ret.detail1[0].sprice);
+				$('body').removeClass('uhide');
+				_Public.hideProgress();
+			}
+		},function(xhr,type){
+			if(xhr){
+				_Public.hideProgress();
+				_Public.layerMsg(xhr.statusText);
+			}
+		});
+		/*有数据列表点击跳转到此页面，数据交互-结束*/
+	}
+})
+</script>
+</html>

@@ -1,0 +1,262 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>选择货品</title>
+    <link rel="stylesheet" type="text/css" href="../../css/ui-base.css">
+    <link rel="stylesheet" type="text/css" href="../../css/layer.css">
+    <link rel="stylesheet" type="text/css" href="../../css/pullToRefresh.css">
+    <link rel="stylesheet" type="text/css" href="../../css/public.css">
+    <link rel="stylesheet" type="text/css" href="../../css/base_index.css">
+</head>
+<body class="forbid-scroll">
+    <!--头部开始-->
+    <header class="ub ub-pc ub-ac module-header-t1 bg-fixed2 line-b">
+        <a class="ub ub-ac" href="javascript:history.back(-1);">
+            <div class="icon back-icon-wh"></div>
+            <div class="tx-16 tx-wh">返回</div>
+        </a>
+        <div class="ub-f1 ub ub-ac ub-pc tx-18">选择货品</div>
+        <div class="ub ub-ac ub-pe title-r">
+            <div id="submitBtn" class="icon post-icon-wh marl-10"></div>
+        </div>
+    </header>
+    <!--头部结束-->
+    <!--主体 开始-->
+    <div class="mart-5 padt-44 ub ub-ver line-t line-b bg-wh">
+        <form class="ub ub-ac ub-pc module-input-t1 line-b">
+            <div class="ub-f1 ub ub-ac ub-pc line-all">
+                <input id="keyword" name="keyword" class="ub ub-f1 billInput" placeholder="名称/编号">
+                <div id="searchBtn" class="search-icon"></div>
+            </div>
+        </form>
+        <div id="wrapper">
+            <!-- 列表 开始 -->
+            <ul class="dataList">
+                <!--<li class="ub ub-ac h-65 marl-10 marr-10 line-b active" data-type="item" data-id="2">
+                    <div class="li-tips"></div>
+                    <div class="ub ub-ver ub-f1 marl-10">
+                        <div class="ub marb-10 tx-16">
+                            <div class="tx-gra marr-10">1001</div>
+                            <div class="ub-f1 tx-bla">DVD风采</div>
+                        </div>
+                        <div class="ub ub-f1 tx-12 tx-gray">
+                            <div class="ub-f1 ut-s tx-l">库存：10370000（台）</div>
+                            <div class="ub-f1 ut-s tx-c">进价：￥10000000.00</div>
+                            <div class="ub-f1 ut-s tx-r">售价：￥15000000.00</div>
+                        </div>
+                    </div>
+                </li>-->
+                <!-- 列表 结束 -->
+            </ul>
+        </div>
+    </div>
+    <!--主体 结束-->
+</body>
+</html>
+<script type="text/javascript" src="../../js/sea.js"></script>
+<script type="text/javascript" src="../../js/zepto.min.js"></script>
+<script type="text/javascript" src="../../js/base_index.js"></script>
+<script type="text/javascript">
+    seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'], function (_Public) {
+        $(document).ready(function () {
+            var base_index = new Base_index();
+            //输入框背景虚化
+            base_index.useMask();
+
+            var url_suffix;
+            //页面数据项数
+            var count = 0;
+            //上拉加载标记 1为允许加载 0为禁止
+            var flag = 1;
+            //过滤参数
+            var condition = '';
+            //设置弹动区域高度
+            var act = base_index.getPageParams('act');
+
+            $('#wrapper').height($(window).height() - $('header').height() - $('form').height() - $('footer').height());
+            //_basic.showLoading();
+            //获取全局地址
+            url_suffix = localStorage.getItem('sdIP');
+
+            //第一次进入的时候刷新一次页面
+            getGoodsList('refresh');
+
+            //跨页面数据交互
+            //单据类型
+            var type = base_index.getPageParams('type');
+
+            //点击搜搜按钮
+            $(document).on('tap', '.search-icon', function () {
+                searchSubmit();
+            })
+
+            //表单提交搜索
+            $('form').submit(function (e) {
+                e.preventDefault();
+                searchSubmit();
+                return false;
+            });
+
+            //搜索获得关键字
+            function searchSubmit() {
+                var kw = $.trim($('input[name=keyword]').val());
+                if (kw != '')
+                    condition = kw;
+                else
+                    condition = '';
+                $('input').blur();
+                getGoodsList('refresh');
+            }
+
+            $(document).on('tap', '.goodListItem', function () {
+                $('.goodListItem').removeClass('active');
+                $(this).addClass('active');
+            });
+
+            //监听商品选择确定事件
+            $(document).on('tap', '#submitBtn', function () {
+                var curObj = $('.active');
+                var name, code;
+                if (act == 'goods') {
+                    if (curObj.length == 0) {
+                        name = '全部';
+                        code = '';
+                    } else {
+                        name = curObj.attr('data-name');
+                        code = curObj.attr('data-code');
+                    }
+                    //如果是过滤的话,则跳转到过滤页面
+                    base_index.extendSessionStorage('session_filterJson', { goodsName: name, goodsCode: code });
+                    window.location = 'filter.html?type=' + type;
+                } else {
+                    if (curObj.length == 0) {
+                        _Public.layerMsg('请先选择商品');
+                        return;
+                    }
+                    //设置缓存
+                    var d = curObj.attr('data-json');
+                    sessionStorage.setItem('goodsData', d);
+
+                    //打开商品明细编辑页面
+                    window.location = 'pro_edit.html?type=' + type + '&act=add';
+                }
+            })
+
+            /*上拉加载/下拉刷新*/
+            refresher.init({
+                id: "wrapper",
+                pullDownAction: Refresh,
+                pullUpAction: Load
+            });
+            //下拉刷新
+            function Refresh() {
+                getGoodsList('refresh');
+            }
+            //上拉加载
+            function Load() {
+                getGoodsList('add');
+            }
+
+            //获取商品列表
+            function getGoodsList(type) {
+                //type为refresh或者add refresh为刷新 一页20个
+                var param;
+                param = {
+                    filter: "closed='F' and g.phoneapply='T'",
+                    likeValue: condition,
+                    pageSize: 20
+                }
+
+                if (type == 'refresh') {
+                    $('.dataList').empty();
+                    param.start = 0
+                    count = 0;
+                    flag = 1;
+                }
+                else {
+                    param.start = count;
+                }
+
+                if (flag == 0) {
+                    myScroll.refresh();
+                    return;
+                }
+
+                //显示读取中
+                if (condition != '')
+                    param = $.extend(param, condition);
+
+                Ajax_data = {};
+                Ajax_data.url = 'http://' + url_suffix + '/lookupdm/lookupdata.action?viewname=goods';
+                Ajax_data.method = 'post';
+                Ajax_data.datatype = 'json';
+                Ajax_data.data = param;
+
+                _Public.Get_ajax(Ajax_data, function (data) {
+                    if (data.errNo) {
+                        _Public.layerMsg(data.errMsg);
+                        return;
+                    }
+                    var datalist = data.listData;
+                    var length = datalist.length;
+                    var list = '';
+                    if (length == 0) {
+                        //需要加入图片之类的
+                        if (count == 0) {
+                            list += '<div class="none-icon ">' +
+                                    '<img src="../../image/none.png">' +
+                                    '<div class="tx-gray">暂无数据</div>' +
+                                '</div>';
+                        }
+                        flag = 0;
+                    }
+                    else {
+                        for (var i = 0; i < datalist.length; i++)
+                            list += render(datalist[i]);
+                    }
+                    $('.dataList').append($(list));
+                    myScroll.refresh();
+                    count += length;
+                }, function (xhr, type) {
+                    _Public.layerMsg(xhr.statusText);
+                })
+            }
+
+            //检查内容是否为空,为空则返回空字符串 避免出错
+            function checkValue(val) {
+                if (val == undefined || val == null)
+                    return '';
+                else
+                    return val;
+            }
+
+            //填充数据 数据模版
+            function render(data) {
+                data.goodscode = data.code;
+                data.goodsname = data.name;
+                var list = '';
+                list += '<div class="ub ub-ac h-65 marl-10 marr-10 line-b goodListItem" data-json=' + JSON.stringify(data) + ' >' +
+        '				<div class="li-tips"></div>' +
+        '				<div class="ub ub-ver ub-f1 marl-10">' +
+        '					<div class="ub marb-10 tx-16">' +
+        '						<div class="tx-gra marr-10">' + checkValue(data.code) + '</div>' +
+        '						<div class="ub-f1 tx-bla">' + checkValue(data.name) + '</div>' +
+        '					</div>' +
+        '					<div class="ub ub-f1 tx-12 tx-gray">' +
+        '						<div class="ub-f1 ut-s tx-l">库存：' + checkValue(data.onhand) + checkValue(data.unit) + '</div>' +
+        '						<div class="ub-f1 ut-s tx-c">进价：' + checkValue(data.pprice) + '</div>' +
+        '						<div class="ub-f1 ut-s tx-r">售价：' + checkValue(data.sprice) + '</div>' +
+        '					</div>' +
+        '				</div>' +
+        '			</div>';
+
+                return list;
+            }
+
+        })
+    });
+</script>
