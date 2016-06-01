@@ -1,0 +1,369 @@
+.index-header {
+    height: 40px;
+    background: #004527;
+}
+
+.l-footer {
+    position: fixed;
+    bottom: 0;
+    background-color: #006938;
+    height: 40px;
+    width: 100%;
+}
+
+.pos-rel {
+    position: relative;
+}
+
+.footer-logo {
+    width: 200px;
+    height: 40px;
+    background-image: url("../images/icon1.png");
+    background-repeat: no-repeat;
+    background-size: 998px;
+    background-position: -499px -27px;
+}
+
+.sd-logo {
+    background: url("../images/sd-logo.png") no-repeat;
+    background-size: 64px 24px;
+    background-position: 0px 7px;
+}
+
+.ty-logo {
+    background: url("../images/ty-logo.png") no-repeat;
+    background-size: 64px 24px;
+    background-position: 0px 10px;
+}
+
+.sd-logo, .ty-logo {
+    height: 100%;
+    width: 70px;
+    margin-left: 10px;
+}
+
+.accset_banner:before {
+    content: "";
+    display: block;
+    padding-top: 49.5%;
+}
+
+.accset_banner_suda {
+    position: relative;
+    background: #45B945 url("../images/sd_j.png") no-repeat center center;
+    background-size: 136px 64px;
+}
+
+.accset_banner_tianyi {
+    position: relative;
+    background: #F7941C url("../images/ty_j.png") no-repeat center center;
+    background-size: 136px 64px;
+}
+
+.little-tit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 60px;
+    padding: 3px;
+    font-size: 12px;
+    text-align: center;
+    color: #D8D8D8;
+    background: #006835;
+}
+
+.go-icon {
+    width: 25px;
+    height: 40px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -239px 9px;
+    background-size: 620px 270px;
+}
+
+.base_banner {
+    background: #45B945 url("../images/en_banner.png") no-repeat center center;
+    background-size: 180px 60px;
+}
+
+    .base_banner:before {
+        content: "";
+        display: block;
+        padding-top: 49.5%;
+    }
+
+.icon-head {
+    height: 20px;
+    width: 20px;
+    background-image: url("../images/icon.png");
+    background-position: -422px -37px;
+    background-size: 620px;
+}
+
+.icon-lock {
+    height: 20px;
+    width: 20px;
+    background-image: url("../images/icon.png");
+    background-position: -456px -3px;
+    background-size: 620px;
+}
+
+.icon-remember {
+    height: 21px;
+    width: 21px;
+    margin-right: 10px;
+    background-image: url("../images/icon.png");
+    background-position: -177px -37px;
+    background-size: 620px;
+}
+
+.icon-card {
+    height: 20px;
+    width: 20px;
+    background-image: url("../images/icon.png");
+    background-position: -436px -3px;
+    background-size: 640px;
+}
+
+.icon-checked {
+    height: 21px;
+    width: 21px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-image: url("../images/icon.png");
+    background-position: -562px -178px;
+    background-size: 620px 270px;
+}
+
+.icon-arrow {
+    height: 20px;
+    width: 16px;
+    background-image: url("../images/icon.png");
+    background-position: -257px -2px;
+    background-size: 649px;
+}
+
+.listItem.pw-remember {
+    border-bottom: none;
+    margin-bottom: 20px;
+    background-color: transparent;
+}
+
+/*对话框*/
+.mask {
+    display: none;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 999;
+}
+
+    .mask .container {
+        position: relative;
+        top: 15%;
+    }
+
+.dialog {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+    .dialog .title {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .dialog .content {
+        margin-top: 15px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+        .dialog .content .item {
+            margin: 8px 0 8px 0;
+        }
+
+        .dialog .content .sm {
+            margin-top: 7px;
+        }
+
+            .dialog .content .sm .item {
+                margin: 8px 0 0 0;
+                font-size: 12px;
+            }
+
+    .dialog .btn-group {
+        height: 44x;
+        margin-top: 15px;
+        line-height: 44px;
+        border-top: 1px solid #D7D7D7;
+        text-align: center;
+    }
+
+        .dialog .btn-group .btn {
+            border-left: 1px solid #D7D7D7;
+            cursor: pointer;
+        }
+
+            .dialog .btn-group .btn:first-child {
+                border-left: none;
+            }
+
+            .dialog .btn-group .btn:active {
+                background-color: #f8f8f8;
+            }
+
+            .dialog .btn-group .btn:first-child:active {
+                background-color: #f8f8f8;
+                border-bottom-left-radius: 10px;
+            }
+
+            .dialog .btn-group .btn:last-child:active {
+                background-color: #f8f8f8;
+                border-bottom-right-radius: 10px;
+            }
+/*对话框end*/
+
+/*调整类*/
+.mart-5 {
+    margin-top: 5px;
+}
+
+.mart-15 {
+    margin-top: 15px;
+}
+
+.mart-20 {
+    margin-top: 20px;
+}
+
+.mart-30 {
+    margin-top: 30px;
+}
+
+.mart-40 {
+    margin-top: 40px;
+}
+
+.mart-60 {
+    margin-top: 60px;
+}
+
+.marb-50 {
+    margin-bottom: 50px;
+}
+
+.pdt-40 {
+    padding-top: 40px;
+}
+
+.pdb-50 {
+    padding-bottom: 50px;
+}
+
+.tx-14 {
+    font-size: 14px;
+}
+/*调整类end*/
+
+/*list修正*/
+.i-list {
+    background-color: transparent;
+    border: none;
+}
+
+.i-listItem {
+    height: 35px;
+    width: 70%;
+    line-height: 35px;
+}
+
+.i-list .i-listItem {
+    padding-left: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #F6F6F6;
+}
+
+    .i-list .i-listItem input {
+        color: #D2D2D2;
+        padding-left: 20px;
+        background-color: #F6F6F6;
+    }
+
+.switch {
+    top: -2px;
+}
+
+.switchBtn {
+    height: 0;
+}
+
+    .switchBtn:before {
+        height: 20px;
+        width: 40px;
+        border-radius: 10px;
+    }
+
+    .switchBtn:after {
+        height: 20px;
+        width: 20px;
+        border-radius: 10px;
+    }
+
+.i-list .i-listItem .switch input {
+    padding-left: 0;
+}
+
+.i-list .i-listItem input::-webkit-input-placeholder {
+    color: #D2D2D2;
+}
+
+.i-list .i-listItem input:focus {
+    color: #333;
+}
+/*list修正 end*/
+.billInput {
+    line-height: 18px;
+}
+
+    .billInput::-webkit-input-placeholder {
+        line-height: 20px;
+    }
+
+input.billInput {
+    line-height: 18px;
+}
+
+.listItem {
+    background-color: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+input, select {
+    border: 0px !important;
+    -webkit-appearance: none !important;
+    outline: none !important;
+}
+
+.login-btn {
+    background: #9A9A9A;
+    color: #333;
+    font-weight: bold;
+}
+
+    .login-btn:active {
+        background: #7b7b7b;
+    }
+
+.b-btn {
+    height: 40px;
+    margin: 10px 15px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 5px;
+}

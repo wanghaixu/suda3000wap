@@ -1,0 +1,694 @@
+/* 页面底部菜单，类型：5按钮 上图下字-开始 */
+/* 参考用例：enhance_check/checked.html 范围： <footer></footer>*/
+.module-footer-t5{
+	position: fixed;
+	bottom: 0px;
+	left:0px;
+	width: 100%;
+	height: 50px;
+	font-size: 12px;
+	line-height: 16px;
+	color:#fff;
+	background-color: #004527;
+	border-top: 1px solid #e5e5e5;
+}
+.module-footer-t5 a{
+	color:#fff;
+}
+
+	/* 菜单1图标:非活动; */
+.module-footer-t5 .nav1{
+	width: 25px;
+	height: 25px;
+
+	background: url(../images/icon.png) no-repeat;
+	background-position: -0px -35px;
+	background-size:620px 270px;
+}
+/* 菜单1，活动态 */
+.module-footer-t5 .nav1-active{
+	background-position: -0px -0px;
+	
+}
+	/* 菜单2图标:非活动; */
+.module-footer-t5 .nav2{
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -35px -35px;
+	background-size:620px 270px;
+}
+/* 菜单2，活动态 */
+.module-footer-t5 .nav2-active{
+	background-position: -35px -0px;
+	
+}
+	/* 菜单3图标:非活动; */
+.module-footer-t5 .nav3{
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -70px -35px;
+	background-size:620px 270px;
+}
+/* 菜单3，活动态 */
+.module-footer-t5 .nav3-active{
+	background-position: -70px -0px;
+	
+}
+	/* 菜单4图标:非活动; */
+.module-footer-t5 .nav4{
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -105px -35px;
+	background-size:620px 270px;
+}
+/* 菜单3，活动态 */
+.module-footer-t5 .nav4-active{
+	background-position: -105px -0px;
+	
+}
+	/* 菜单5图标:非活动; */
+.module-footer-t5 .nav5{
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -140px -35px;
+	background-size:620px 270px;
+}
+/* 菜单3，活动态 */
+.module-footer-t5 .nav5-active{
+	background-position: -140px -0px;
+	
+}
+/* 菜单文字：活动态 */
+/*.module-footer-t5 .footerNavActive{
+	color:#fff;
+}*/
+	/* 菜单图标：活动态 */
+/*.module-footer-t5 .footerNavActive .nav{
+	background-color: #004E26;
+}*/
+/* 页面底部菜单，类型：5按钮 上图下字-开始 */
+/* 带筛选功能的查询功能表单-开始 
+ *	用例页面：enhance_check/checked.html
+*/
+.module-form-t1{
+	min-height: 75px;
+	padding-right: 15px;
+	background-color: #fff;
+}
+	/* 表单头部区域 */
+.module-form-t1 .filtration{
+	padding-left: 15px;
+	font-size: 16px;
+	color:#333;
+}
+.module-form-t1 .filtration:active{
+	background-color: #f8f8f8 !important;
+}
+	/* 表单头部区域-小图标（下） */
+.module-form-t1 .filtration-icon{
+	width:25px;
+	height: 25px;
+	margin-right: 10px;
+	margin-left: 10px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -211px -34px;
+	background-size:620px 270px;
+}
+	/* 表单头部区域-活动小图标（上） */
+.module-form-t1 .filtration-icon-active{
+	background-position: -212px -1px;
+}
+	/* 表单头部区域-输入框设置 */
+.module-form-t1 input{
+	height: 43px;
+	padding-left: 10px;
+	padding-right: 35px;
+	outline: none;
+	font-size: 14px;
+	background-color: #f8f8f8;
+}
+.module-form-t1 .focusShade,.module-input-t1 .focusShade{
+	position: fixed;
+	top: 119px;
+	left: 0px;
+	width: 100%;
+	min-height: 100%;
+	background-color: rgba(0,0,0,.4);
+	z-index: 999;
+}
+	/* 表单头部区域-输入框搜索小图标 */
+.module-form-t1 .search-icon{
+	position: absolute;
+	right: 10px;
+	top:27px;
+	width:25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -455px -35px;
+	background-size:620px 270px;
+}
+	/* 筛选区域上边框线-小三角图标-开始*/
+.module-form-t1 .sharp-icon div{
+	position: absolute;
+	width:0px;
+	height: 0px;
+}
+.module-form-t1 .sharp-icon .first{
+	border-width:13px; 
+	border-style:solid dashed dashed; 
+	border-color:transparent transparent #fff  transparent; 
+	left:40px; 
+	bottom:-1px;
+	z-index: 9;
+}
+.module-form-t1 .sharp-icon .last{
+	border-width:13px; 
+	border-style:solid dashed dashed; 
+	border-color:transparent transparent #e5e5e5 transparent; 
+	left:40px; 
+	bottom:0px;
+}
+	/* 筛选区域上边框线-小三角图标-结束*/
+	/* 筛选区域-列表 */
+.module-form-t1 .item-body{
+	position: absolute;
+	top: 75px;
+	left: 0px;
+	width: 100%;
+	z-index: 999;
+	background-color: #fff;
+	border-top: 1px solid #e5e5e5;
+}
+	/* 筛选区域-遮罩层（高度得结合js计算，看用例页面:enhance_check/checked.html） */
+.module-form-t1 #shade{
+	position: absolute;
+	left: 0px;
+	top: 65px;
+	min-width: 100%;
+	margin-top: 10px;
+	z-index: 888;
+	background-color: rgba(0,0,0,.3);
+
+}
+	/* 筛选区域-列表项-开始 */
+.module-form-t1 .item-1{
+	height: 44px;
+	margin-left: 15px;
+	margin-right: 15px;
+	padding-right: 7px;
+	background-color: #fff;
+	color:#666;
+}
+.module-form-t1 .item-1:active{
+	background-color: #f8f8f8 !important;
+}
+.module-form-t1 .item-body .item-1:last-child{
+	border:none;
+}
+.module-form-t1 .item-r-icon{
+	width: 25px;
+	height: 25px;
+	margin-left: 10px;
+}
+.module-form-t1 .item-1-active .item-r-icon{
+	background: url(../images/icon.png) no-repeat;
+	background-position: -175px -0px;
+	background-size:620px 270px;
+}
+.module-form-t1 .item-1-active{
+	color:#999;
+}
+/* 筛选区域-列表项-结束 */
+/* 带筛选功能的查询功能表单-结束 */
+
+/* 输入框组件，输入框独占一行
+ * 用例页面：enhance_data/product.html <form></form>区域 --开始
+ */
+ .module-input-t1{
+ 	min-height: 65px;
+ 	padding-left: 15px;
+ 	padding-right: 15px;
+ 	border-bottom: 1px solid #e5e5e5;
+ 	background-color: #fff;
+ }
+ .module-input-t1 input{
+ 	height: 35px;
+ 	padding-left: 10px;
+ 	padding-right: 35px;
+ 	outline: none;
+ 	border:1px solid #e5e5e5;
+ 	background-color: #f8f8f8;
+ }
+ .module-input-t1 .search-icon{
+ 	position: absolute;
+ 	right: 10px;
+ 	top:20px;
+ 	width:25px;
+ 	height: 25px;
+ 	background: url(../images/icon.png) no-repeat;
+ 	background-position: -455px -35px;
+ 	background-size:620px 270px;
+ }
+ /* 输入框组件，输入框独占一行
+  * 用例页面：enhance_data/product.html <form></form>区域 --结束
+  */
+/*固定头部菜单-开始
+ *用例页面：enhance_data/pro_detail.html 
+ *tip:给body加上padding-top:44px;
+ */
+ .module-header-t1{
+ 	min-width: 100%;
+    height: 44px;
+    z-index: 9;
+    font-size: 18px;
+    color: #fff;
+    border-bottom: none;
+ }
+ .module-header-t1 .goback{
+ 	height: 100%;
+    width: 65px;
+    padding-left: 15px;
+    font-size: 16px;
+    color: #fff;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -590px 10px;
+    background-size: 620px 270px;
+ }
+ .module-header-t1 .holder{
+ 	width:80px;
+ 	height: 100%;
+ }
+ /*固定头部菜单-结束
+  *用例页面：enhance_data/pro_detail.html 
+  */
+/*头部组件 start*/
+/*头部标签
+  示例 enhance_index/sale_order.html
+  .header 头部容器 
+  <header class="header"></header> or <div class="header"></div>
+  .back返回按钮 
+  .
+*/
+.header{
+	text-align:center;
+	height:44px;
+	line-height:44px;
+	border-bottom:1px solid #D7D7D7;
+	background-color:#f8f8f8;
+	margin-bottom:5px;
+}
+.header .back{
+	display:block;
+	color:#004E26;
+	width: 50px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -552px 10px;
+	background-size:620px 270px;	
+}
+.menu{
+	color:#004E26;
+}
+/*头部区域右上角图标系列
+  示例 enhance_index/sale_order.html
+  复制 sale_order.html 的头部即可
+*/
+.menuBtn,.sureBtn{
+	background: url(../images/icon.png) no-repeat;
+	background-size:620px 270px;
+}
+/*右上角按钮系列-菜单按钮*/
+.menuBtn{
+	width: 40px;
+	height: 45px;
+	background-position: -240px -25px;
+}
+/*右上角按钮系列-确定按钮*/
+.sureBtn{
+	width: 40px;
+	height: 45px;
+	background-position: -275px -25px;
+}
+/*右上角按钮系列-过滤按钮*/
+.filterBtn{
+	display:block;
+	width: 45px;
+	height: 44px;
+	float: right;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -340px 8px;
+	background-size:620px 270px;
+	
+}
+/*头部区域右上角图标系列 end*/
+/*头部组件 end*/
+
+/*列表组件化*/
+/*信息列表 start*/
+/*section  列表区域容器
+  section>div:last-child 列表最后一条 用于控制隐藏底部边框线;
+  listItem 单条列表容器
+  itemName 列表左侧名称
+  itemContent 列表右侧内容
+  itemAnchor 可跳转的a标签 用来包裹需要跳转的列表项
+  使用页面: enhance_index/order_product_edit.html
+  			set/index.html
+*/
+.list{
+	border-top:1px solid #e5e5e5;
+	border-bottom:1px solid #e5e5e5;
+	background-color:#fff;
+	margin-bottom:5px;
+}
+.list>div:last-child{
+	border-bottom:0 none;
+}
+.listItem{
+	height:44px;
+	line-height:44px;
+	margin-left:15px;
+	margin-right:15px;
+}
+.listItem input {
+	display:block;
+	height: 44px;
+	width: 100%;
+	background: #ffffff;
+	line-height: 44px;
+	font-size:16px;
+	text-align: right;
+	color:#999;
+	border:0 none;
+	outline:0 none;
+}
+.itemName{
+	width:auto;
+	color:#333;
+	text-align:left;
+	padding-right: 0.5rem;
+}
+.itemContent{
+	color:#999;
+	text-align:right;
+}
+.itemAnchor{
+	display:block;
+}
+/*信息列表 end*/
+
+/*商品列表 start*/
+/*示例 enhance_index/sale_order.html
+	goodsItem 商品列表外容器
+	goodsName 商品列表左侧商品名称
+	goodsInfo 商品列表右侧信息
+	goodsNum  商品列表价格信息
+*/
+.goodsItem{
+	padding:10px 0;
+	margin-left:15px;
+	margin-right:15px;
+	text-align:center;
+	border-bottom:1px solid #E5E5E5;
+}
+.goodsName{
+	width:auto;
+	color:#333;
+	text-align:left;
+}
+.goodsInfo{
+	color:#999;
+	font-size:12px;
+}
+.goodsNum{
+	font-weight:bold;
+	color:#EF5B2D;
+	text-align:right;
+}
+/*商品列表 end*/
+
+/*input start*/
+/*列表右侧输入框 示例 enhance_index/sale_order.html*/
+.billInput{
+	display:block;
+	font-size:16px;
+	color:#999;
+	border:0 none;
+	outline:0 none;
+}
+.billInput:focus{
+	color:#333;
+}
+.billInput::-webkit-input-placeholder{
+	color:#999;
+}
+.billInput::-ms-input-placeholder{
+	color:#999;
+}
+/*input end*/
+
+/*底部按钮区域 start*/
+/*footer是用地存放底部按钮的区域
+  longButton 两侧外边距为15px
+  shortButton 两侧外边距为60px
+  success 绿色背景
+  danger 红色背景 
+  按钮示例 enhance_index/sale_order.html
+  <div class="longButton danger"></div>//长按钮 背景为红色
+  <div class="shortButton success"></div>//短按钮 背景为绿色
+*/
+.footer{
+	height:60px;
+	line-height:60px;
+}
+.longButton{
+	margin:15px 15px 30px;
+	height:44px;
+	line-height:44px;
+	text-align:center;
+	color:#fff;
+	border-radius:6px;
+}
+.shortButton{
+	margin-left:60px;
+	margin-right:60px;
+	height:44px;
+	line-height:44px;
+	text-align:center;
+	color:#fff;
+	border-radius:6px;
+}
+.success{
+	background-color:#006442;
+}
+.success:active{
+	background-color:#084631;
+}
+
+.danger{
+	background-color:#EA4B35;;
+}
+.danger:active{
+	background-color:#d0412e;
+}
+/*底部按钮区域 end*/
+
+/*小图标系列 start
+	示例 enhance_index/sale_order.html
+*/
+.rightArrow{
+	display:block;
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -237px 0px;
+	background-size:620px 270px;
+}
+.leftArrow{
+	display:block;
+	width: 25px;
+	height: 25px;
+	background: url(../images/icon.png) no-repeat;
+	background-position: -245px 0px;
+	background-size:620px 270px;
+}
+/*小图标系列 end*/
+
+/*IOS风格 checkbox 开关 start
+  隐藏原生input 但是checked属性仍然生效(能够获取选中的值)
+  通过两个伪类:before&:after来模拟按钮槽和按钮;
+  示例 enhance_index/sale_order.html
+*/
+.switch{
+	position:relative;
+	font-size:16px;
+	width:52px;
+	height:32px;
+	line-height:32px;
+}
+.switchBtn{
+	display:inline-block;
+	width:52px;
+	height:32px;
+	position:relative;
+	z-index:2;
+	border:0;
+	background:0 0;
+	-webkit-appearance:none;
+	outline:0;
+}
+.switchBtn:before{
+	content:'';
+	width:50px;
+	height:30px;
+	border:1px solid #dfdfdf;
+	background-color:#fdfdfd;
+	border-radius:20px;
+	cursor:pointer;
+	display:inline-block;
+	position:relative;
+	vertical-align:middle;
+	box-sizing:content-box;
+	border-color:#dfdfdf;
+	box-shadow:#dfdfdf 0 0 0 0 inset;
+	transition:border .4s,box-shadow .4s;
+	-webkit-transition:border .4s,box-shadow .4s;
+	background-clip:content-box;
+}
+.switchBtn:after{
+	content:'';
+	width:30px;
+	height:30px;
+	position:absolute;
+	top:1px;
+	left:0;
+	border-radius:50%;
+	background-color:#fff;
+	box-shadow:0 1px 3px rgba(0,0,0,.4);
+	-webkit-transition:left .2s;
+	transition:left .2s;
+}
+input:checked:before{
+	border-color:#004e26;
+	-webkit-box-shadow:#004e26 0 0 0 16px inset;
+	box-shadow:#004e26 0 0 0 16px inset;
+	background-color:#004e26;
+	transition:border .4s,box-shadow .4s,background-color 1.2s;
+	}
+input:checked:after{
+	left:21px;
+}
+.mdselect{
+	width:100px;
+	direction:rtl;
+	font-size:14px;
+	color:#333;
+	border:none;	/*隐藏边框*/
+	outline:none;	/*隐藏外轮廓*/
+	-webkit-appearance:none;/*清除预定义样式*/
+}
+/*IOS风格 checkbox 开关 start*/
+/*fixed类 start 用于样式微调*/
+.mart-44{
+	margin-top:44px;
+}
+/*fixed类 end*/
+/* 数字，字母的字体设置 */
+.tx-Arial{
+	font-family: Arial !important;
+}
+/*line类 start 用于添加0.5px边框 需要按方向使用*/
+/*上边框 命名取自line-top 取名方式下同*/
+.line-t:before{
+	content: '';
+	position: absolute;
+	height: 1px;
+	width: 100%;
+	border-bottom: 1px solid #e5e5e5;    
+	top: 0; 
+	left:0;
+	right: 0;
+	transform-origin: 0 0;
+	transform: scaleY(0.5);
+	box-sizing: border-box;
+	-webkit-transform-origin: 0 0;
+	-webkit-transform: scaleY(0.5);
+	-webkit-box-sizing: border-box;
+}
+/*左边框*/
+.line-l:before{
+	content: '';
+	position: absolute;
+	height: 100%;
+	width: 1px;
+	border-left:1px solid #e5e5e5;    
+	top: 0; 
+	left:0;
+	bottom:0;
+	-webkit-transform-origin: 0 0;
+	-webkit-transform: scaleX(0.5);
+	-webkit-box-sizing: border-box;
+}
+/*下边框*/
+.line-b:after{
+	content: '';
+	position: absolute;
+	height: 1px;
+	width: 100%;
+	border-bottom: 1px solid #e5e5e5;
+	left: 0;
+	bottom:-1px;
+	right: auto;
+	top: auto;
+	-webkit-transform-origin: 0 0;
+	-webkit-transform: scaleY(0.5);
+	-webkit-box-sizing: border-box;
+}
+/*右边框*/
+.line-r:after{
+	content: '';
+	position: absolute;
+	height: 100%;
+	width: 1px;
+	border-right:1px solid #e5e5e5;    
+	top: 0; 
+	right:-1px;
+	bottom:0;
+	-webkit-transform-origin: 0 0;
+	-webkit-transform: scaleX(0.5);
+	-webkit-box-sizing: border-box;
+}
+/*line类 end*/
+.dw-select .dw {
+	top: 0;
+}
+/*layermobile样式*/
+.layerMobile{
+	background-color: #004E26;
+	color:#fff;
+
+}
+/*layermobile样式end*/
+/* 列表加载中loading部分样式 
+ * 例子请参考report/product_store.html 
+ */
+.loading {
+	width: 70px;
+	margin: 60px auto;
+	line-height: 24px;
+	font-size: 14px;
+}
+.loading-icon {
+	width: 24px;
+	height: 24px;
+}
+.cus-select {
+	display: none;
+}
+.none-icon {
+	width: 30%;
+	margin: 30px auto;
+	text-align: center;
+}

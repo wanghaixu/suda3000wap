@@ -1,0 +1,1166 @@
+﻿html,
+body
+{
+    background-color: #eee;
+}
+html,
+body,
+header,
+section,
+footer,
+div,
+ul,
+ol,
+li,
+img,
+a,
+span,
+fieldset,
+form,
+label,
+dl,
+dt,
+dd,
+cite,
+input,
+hr,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p
+{
+    font-family: Arial,Microsoft Yahei;
+    border-radius: 0;
+}
+input {
+    background: transparent;
+}
+.hide{
+    display: none!important;
+}
+.h-40
+{
+    height: 40px;
+}
+.h-44
+{
+    height: 44px;
+}
+.h-65
+{
+    height: 65px;
+}
+.mart-5
+{
+    margin-top: 5px;
+}
+.mart-10
+{
+    margin-top: 10px;
+}
+.mart-40
+{
+    margin-top: 40px;
+}
+.mart-44
+{
+    margin-top: 44px;
+}
+.mart-100
+{
+    margin-top: 100px;
+}
+.mart-114{
+    margin-top: 114px;
+}
+.marr-5
+{
+    margin-right: 5px;
+}
+.marr-10{
+    margin-right: 10px;
+}
+.marr-15
+{
+    margin-right: 15px;
+}
+.marr-50
+{
+    margin-right: 50px;
+}
+.marb-5
+{
+    margin-bottom: 5px;
+}
+.marb-10
+{
+    margin-bottom: 10px;
+}
+.marb-55
+{
+    margin-bottom: 55px;
+}
+.marl-5
+{
+    margin-left: 5px;
+}
+.marl-10{
+    margin-left: 10px;
+}
+.marl-15
+{
+    margin-left: 15px;
+}
+.marl-50
+{
+    margin-left: 50px;
+}
+.padlr-15{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.padt-5
+{
+    padding-top: 5px;
+}
+.padt-44
+{
+    padding-top: 44px;
+}
+.parr-5{
+    padding-right: 5px;
+}
+.padb-10
+{
+    padding-bottom: 10px;
+}
+.bg-wh{
+    background-color: #fff;
+}
+.bg-e7 {
+    background-color: #E7E7E7!important;
+}
+.bg-0d80eb
+{
+    background-color: #0d80eb;
+}
+.bg-ee6602
+{
+    background-color: #ee6602;
+}
+.bg-01BF47
+{
+    background-color: #01bf47;
+}
+.bor1-b2 {
+    border: 1px solid #B2B2B2;
+}
+.tx-wh{
+    color: #fff;
+}
+.tx-gra{
+    color: #666;
+}
+.tx-bla-2{
+    color:#666;
+}
+.tx-bla-3{
+    color: #999;
+}
+.tx-orange {
+    color: #f18b00;
+}
+.module-form-t1 .focusShade, .module-input-t1 .focusShade{
+    top: 110px;
+}
+.focusShade {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: rgba(0,0,0,.4);
+    z-index: 999;
+}
+/*向上箭头*/
+.icon-upArrow{
+    height:25px;
+    width:25px;
+    background:url("../images/icon.png") no-repeat;
+    background-size: 620px 270px;
+    background-position: -315px 0;
+    margin-right: 10px;
+}
+/*向下箭头*/
+.icon-down{
+    background-position: -315px -34px;
+}
+/*------------------------------------------------------------------------------------*/
+/*边框 - 开始*/
+.line-t:before
+{
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    left: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    width: 100%;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+            transform: scaleY(.5);
+    -webkit-transform-origin: 0 0;
+            transform-origin: 0 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.line-r:after
+{
+    position: absolute;
+    top: 0;
+    right: -1px;
+    bottom: 0;
+
+    -webkit-box-sizing: border-box;
+    width: 1px;
+    height: 100%;
+
+    content: '';
+    -webkit-transform: scaleX(.5);
+    -webkit-transform-origin: 0 0;
+
+    border-right: 1px solid #e5e5e5;
+}
+.line-b:after
+{
+    position: absolute;
+    z-index: 1;
+    top: auto;
+    right: auto;
+    bottom: -1px;
+    left: 0;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    height: 1px;
+    content: '';
+    -webkit-transform: scaleY(.5);
+    -webkit-transform-origin: 0 0;
+
+    border-bottom: 1px solid #e5e5e5;
+}
+.line-l:before
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-box-sizing: border-box;
+    width: 1px;
+    height: 100%;
+    content: '';
+    -webkit-transform: scaleX(.5);
+    -webkit-transform-origin: 0 0;
+
+    border-left: 1px solid #e5e5e5;
+}
+/*边框 - 开始*/
+/*------------------------------------------------------------------------------------*/
+/*输入框边线*/
+.module-input-t1 .line-all:before,.module-form-t1 .line-all:before{
+    content: "";
+    position: absolute;
+    height: 72px;
+    width: 200%;
+    border: 1px solid #e5e5e5;
+    background-color: transparent;
+    left: 0;
+    bottom: auto;
+    right: auto;
+    top: -1px;
+    -webkit-transform-origin: -1px 0px;
+    -moz-transform-origin: -1px 0px;
+    -ms-transform-origin: -1px 0px;
+    -o-transform-origin: -1px 0px;
+    transform-origin: -1px 0px;
+    -webkit-transform: scale(0.5, 0.5);
+    -ms-transform: scale(0.5, 0.5);
+    -o-transform: scale(0.5, 0.5);
+    transform: scale(0.5, 0.5);
+}
+/*------------------------------------------------------------------------------------*/
+/* 头部表单下拉框 -开始 */
+/* 参考用例：index/base_data_frame.html*/
+.classic-module-form-t1 .filtration-icon {
+    height: 28px;
+    width: 28px;
+    margin-left: 0;
+    margin-right: 10px;
+    border-left: none;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -208px -33px;
+    background-size: 620px 270px;
+}
+.classic-module-form-t1 .filtration-icon-active {
+    background-position: -209px 1px;
+}
+/* 头部表单下拉框 -结束
+ * 参考用例：index/base_data_frame.html 
+ */
+/*------------------------------------------------------------------------------------*/
+/*底部菜单-开始*/
+.module-footer-t5 {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    font-size: 12px;
+    line-height: 16px;
+    color: #fff;
+    background-color: #004527;
+    z-index: 9;
+    border-top: 0;
+}
+.module-footer-t5 .nav1 {
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: 0 -35px;
+    background-size: 620px 270px;
+}
+.module-footer-t5 .nav2 {
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -35px -35px;
+    background-size: 620px 270px;
+}
+.module-footer-t5 .nav3 {
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -70px -35px;
+    background-size: 620px 270px;
+}
+.module-footer-t5 .nav4 {
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -105px -35px;
+    background-size: 620px 270px;
+}
+.module-footer-t5 .nav5 {
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -140px -35px;
+    background-size: 620px 270px;
+}
+.footer-nav-active .nav1{
+    background-position: 0 0;
+}
+.footer-nav-active .nav2{
+    background-position: -35px 0;
+}
+.footer-nav-active .nav3{
+    background-position: -70px 0;
+}
+.footer-nav-active .nav4{
+    background-position: -105px 0;
+}
+.footer-nav-active .nav5{
+    background-position: -140px 0;
+}
+/*底部菜单-结束*/
+/*------------------------------------------------------------------------------------*/
+/* 头部logo -开始
+ * 用例页面：index/en_index_frame.html
+ */
+.logo-3000
+{
+    width: 130px;
+    height: 40px;
+
+    background: url('../images/icon.png') no-repeat;
+    background-position: 0 -219px;
+    background-size: 620px 270px;
+}
+.logo-5000
+{
+    width: 130px;
+    height: 40px;
+
+    background: url('../images/icon.png') no-repeat;
+    background-position: -490px -219px;
+    background-size: 620px 270px;
+}
+/* 头部logo -结束
+ * 用例页面：index/en_index_frame.html
+ */
+/*------------------------------------------------------------------------------------*/
+ /*基础头部-开始*/
+.header-green {
+    height: 60px;
+    background-color: #004527;
+}
+.module-header-t1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    z-index: 9;
+    font-size: 18px;
+    border-bottom: none;
+}
+.logo-left {
+    height: 60px;
+    width: 70px;
+    margin-left: 20px;
+    background-image: url("../images/icon1.png");
+    background-size: 1573px;
+    background-position: -699px -43px;
+}
+.header-right {
+    margin-bottom: 7px;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: oblique;
+    letter-spacing: 1px;
+    color: #a9e138;
+}
+.header-right .tx-erp {
+    color: #EF0402;
+    letter-spacing: 0;
+}
+.header-right .version {
+    left: -3px;
+    bottom: -1px;
+    font-size: 12px;
+    font-style: oblique;
+    letter-spacing: 0;
+    -webkit-transform: scale(0.75,0.75);
+}
+/*基础头部-结束*/
+/*------------------------------------------------------------------------------------*/
+/*表单-开始*/
+.classic-module-form-t1 {
+    height: 40px;
+    min-height: 0;
+    padding-right: 0;
+    background-color: #fff;
+    border-bottom: none;
+    z-index: 5;
+}
+.classic-module-form-t1 .filtration {
+    padding-left: 15px;
+    font-size: 16px;
+    color: #333;
+}
+.classic-module-form-t1 .classic-filtrate-type {
+    font-size: 14px;
+    height: 28px;
+    line-height: 29px;
+    border: 1px solid #B2B2B2;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.filtration-icon {
+    height: 28px;
+    width: 28px;
+    margin-left: 0;
+    margin-right: 10px;
+    border-left: none;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -208px -34px;
+    background-size: 620px 270px;
+}
+.filtration-icon-active {
+    background-position: -209px 1px;
+}
+.classic-module-form-t1 .classic-billInput {
+    display: block;
+    height: 28px;
+    margin-left: 30px;
+    line-height: 16px;
+    background-color: #E7E7E7;
+    border: 1px solid #B2B2B2;
+    color: #999;
+    border-radius: 3px;
+}
+.classic-module-form-t1 input {
+    padding-left: 10px;
+    padding-right: 35px;
+    outline: none;
+    font-size: 14px;
+}
+.classic-module-form-t1 .search-icon {
+        position: absolute;
+    right: 0px;
+    top: 7px;
+    width: 35px;
+    height: 27px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -450px -34px;
+    background-size: 620px 270px;
+}
+.module-form-t2 {
+    height: 57px;
+    min-height: 0;
+    padding-right: 0;
+    background-color: #fff;
+    border-bottom: none;
+    z-index: 5;
+}
+.module-form-t2 .search-input{
+    height: 35px;
+    border: 1px solid #e5e5e5;
+    border-radius: 2px;
+}
+.module-form-t2 .search-input input{
+    padding-left: 12px;
+    padding-right: 34px;
+    height: 100%;
+    background-color: #f8f8f8;
+}
+.module-form-t2 .search-input input:focus{
+    background-color: #fff;
+}
+/*表单-结束*/
+/*------------------------------------------------------------------------------------*/
+/*固定式表单-开始*/
+.fixed-form{
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+    top: 64px;
+}
+/*固定式表单-结束*/
+/*------------------------------------------------------------------------------------*/
+/*首页中部-开始*/
+.item-body {
+    margin: 2px 5px 0 5px;
+    z-index: 2;
+}
+.item-1 .item-con {
+    width: 48%;
+    height: 75px;
+    margin: 5px 5px 0 5px;
+    border-radius: 3px;
+    background-color: #DBF9E7;
+}
+.item-1 .item-con:last-child {
+    margin-left: 0;
+}
+.icon-big {
+    left: -35px;
+    width: 55px;
+    height: 55px;
+    margin-bottom: 5px;
+    background: url("../images/icon.png") no-repeat;
+    background-size: 620px 270px;
+    -webkit-transform: scale(0.6);
+}
+.icon-b1{
+  background-position: -3px -72px;
+}
+.icon-b2{
+  background-position: -72px -72px;
+}
+.icon-b3{
+  background-position: -142px -72px;
+}
+.icon-b4{
+  background-position: -212px -72px;
+}
+.icon-b21{
+  background-position: -3px -142px;
+}
+.icon-b22{
+  background-position: -72px -142px;
+}
+.icon-b23{
+  background-position: -144px -142px;
+}
+.icon-b24{
+  background-position: -212px -142px;
+}
+.icon-b25{
+  background-position: -281px -142px;
+}
+.icon-b26{
+  background-position: -352px -142px;
+}
+.icon-b27{
+  background-position: -423px -142px;
+}
+.icon-b28{
+  background-position: -493px -142px;
+}
+.item-1 .description {
+    position: absolute;
+    top: 18px;
+    left: 15px;
+    font-size: 12px;
+    width: 130px;
+}
+.item-1 .item-text-e {
+    position: relative;
+    font-style: oblique;
+    left: -25px;
+    font-size: 12px;
+    -webkit-transform: scale(0.6);
+}
+.service .h {
+    height: 25px;
+    font-size: 12px;
+    margin-left: 20px;
+}
+.service .h .tx-md {
+    -webkit-transform: scale(0.8);
+}
+.service .h .tx-sm {
+    top: 1px;
+    left: -30px;
+    -webkit-transform: scale(0.5);
+}
+.banner-list .ban{
+  height: 50px;
+  background:#98EAB5;
+  border-radius: 3px;
+}
+.cus .cus-1{
+  font-size: 14px;
+  font-weight: bold;
+  font-style: oblique;
+  margin-right: 17px;
+}
+
+.pla .dingdang{
+  height: 50px;
+  width:115px;
+  background: url("../images/share.png") no-repeat center;
+  background-size: 110px;
+}
+.cus .dc{
+  height: 50px;
+  width:50px;
+  margin-left: 15px;
+  background-image: url("../images/icon1.png");
+  background-size: 1061px;
+  background-position: -748px -33px;
+}
+.service .desc {
+    position: relative;
+    font-style: oblique;
+    font-weight: bold;
+    font-size: 12px;
+    left: -10px;
+    -webkit-transform: scale(0.7);
+}
+.cus .desc {
+    left: -24px;
+}
+/*首页中部-结束*/
+/*------------------------------------------------------------------------------------*/
+/* 蒙版 -开始
+ * 用例页面：index/en_index_frame.html
+ */
+.mask
+{
+    position: fixed;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.4);
+}
+/* 蒙版 -结束
+ * 用例页面：index/en_index_frame.html
+ */
+/*------------------------------------------------------------------------------------*/
+/*列表（左图标右文字） -开始
+ * 用例页面：index/en_report_frame.html
+ * 用例页面：index/en_data_frame.html
+ */
+/*列表的外容器*/
+.item-anchor:active
+{
+    background-color: #f8f8f8;
+}
+/*列表的内容器*/
+.report-card
+{
+    line-height: 100px;
+    height: 100px;
+    margin: 0 15px;
+}
+/*报告首页图标*/
+/*report-icon 图标基本样式
+  r1~r5 不同的图标
+*/
+.icon-list
+{
+    width: 50px;
+    height: 55px;
+    background: url(../images/icon.png) no-repeat;
+    background-size: 620px 270px;
+}
+.r1
+{
+    background-position: -6px -73px;
+}
+.r2
+{
+    background-position: -74px -73px;
+}
+.r3
+{
+    background-position: -145px -73px;
+}
+.r4
+{
+    background-position: -215px -73px;
+}
+.r5
+{
+    background-position: -285px -73px;
+}
+.r6
+{
+    background-position: -356px -73px;
+}
+.r7
+{
+    background-position: -425px -73px;
+}
+.icon-goods
+{
+    background-position: -425px -73px;
+}
+.icon-clientele
+{
+    background-position: -492px -73px;
+}
+.icon-supplier
+{
+    background-position: -559px -73px;
+}
+/*列表文字*/
+.report-txt
+{
+    margin-left: 15px;
+
+    text-align: center;
+
+    color: #333;
+
+            flex: 1;
+    -webkit-flex: 1;
+}
+/*列表（左图标右文字）-结束
+ * 用例页面：index/en_report_frame.html
+ * 用例页面：index/en_data_frame.html
+ */
+/*------------------------------------------------------------------------------------*/
+/*下拉列表 - 开始*/
+.select-body .item-1 {
+    height: 44px;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-right: 7px;
+    background-color: #fff;
+    color: #666;
+    font-size: 14px;
+}
+/* 筛选区域-列表项-开始 */
+.select-body .item-1{
+    height: 44px;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-right: 7px;
+    background-color: #fff;
+    color:#666;
+}
+.select-body .item-1:active{
+    background-color: #f8f8f8 !important;
+}
+.select-body .item-1:last-child{
+    border:none;
+}
+.select-body .item-r-icon{
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+}
+.select-body .item-1-active .item-r-icon{
+    background: url(../images/icon.png) no-repeat;
+    background-position: -175px -0px;
+    background-size:620px 270px;
+}
+.select-body .item-1-active{
+    color:#999;
+}
+/*下拉列表 - 结束*/
+/*------------------------------------------------------------------------------------*/
+/*头部切换按钮 -开始
+ * 用例页面：index/en_check_frame.html
+ */
+.header-group
+{
+    padding: 6px 0;
+}
+.header-group-left
+{
+    width: 70px;
+}
+.header-group-right
+{
+    width: 70px;
+}
+.header-group-center
+{
+    min-width: 185px;
+    max-width: 185px;
+    height: 30px;
+    margin-right: 10px;
+    margin-left: 10px;
+
+    border: 1px solid #fff;
+    border-radius: 3px;
+}
+.header-tab-active
+{
+    color: #004e26;
+    background-color: #fff;
+}
+/* 空心确认图标 */
+.affirm-icon
+{
+    background-position: -280px -24px;
+}
+/* 列表图标 */
+.list-icon
+{
+    position: absolute;
+    left: -20px;
+    background-position: -244px -24px;
+}
+.icon {
+    width: 26px;
+    height: 44px;
+    background: url(../images/icon.png) no-repeat;
+    background-size: 620px 270px;
+}
+.title-l,
+.title-r
+{
+    width: 60px;
+    height: 100%;
+}
+/*返回按钮*/
+.back-icon-wh {
+    width: 28px;
+    background-position: -594px 9px;
+}
+/*列表跳转按钮*/
+.list-icon-wh
+{
+    position: absolute;
+    left: -20px;
+    background-position: -559px -130px;
+}
+/*提交按钮*/
+.post-icon-wh {
+    margin-right: 5px;
+    background-position: -594px -131px;
+}
+/*过滤按钮*/
+.filt-icon-wh {
+    margin-right: 5px;
+    background-position: -594px -24px;
+}
+/*头部切换按钮 -结束
+ * 用例页面：index/en_check_frame.html
+ */
+/*------------------------------------------------------------------------------------*/
+/* 数据列表-开始 */
+.list
+{
+    border-top: none;
+    background-color: #eee;
+}
+.list .ul
+{
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: #fff;
+}
+.list .ul:active
+{
+    background-color: #f8f8f8 !important;
+}
+.list .li-header
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+}
+.list .li-hl
+{
+    font-size: 14px;
+    color: #333;
+}
+.list .li-hr
+{
+    font-size: 12px;
+    color: #999;
+}
+.list .li-content
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 30px;
+}
+.list .li-title
+{
+    font-size: 16px;
+    padding-bottom: 5px;
+    color: #333;
+}
+.list .li-type
+{
+    font-size: 14px;
+    color: #666;
+}
+.list .li-price
+{
+    font-size: 14px;
+    color: #ef5b2d;
+}
+.li-tips{
+    width: 25px;
+    height: 25px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -175px -35px;
+    background-size: 620px 270px;
+}
+.active .li-tips{
+    background-position: -175px 1px !important;
+}
+/* 过滤页面-开始 */
+.filterList
+{
+    margin-bottom: 5px;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #fff;
+}
+.filterList > div:last-child
+{
+    border-bottom: 0 none;
+}
+.filterListItem
+{
+    line-height: 44px;
+    height: 44px;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding: 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+.itemName
+{
+    width: auto;
+    padding-right: 5px;
+    text-align: left;
+    color: #333;
+}
+.itemContent
+{
+    text-align: right;
+    color: #999;
+}
+.itemAnchor
+{
+    display: block;
+}
+/*信息列表 end*/
+/*列表右侧输入框 示例 enhance_index/sale_order.html*/
+.module-form-t1{
+    min-height: 65px;
+}
+.module-form-t1 input{
+    height: 35px;
+}
+.billInput
+{
+    font-size: 16px;
+    display: block;
+    color: #999;
+    border: 0 none;
+    outline: 0 none;
+    line-height: 19px;
+}
+.billInput:focus
+{
+    color: #333;
+}
+.billInput::-webkit-input-placeholder
+{
+    color: #999;
+}
+.billInput::-ms-input-placeholder
+{
+    color: #999;
+}
+/*input end*/
+/* 过滤页面-结束 */
+/* 订单编辑页-开始 */
+.orderListEdit
+{
+    margin-bottom: 5px;
+    background-color: #fff;
+}
+.orderListEdit > div:last-child
+{
+    border-bottom: 0 none;
+}
+.list-item
+{
+    line-height: 44px;
+    height: 44px;
+    margin-right: 15px;
+    margin-left: 15px;
+    padding: 0;
+}
+.longButton
+{
+    line-height: 44px;
+
+    height: 44px;
+    margin: 15px 15px 30px;
+    text-align: center;
+    color: #fff;
+    border-radius: 6px;
+}
+.goodsItem
+{
+    margin-right: 15px;
+    margin-left: 15px;
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 0;
+}
+/* 订单编辑页结束 */
+/* 选择货品页面-开始 */
+.module-input-t1
+{
+    min-height: 65px;
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: #fff;
+}
+.module-input-t1 input
+{
+    height: 35px;
+    padding-right: 35px;
+    padding-left: 10px;
+    border: 0;
+    outline: none;
+    background-color: #f8f8f8;
+}
+.module-input-t1 .search-icon
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35px;
+    height: 100%;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -450px -30px;
+    background-size: 620px 270px;
+}
+.module-input-t1 .icon-scan
+{
+    width: 30px;
+    height: 30px;
+    background: url(../images/icon.png) no-repeat;
+    background-position: -277px 2px;
+    background-size: 620px 270px;
+}
+/* 选择货品页面-结束 */
+/* 采购收货列表-开始 */
+.tickets {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    padding: 0 6px;
+    transform: skew(-10deg,0);
+    -webkit-transform: skew(-10deg,0);
+    height: 25px;
+    line-height: 25px;
+    border-radius: 3px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.tickets span {
+    position: relative;
+    transform: skew(10deg,0);
+}
+/* 采购收货列表-结束 */
+
+/*修正下拉选择弹窗-开始*/
+.mbsc-mobiscroll {
+    position: inherit;
+}
+.mbsc-control{
+    background-color: transparent;
+}
+/*修正下拉选择弹窗-结束*/
+
+/*下拉框内容显示表单-开始*/
+.moscroll-input input{
+    text-align: right;
+    color: #999;
+}
+.moscroll-input input:focus{
+    color: #333;
+}
+/*下拉框内容显示表单-结束*/
+
+/*列表active-开始*/
+.bg-f8-active:active{
+    background-color: #f8f8f8;
+}
+/*列表active-结束*/
+
+.list-item input{
+    background-color: transparent;
+}
+/*居右下拉选择框-开始*/
+.sel-opt {
+    -webkit-appearance: none;
+    outline: none;
+    direction: rtl;
+    background: transparent;
+    border-color: transparent;
+    color: #999;
+    font-size: 16px;
+}
+.sel-opt:focus{
+    color: #333;
+}
+/*居右下拉选择框-结算*/
+.top-1{
+    top:-1px;
+}
+/*mobiscroll输入框*/
+.sel-label input{
+    text-align: right;
+    color: #999;
+    font-size: 16px;
+    line-height: 19px;
+}

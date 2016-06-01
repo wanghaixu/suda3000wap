@@ -1,0 +1,70 @@
+/*set模块样式
+	set.html
+	edit_password1.html
+	edit_password2.html
+*/
+.itemName{
+	width:70px;
+}
+.sendCkCode{
+	height:28px;
+	width:100px;
+	line-height: 28px;
+	background-color:#006442;
+	color:#fff;
+	font-size:12px;
+	text-align: center;
+	border-radius:4px;
+/*	padding:0 10px;*/
+	margin-left:10px;
+}
+.sended{
+	background-color:#ccc;
+}
+/*头部 start*/
+.header-green{
+	min-width: 100%;
+    height: 44px;
+    background-color: #004E26;
+    font-size: 18px;
+    color: #fff;
+}
+.logo-5000{
+	height: 40px;
+	width: 130px;
+	background: url("../images/icon.png") no-repeat;
+	background-size: 620px 270px;
+	background-position: -490px -219px;
+}
+.border-fixed{
+	border-bottom:none !important;
+}
+/*头部 end*/
+.helpContent {
+    text-indent: 2em;
+    margin: 20px 15px 0px 15px;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+}
+.helpImgT {
+    margin: 10px 0px 0px 15px;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+}
+.helpBox {
+    margin-top: 8px;
+    margin-bottom: 15px;
+    width: 90%;
+    border: 1px solid #999;
+}
+.helpDirection {
+    width: 35px;
+    height: 30px;
+    background: url('../images/jiantou.png') no-repeat;
+    background-size: 30px;
+}
+.listItem-border {
+    border-bottom: 1px solid #e5e5e5;
+}
