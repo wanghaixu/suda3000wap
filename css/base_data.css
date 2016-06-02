@@ -11,6 +11,12 @@ body{
 .hrefBtn:active{
 	background-color: #f8f8f8 !important;
 }
+.w-30p{
+	width: 30%;
+}
+.w-33p{
+	width: 33%;
+}
 #header{
 	position: fixed;
 	top: 0px;
@@ -102,6 +108,9 @@ body{
 }
 .marr-30{
 	margin-right: 30px;
+}
+.marb-10{
+	margin-bottom: 10px;
 }
 .mw-80{
 	max-width: 80px;

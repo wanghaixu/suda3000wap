@@ -483,6 +483,7 @@ input {
 }
 .classic-module-form-t1 .classic-billInput {
     display: block;
+    width: 100%;
     height: 28px;
     margin-left: 30px;
     line-height: 16px;

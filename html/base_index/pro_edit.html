@@ -9,11 +9,6 @@
     <link rel="stylesheet" type="text/css" href="../../css/public.css" />
     <link rel="stylesheet" type="text/css" href="../../css/mobiscroll.2.13.2.min.css" />
     <link rel="stylesheet" type="text/css" href="../../css/base_index.css" />
-    <style>
-        .batch .go-icon {
-            margin-left: 40px;
-        }
-    </style>
 </head>
 <body class="hide">
     <!--头部开始-->
@@ -200,6 +195,9 @@
                 $('.bill_pro').remove();
             }
 
+            if(!lot){
+                sessionStorage.removeItem('tempProData');
+            }
             var traderID = store_billData.traderID;//客户ID
             var noteType = store_billData.noteType;//发票类型
             var storeID = store_billData.storeID;//仓库ID
@@ -256,8 +254,8 @@
                 //如果批号管理为'T'或者货品的成本核算类型为2时,有批号,批号可以获取或者输入,采购或者销售都是获取或者输入
                 if (data.inf_costingtypeid == '2' || data.batchctrl == 'T') {
                     base_index.setValue($('.batchcode'), data.batchcode);
-                    //编辑单据的时候 需要判断referbillid是否为空或者0 如果不是为空或者0的话 则提示不能重新选择批号
-                    if(data.referbillid!==''&&data.referbillid!==null&&data.referbillid!==0&&data.referbillid!==undefined){
+                    //被引用次数大于0的话 不能修改批号
+                    if(data.refercount!=0){
                         $('.batchcode').attr('readonly','readonly');
                         $('.batchcode').click(function () {
                             _Public.layerMsg('批号不可重新选择');           
@@ -267,8 +265,8 @@
                         if(storeID==''){                            
                             _Public.layerMsg('请先选择仓库!');
                         }else{
-                            //编辑单据的时候 需要判断referbillid是否为空或者0 如果不是为空或者0的话 则提示不能重新选择批号
-                            if(data.referbillid!==''&&data.referbillid!==null&&data.referbillid!==0&&data.referbillid!==undefined)
+                            //被引用次数大于0的话 不能修改批号
+                            if(data.refercount!=0)
                                 _Public.layerMsg('批号不可重新选择');                                
                             else
                                 getBatchcode();
@@ -380,7 +378,6 @@
 
                 data.amount = data.total;
                 data.unitqty = data.qty;
-                data.oldTaxRate=data.taxrate;//将货品税率缓存起来
 
                 if (data.inf_costingtypeid == null)
                     data.inf_costingtypeid = ''
@@ -399,10 +396,14 @@
 
             //发出删除货品事件
             $(document).on('tap', '.longButton', function () {
-                var _id = data.log_id;
-                base_index.deleteGoods(_id);
-                //由于是编辑进来的 所以history后退一步
-                history.go(-1);
+                if(data.refercount!=0){
+                    _Public.layerMsg('货品明细被引用 不能删除!');
+                }else{
+                    var _id = data.log_id;
+                    base_index.deleteGoods(_id);
+                    //由于是编辑进来的 所以history后退一步
+                    history.go(-1);
+                }
             })
 
             //数量变化

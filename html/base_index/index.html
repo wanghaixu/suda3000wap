@@ -13,11 +13,14 @@
 		background-color:#9A9A9A;
 		overflow-x:hidden;
 	}
+	#filterInput{
+		width: 100%;
+	}
 	</style>
 </head>
 <body>
 	<header class="module-header-t1">
-		<div class="ub ub-ae header-green tx-r">
+		<div class="ub ub-f1 ub-ae header-green tx-r">
 			<div class=" logo-left"></div>
 			<div class="ub ub-f1 ub-pe">
 				<div class="ub header-right ">
@@ -26,30 +29,30 @@
 				</div>
 			</div>
 		</div>
-		<form class="ub uf-f1 classic-module-form-t1 line-b" action="#" onsubmit="return false">
+		<form class="ub ub-f1 classic-module-form-t1 line-b" action="#" onsubmit="return false">
 			<div id="filtBtn" class="ub ub-ac ub-pc filtration" tapmode>
 				<div id="filtrateType" class="classic-filtrate-type" data-winName="pur_order">采购订单</div>
 				<div class="bg-e7 bor1-b2 filtration-icon"></div>
 			</div>
-			<div class="ub-f1 ub ub-ac ub-pc marr-15">
+			<div class="ub ub-f1 ub ub-ac ub-pc marr-15">
 				<input id="filterInput" type="search" name="keyword" class="ub ub-f1 ub-ac classic-billInput tx-16" placeholder="名称/单号">
 				<div id="searchBtn" class="search-icon"></div>
 			</div>
 		</form>
 		<div class="ub ub-ver select-body bg-wh uhide">
-			<div class="ub ub-ac ub-pc item-1 item-1-active line-b" data-type="purchase_order">
+			<div class="ub ub-ac ub-pc item-1 item-1-active line-b" data-type="pur_order">
 				<div class="item-left ub-f1 ut-s">采购订单</div>
 				<div class="item-r-icon"></div>
 			</div>
-			<div class="ub ub-ac ub-pc item-1 line-b" data-type="purchase_gain">
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="pur_gain">
 				<div class="item-left ub-f1 ut-s">采购收货</div>
 				<div class="item-r-icon"></div>
 			</div>
-			<div class="ub ub-ac ub-pc item-1 line-b" data-type="cash_purchase">
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="cash_pur">
 				<div class="item-left ub-f1 ut-s">现款采购</div>
 				<div class="item-r-icon"></div>
 			</div>
-			<div class="ub ub-ac ub-pc item-1 line-b" data-type="purchase_return">
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="pur_return">
 				<div class="item-left ub-f1 ut-s">采购退货</div>
 				<div class="item-r-icon"></div>
 			</div>
@@ -57,7 +60,7 @@
 				<div class="item-left ub-f1 ut-s">销售订单</div>
 				<div class="item-r-icon"></div>
 			</div>
-			<div class="ub ub-ac ub-pc item-1 line-b" data-type="sale_deliver">
+			<div class="ub ub-ac ub-pc item-1 line-b" data-type="sale_del">
 				<div class="item-left ub-f1 ut-s">销售发货</div>
 				<div class="item-r-icon"></div>
 			</div>
@@ -217,6 +220,18 @@ seajs.use(['zepto.min'], function(zepto){
 	sessionStorage.removeItem('session_filterJson');
 	sessionStorage.removeItem('goodsData');
 	sessionStorage.removeItem('session_prevTraderId');
+	//列表详情页名称
+	var listPageName = {
+        'sale_order': 'order_frame.html',//销售订单
+        'pur_order': 'order_frame.html',//采购订单
+        'pur_gain': 'billing_frame.html',//采购收货
+        'pur_return': 'billing_frame.html',//采购退货
+        'cash_pur': 'billing_frame.html',//现款采购
+        'sale_del': 'billing_frame.html',//销售发货
+        'cash_sale': 'billing_frame.html',//现款销售
+        'sale_return': 'billing_frame.html'//销售退货
+    }
+
 	$(document).on('tap','.filtration',function(){
 		toggle();
 	});
@@ -261,7 +276,7 @@ seajs.use(['zepto.min'], function(zepto){
 	function searchBillData(){
 		var type = $('.item-1-active').data('type');
 		var filterValue = $.trim($('#filterInput').val());
-		window.location.href = type+'.html?keyword='+filterValue;
+		window.location.href = listPageName[type]+'?type='+type+'&keyword='+filterValue;
 	}
 
 	//隐藏显示东西

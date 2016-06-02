@@ -182,7 +182,7 @@ seajs.use(['zepto.min','base_data','public','layer','iscroll','pullToRefresh'],f
 						onhand=listData[i].onhand?listData[i].onhand:0,
 						moneycode=listData[i].moneycode?listData[i].moneycode:'',
 						unit=checkValue(listData[i].unit);
-					node+='<li class="h-71"><div class="ub ub-ver ub-pc ul line-b productItem" Data-href="pro_detail.html?list_id='+goodsid+'&list_code='+code+'"><div class="ub ub-ac ub-pc"><div class="tx-16 tx-bla-2 marr-10">'+code+'</div><div class="ub-f1 tx-bla ut-s">'+name+specs+'</div></div><div class="ub-f1 ub mart-7"><div class="ub-f1 tx-12 tx-bla-3 ut-s">库存：<span class="">'+onhand+'('+unit+')'+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">进价：<span class="">'+pprice+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">售价：<span class="">'+sprice+'</span></div></div></div></li>';
+					node+='<li class="h-71"><div class="ub ub-ver ub-pj ul line-b productItem" Data-href="pro_detail.html?list_id='+goodsid+'&list_code='+code+'"><div class="ub ub-ac ub-pc"><div class="tx-16 tx-bla-2 marr-10">'+code+'</div><div class="ub-f1 tx-bla ut-s">'+name+specs+'</div></div><div class="ub ub-ac"><div class="ub-f1 tx-12 tx-bla-3 ut-s w-30p">库存：<span class="">'+onhand+' '+unit+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s w-30p">进价：<span class="">'+pprice+'</span></div><div class="ub-f1 tx-12 tx-bla-3 ut-s">售价：<span class="">'+sprice+'</span></div></div></div></li>';
 				}
 				if(type=='refresh'||type=='search'||type=='all'){
 					$('#wrapper .navDataList').find('.h-71').remove();

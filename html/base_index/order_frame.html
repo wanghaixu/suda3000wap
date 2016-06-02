@@ -18,7 +18,7 @@
             <div class="icon back-icon-wh"></div>
             <div class="tx-16 tx-wh">返回</div>
         </a>
-		<div id="pageTitle" class="ub-f1 ub ub-ac ub-pc bold">销售订单列表</div>
+		<div id="pageTitle" class="ub-f1 ub ub-ac ub-pc bold"></div>
 		<a class="ub ub-ac ub-pe title-r" href="filter.html?type=sale_order">
 			<div class="icon filt-icon-wh"></div>
 		</a>
@@ -106,7 +106,7 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 	if(keyword!=''){
 		//搜索请求
 		$('#filterInput').val(keyword);
-		searchSaleOrderData();
+		searchListData();
 	}else if(action == 'filter' && sessionStorage.getItem('session_filterJson')){
 		// 获取参数
 		var session_filterJson = sessionStorage.getItem('session_filterJson');
@@ -118,10 +118,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 				if(ret.errNo){
 					_Public.hideProgress();
                     _Public.closeToLogin(ret.errMsg);
-				}else if(ret.errNo==-1){
-					//提示错误信息弹窗
-					_Public.layerMsg(ret.errMsg);
-					_Public.hideProgress();
 				}else {
 					succFunc(ret);
 					//设置下一页参数
@@ -140,10 +136,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 				if(ret.errNo){
 					_Public.hideProgress();
                     _Public.closeToLogin(ret.errMsg);
-				}else if(ret.errNo==-1){
-					//提示错误信息弹窗
-					_Public.layerMsg(ret.errMsg);
-					_Public.hideProgress();
 				}else {
 					succFunc(ret);
 					//设置下一页参数
@@ -211,7 +203,7 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 	});
 	//搜索(键盘按钮)
 	$('form').on('submit', function(){
-		searchSaleOrderData();
+		searchListData();
 		$('#filterInput').blur();
 		//阻止form提交跳转
 		return false;
@@ -219,11 +211,11 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 	//搜索(搜索按钮)
 	$('#searchBtn').on('tap', function(event){
 		event.preventDefault();
-		searchSaleOrderData();
+		searchListData();
 	});
 
 	//搜索
-	function searchSaleOrderData(){
+	function searchListData(){
 		//获取搜索内容
 		var filterValue = $('#filterInput').val();
 		if(filterValue!=''){
@@ -235,10 +227,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 					if(ret.errNo){
 						_Public.hideProgress();
                     	_Public.closeToLogin(ret.errMsg);
-					}else if(ret.errNo==-1){
-						//提示错误信息弹窗
-						_Public.layerMsg(ret.errMsg);
-						_Public.hideProgress();
 					}else {
 						//清空页面HTML
 						htmlCommand.clearConFrom($('#dataList'));
@@ -259,10 +247,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 					if(ret.errNo){
 						_Public.hideProgress();
                     	_Public.closeToLogin(ret.errMsg);
-					}else if(ret.errNo==-1){
-						//提示错误信息弹窗
-						_Public.layerMsg(ret.errMsg);
-						_Public.hideProgress();
 					}else {
 						htmlCommand.clearConFrom($('#dataList'));
 						succFunc(ret);
@@ -284,10 +268,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 				if(ret.errNo){
 					_Public.hideProgress();
                 	_Public.closeToLogin(ret.errMsg);
-				}else if(ret.errNo==-1){
-					//提示错误信息弹窗
-					_Public.layerMsg(ret.errMsg);
-					_Public.hideProgress();
 				}else {
 					//清空页面HTML
 					htmlCommand.clearConFrom($('#dataList'));
@@ -309,10 +289,6 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 				if(ret.errNo){
 					_Public.hideProgress();
                 	_Public.closeToLogin(ret.errMsg);
-				}else if(ret.errNo==-1){
-					//提示错误信息弹窗
-					_Public.layerMsg(ret.errMsg);
-					_Public.hideProgress();
 				}else {
 					succFunc(ret);
 					//设置下一页参数

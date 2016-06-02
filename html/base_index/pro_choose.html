@@ -154,6 +154,8 @@
             });
             //下拉刷新
             function Refresh() {
+                condition='';
+                $('input[name="keyword"]').val('');
                 getGoodsList('refresh');
             }
             //上拉加载

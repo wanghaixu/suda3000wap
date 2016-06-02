@@ -165,6 +165,12 @@ function Base_index() {
             return '供应商';
         }
     },
+    //根据请求类型获取选择列表的标题
+    this.getChooseTypeTitle = {
+        'trader': '供应商',
+        'customer': '客户',
+        'employ': '业务员'
+    },
     //根据请求类型获取主单据(付款账户/收款账户)标题
     this.getPayAccountTitle = function (type) {
         if (type.indexOf('sale') > -1) {
@@ -1224,10 +1230,10 @@ Base_index.prototype = {
                         display: 'bottom',
                         mode: 'selectBasic'
                     });
-                    console.log(selObj.find("option").not(function () { return !this.selected }).data('id'));
+                    // console.log(selObj.find("option").not(function () { return !this.selected }).data('id'));
                     selObj.data('id', selObj.find("option").not(function () { return !this.selected }).data('id'));
                     var realValue = selObj.attr('real-value') || '';
-                    console.log('realValue:' + realValue);
+                    // console.log('realValue:' + realValue);
                     if (realValue != '') {
                         selObj.prev('input').val(selObj.attr('real-value'));
                         console.log('real_id:' + selObj.attr('real-id'));

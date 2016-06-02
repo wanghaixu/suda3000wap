@@ -43,7 +43,7 @@
 			</div>
 			<div id="chooseTraderBtn" class="padlr-15 bg-f8-active">
 				<div class="ub ub-ac h-44 line-b">
-					<div id="traderType" class="itemName tx-l tx-bla" data-id="477">供应商</div>
+					<div id="traderType" class="itemName tx-l tx-bla" data-id="477"></div>
 					<div class="ub ub-ac ub-f1 tx-r tx-gray">
 						<input id="traderName" class="billInput ub-f1 tx-r" type="text" data-id="" data-code="" value="全部" readonly>
 						<div class="rightArrow"></div>
@@ -113,7 +113,7 @@ seajs.use(['public', 'iscroll', 'pullToRefresh', 'layer'],function(_Public){
 	$('#chooseTraderBtn').on('tap', function(event) {
 		event.preventDefault();
 		base_index.setSessionStorage('session_filterJson', filterJsonMode());//获取JSON数据并设置到缓存
-		window.location.href = './trader_choose.html?action=filter&type='+type;
+		window.location.href = './trader_choose.html?action=filter&type='+type+'&base='+base_index.getTraderNameKey[type];
 	});
 	//选择货品
 	// $('#chooseGoodBtn').on('tap', function(event) {
