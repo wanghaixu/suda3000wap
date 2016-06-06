@@ -10,15 +10,12 @@ var refresher = {
 	"loadingLable":"数据加载中..."},
 	init:function(parameter){		
 	var wrapper=document.getElementById(parameter.id);
-	
 	var div=document.createElement("div");
 		div.id="scroller";
 		wrapper.appendChild(div);
-		
 	var scroller=document.getElementById("scroller");
 	var list=document.querySelector("#"+parameter.id+" ul")
 		scroller.insertBefore(list,scroller.childNodes[0]);
-		
 	var pullDown=document.createElement("div");
 		pullDown.id="pullDown";
 	var loader=document.createElement("div");
@@ -28,13 +25,10 @@ var refresher = {
 		loader.appendChild(span);	
 		}	
 		pullDown.appendChild(loader);
-			
 	var pullDownLabel=document.createElement("div");
 		pullDownLabel.className="pullDownLabel";
-		pullDown.appendChild(pullDownLabel);	
-			
-		scroller.insertBefore(pullDown,scroller.childNodes[0]);	
-			
+		pullDown.appendChild(pullDownLabel);
+		scroller.insertBefore(pullDown,scroller.childNodes[0]);
 		var pullUp=document.createElement("div");
 		pullUp.id="pullUp";
 		var loader=document.createElement("div");
@@ -44,7 +38,6 @@ var refresher = {
 		loader.appendChild(span);	
 		}	
 		pullUp.appendChild(loader);
-		
 		var pullUpLabel=document.createElement("div");
 		pullUpLabel.className="pullUpLabel";
 		var content=document.createTextNode(refresher.info.pullUpLable);
